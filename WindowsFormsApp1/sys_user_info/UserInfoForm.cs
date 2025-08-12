@@ -30,6 +30,9 @@ namespace WindowsFormsApp1
         {
             DeptInfoForm show_dept_Info = new DeptInfoForm();
             show_dept_Info.Show();
+
+
+
         }
 
         private void btn_srch_Click(object sender, EventArgs e)
