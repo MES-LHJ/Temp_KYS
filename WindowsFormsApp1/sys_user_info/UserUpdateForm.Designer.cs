@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1.sys_user_info
 {
-    partial class user_update
+    partial class UserUpdateForm
     {
         /// <summary>
         /// Required designer variable.
@@ -290,7 +290,8 @@
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
             this.Name = "user_update";
-            this.Text = "user_update";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "사원 수정";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.user_update_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();

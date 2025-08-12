@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class user_add
+    partial class UserAddForm
     {
         /// <summary>
         /// Required designer variable.
@@ -53,7 +53,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.input_user_messenger_id = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.select_dept_cd = new System.Windows.Forms.ComboBox();
+            this.select_id_dept = new System.Windows.Forms.ComboBox();
+            this.input_id_dept = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_cancel
@@ -284,28 +285,34 @@
             this.label12.TabIndex = 38;
             this.label12.Text = "메신저ID";
             // 
-            // select_dept_cd
+            // select_id_dept
             // 
-            this.select_dept_cd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.select_dept_cd.FormattingEnabled = true;
-            this.select_dept_cd.Items.AddRange(new object[] {
-            "관리부",
-            "영업부",
-            "개발부"});
-            this.select_dept_cd.Location = new System.Drawing.Point(24, 50);
-            this.select_dept_cd.Name = "select_dept_cd";
-            this.select_dept_cd.Size = new System.Drawing.Size(170, 20);
-            this.select_dept_cd.TabIndex = 1;
-            this.select_dept_cd.TabStop = false;
-            this.select_dept_cd.UseWaitCursor = true;
-            this.select_dept_cd.SelectedIndexChanged += new System.EventHandler(this.detp_cd_SelectedIndexChanged);
+            this.select_id_dept.CausesValidation = false;
+            this.select_id_dept.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.select_id_dept.FormattingEnabled = true;
+            this.select_id_dept.Location = new System.Drawing.Point(24, 50);
+            this.select_id_dept.Name = "select_id_dept";
+            this.select_id_dept.Size = new System.Drawing.Size(170, 20);
+            this.select_id_dept.TabIndex = 1;
+            this.select_id_dept.TabStop = false;
+            this.select_id_dept.SelectedIndexChanged += new System.EventHandler(this.select_id_dept_SelectedIndexChanged);
+            // 
+            // input_id_dept
+            // 
+            this.input_id_dept.Location = new System.Drawing.Point(26, 398);
+            this.input_id_dept.Name = "input_id_dept";
+            this.input_id_dept.ReadOnly = true;
+            this.input_id_dept.Size = new System.Drawing.Size(100, 21);
+            this.input_id_dept.TabIndex = 39;
             // 
             // user_add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(614, 441);
-            this.Controls.Add(this.select_dept_cd);
+            this.Controls.Add(this.input_id_dept);
+            this.Controls.Add(this.select_id_dept);
             this.Controls.Add(this.input_user_messenger_id);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.input_user_email);
@@ -335,6 +342,7 @@
             this.Name = "user_add";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 추가";
+            this.Load += new System.EventHandler(this.user_add_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.user_add_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -368,6 +376,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox input_user_messenger_id;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox select_dept_cd;
+        private System.Windows.Forms.ComboBox select_id_dept;
+        private System.Windows.Forms.TextBox input_id_dept;
     }
 }

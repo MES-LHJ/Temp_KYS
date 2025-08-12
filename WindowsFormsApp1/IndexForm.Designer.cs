@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class index
+    partial class IndexForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,8 @@
         {
             this.btn_close = new System.Windows.Forms.Button();
             this.btn_log_in = new System.Windows.Forms.Button();
-            this.user_pass = new System.Windows.Forms.TextBox();
-            this.user_id = new System.Windows.Forms.TextBox();
+            this.txtUserPass = new System.Windows.Forms.TextBox();
+            this.txtUserId = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             this.btn_close.TabIndex = 11;
             this.btn_close.Text = "닫기";
             this.btn_close.UseVisualStyleBackColor = false;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            this.btn_close.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // btn_log_in
             // 
@@ -62,22 +62,23 @@
             this.btn_log_in.TabIndex = 10;
             this.btn_log_in.Text = "로그인";
             this.btn_log_in.UseVisualStyleBackColor = false;
-            this.btn_log_in.Click += new System.EventHandler(this.btn_log_in_Click);
+            this.btn_log_in.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
-            // user_pass
+            // input_user_pass
             // 
-            this.user_pass.Location = new System.Drawing.Point(238, 51);
-            this.user_pass.Name = "user_pass";
-            this.user_pass.PasswordChar = '*';
-            this.user_pass.Size = new System.Drawing.Size(187, 21);
-            this.user_pass.TabIndex = 9;
+            this.txtUserPass.Location = new System.Drawing.Point(238, 51);
+            this.txtUserPass.Name = "input_user_pass";
+            this.txtUserPass.PasswordChar = '*';
+            this.txtUserPass.Size = new System.Drawing.Size(187, 21);
+            this.txtUserPass.TabIndex = 9;
+            this.txtUserPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUserPass_KeyDown);
             // 
-            // user_id
+            // input_user_id
             // 
-            this.user_id.Location = new System.Drawing.Point(21, 51);
-            this.user_id.Name = "user_id";
-            this.user_id.Size = new System.Drawing.Size(187, 21);
-            this.user_id.TabIndex = 8;
+            this.txtUserId.Location = new System.Drawing.Point(21, 51);
+            this.txtUserId.Name = "input_user_id";
+            this.txtUserId.Size = new System.Drawing.Size(187, 21);
+            this.txtUserId.TabIndex = 8;
             // 
             // label2
             // 
@@ -104,8 +105,8 @@
             this.ClientSize = new System.Drawing.Size(494, 159);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.btn_log_in);
-            this.Controls.Add(this.user_pass);
-            this.Controls.Add(this.user_id);
+            this.Controls.Add(this.txtUserPass);
+            this.Controls.Add(this.txtUserId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "index";
@@ -120,8 +121,8 @@
 
         private System.Windows.Forms.Button btn_close;
         private System.Windows.Forms.Button btn_log_in;
-        private System.Windows.Forms.TextBox user_pass;
-        private System.Windows.Forms.TextBox user_id;
+        private System.Windows.Forms.TextBox txtUserPass;
+        private System.Windows.Forms.TextBox txtUserId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

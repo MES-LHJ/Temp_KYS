@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class user_info
+    partial class UserInfoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -43,6 +43,7 @@
             this.dept_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user_login_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.user_pass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.user_rank = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.user_emp_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -146,7 +147,7 @@
             this.btn_dept.Size = new System.Drawing.Size(37, 15);
             this.btn_dept.TabIndex = 2;
             this.btn_dept.Text = "부서";
-            this.btn_dept.Click += new System.EventHandler(this.btn_dept_Click);
+            this.btn_dept.Click += new System.EventHandler(this.BtnDept_Click);
             // 
             // btn_srch
             // 
@@ -173,12 +174,14 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dept_cd,
             this.dept_name,
             this.user_id,
             this.user_name,
+            this.user_login_id,
             this.user_pass,
             this.user_rank,
             this.user_emp_type,
@@ -225,6 +228,13 @@
             this.user_name.Name = "user_name";
             this.user_name.ReadOnly = true;
             // 
+            // user_login_id
+            // 
+            this.user_login_id.DataPropertyName = "user_login_id";
+            this.user_login_id.HeaderText = "로그인ID";
+            this.user_login_id.Name = "user_login_id";
+            this.user_login_id.ReadOnly = true;
+            // 
             // user_pass
             // 
             this.user_pass.DataPropertyName = "user_pass";
@@ -259,7 +269,6 @@
             this.user_email.HeaderText = "이메일";
             this.user_email.Name = "user_email";
             this.user_email.ReadOnly = true;
-            this.user_email.Width = 150;
             // 
             // user_messenger_id
             // 
@@ -274,7 +283,6 @@
             this.remark_dc.HeaderText = "비고";
             this.remark_dc.Name = "remark_dc";
             this.remark_dc.ReadOnly = true;
-            this.remark_dc.Width = 150;
             // 
             // user_info
             // 
@@ -287,7 +295,7 @@
             this.Name = "user_info";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서사원";
-            this.Load += new System.EventHandler(this.user_info_Load);
+            this.Load += new System.EventHandler(this.UserInfo_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.user_info_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -313,6 +321,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dept_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_login_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_pass;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_rank;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_emp_type;

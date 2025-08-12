@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="common.cs" />
     <Compile Include="dbconn.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -117,6 +118,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="sys_dept_info\dept_update.resx">
+      <DependentUpon>dept_update.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="sys_user_info\user_add.resx">
       <DependentUpon>user_add.cs</DependentUpon>
     </EmbeddedResource>

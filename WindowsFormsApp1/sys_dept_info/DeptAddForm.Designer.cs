@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class dept_add
+    partial class DeptAddForm
     {
         /// <summary>
         /// Required designer variable.
@@ -88,6 +88,7 @@
             this.input_remark_dc.Name = "input_remark_dc";
             this.input_remark_dc.Size = new System.Drawing.Size(363, 21);
             this.input_remark_dc.TabIndex = 3;
+            this.input_remark_dc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.input_remark_dc_KeyDown);
             // 
             // btn_cancel
             // 

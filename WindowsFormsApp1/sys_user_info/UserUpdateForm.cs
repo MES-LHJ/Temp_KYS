@@ -8,27 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.sys_user_info
 {
-    public partial class dept_add : Form
+    public partial class UserUpdateForm : Form
     {
-        public dept_add()
+        private List<CmnDeptCombo> combo_list = new List<CmnDeptCombo>();
+
+        public UserUpdateForm()
         {
             InitializeComponent();
         }
 
         private void btn_act_Click(object sender, EventArgs e)
         {
-            string dept_cd = input_dept_cd.Text.ToString();
-            string dept_name = input_dept_name.Text.ToString();
-            
-            if(dept_cd == "" || dept_name == "")
-            {
-                MessageBox.Show("필수 입력값이 입력되지 않았습니다.");
-                return;
-            }
+            string user_id = input_user_id.Text.ToString();
+            string user_name = input_user_name.Text.ToString();
 
-            MessageBox.Show(dept_cd + " " + dept_name);
+            MessageBox.Show(user_id + " " + user_name);
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)
@@ -36,7 +32,7 @@ namespace WindowsFormsApp1
             this.Visible = false;
         }
 
-        private void dept_add_KeyDown(object sender, KeyEventArgs e)
+        private void user_update_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -48,6 +44,9 @@ namespace WindowsFormsApp1
                 // 닫기(ESC)
                 case Keys.Escape:
                     btn_cancel_Click(sender, e);
+                    break;
+
+                default:
                     break;
             }
         }

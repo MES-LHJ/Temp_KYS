@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-class Con_Database
+class ConnDatabase
 {
     string connString = @"Data Source=DESKTOP-3E4KCVF\SQLEXPRESS;Initial Catalog=project;Integrated Security=True";
   
@@ -18,11 +19,8 @@ class Con_Database
     {
         try
         {
-            if (conn == null)
-            {
-                conn = new SqlConnection(connString);
-                conn.Open();
-            }
+            conn = new SqlConnection(connString);
+            conn.Open();
         }
         catch (Exception ex)
         {
@@ -41,6 +39,7 @@ class Con_Database
         catch (Exception ex)
         {
             throw ex;
+
         }
     }
     //DataSet 객체 리턴
@@ -48,8 +47,21 @@ class Con_Database
     {
         SqlDataAdapter da = new SqlDataAdapter();
         da.SelectCommand = new SqlCommand(sql, conn);
+
         DataSet ds = new DataSet();
         da.Fill(ds);
         return ds;
+    }
+    
+    public int KK(string sql)
+    {
+        var aa = new SqlCommand(sql, conn);
+        return aa.ExecuteNonQuery();
+    }
+
+    public int EE(string sql)
+    {
+        var aa = new SqlCommand(sql, conn);
+        return (int)aa.ExecuteScalar();
     }
 }
