@@ -15,14 +15,14 @@ namespace WindowsFormsApp1
 {
     public partial class UserAddForm : Form
     {
-        private List<CmnDeptCombo> combo_list = new List<CmnDeptCombo>();
+        private List<CmnDeptCombo> comboList = new List<CmnDeptCombo>();
 
         public UserAddForm()
         {
             InitializeComponent();
         }
 
-        private void user_add_Load(object sender, EventArgs e)
+        private void UserAdd_Load(object sender, EventArgs e)
         {
             ConnDatabase db = new ConnDatabase();
             db.Open();
@@ -30,42 +30,45 @@ namespace WindowsFormsApp1
             string sql = "select * from sys_dept_info";
 
             DataSet ds = db.GetDataSet(sql);
-            
+
             db.Close();
-            
+
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                CmnDeptCombo db_dept = new CmnDeptCombo
+                CmnDeptCombo dbDept = new CmnDeptCombo
                 {
-                    id = ds.Tables[0].Rows[i][0].ToString(),
-                    dept_cd = ds.Tables[0].Rows[i][1].ToString(), 
-                    dept_name = ds.Tables[0].Rows[i][2].ToString()
+                    Id = ds.Tables[0].Rows[i]["id"].ToString(),
+                    DeptCd = ds.Tables[0].Rows[i]["dept_cd"].ToString(),
+                    deptName = ds.Tables[0].Rows[i]["dept_name"].ToString()
                 };
 
-                combo_list.Add(db_dept);
+                comboList.Add(dbDept);
             }
 
-            select_id_dept.DataSource = combo_list;
-            select_id_dept.DisplayMember = "dept_cd";
-            select_id_dept.ValueMember = "dept_name";
+            selectDeptCd.DataSource = comboList;
+            selectDeptCd.DisplayMember = "deptCd";
+            selectDeptCd.ValueMember = "deptName";
 
-            select_id_dept_SelectedIndexChanged(sender, e);
+            selectDeptCd_SelectedIndexChanged(sender, e);
         }
 
-        private void btn_act_Click(object sender, EventArgs e)
+        private void BtnAct_Click(object sender, EventArgs e)
         {
-            string user_id = input_user_id.Text.ToString();
-            string user_name = input_user_name.Text.ToString();
+            string userId = txtUserId.Text.ToString();
+            string userName = txtUserName.Text.ToString();
 
-            MessageBox.Show(user_id + " " + user_name);
+            MessageBox.Show(userId + " " + userName);
         }
 
-        private void btn_cancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
+            UserInfoForm userInfoForm = new UserInfoForm();
+
+            this.Close();
+            userInfoForm.Show();
         }
 
-        private void user_add_KeyDown(object sender, KeyEventArgs e)
+        private void UserAddForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -77,12 +80,12 @@ namespace WindowsFormsApp1
 
                 // 저장(F4)
                 case Keys.F4:
-                    btn_act_Click(sender, e);
+                    BtnAct_Click(sender, e);
                     break;
 
                 // 닫기(ESC)
                 case Keys.Escape:
-                    btn_cancel_Click(sender, e);
+                    BtnCancel_Click(sender, e);
                     break;
 
                 default:
@@ -90,17 +93,17 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void select_id_dept_SelectedIndexChanged(object sender, EventArgs e)
+        private void selectDeptCd_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (select_id_dept.SelectedItem != null)
+            if (selectDeptCd.SelectedItem != null)
             {
-                var selected_dept = (CmnDeptCombo)select_id_dept.SelectedItem;
-                var id_dept = selected_dept.id;
+                var selected_dept = (CmnDeptCombo)selectDeptCd.SelectedItem;
+                var id_dept = selected_dept.Id;
 
-                input_dept_name.Text = select_id_dept.SelectedValue.ToString();
+                txtDeptName.Text = selectDeptCd.SelectedValue.ToString();
                 input_id_dept.Text = id_dept;
 
-                input_user_id.Focus();
+                txtUserId.Focus();
             }
         }
     }

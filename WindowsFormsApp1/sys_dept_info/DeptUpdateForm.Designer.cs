@@ -28,53 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_cancel = new System.Windows.Forms.Button();
-            this.btn_act = new System.Windows.Forms.Button();
-            this.input_remark_dc = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnAct = new System.Windows.Forms.Button();
+            this.txtRemarkDc = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.input_dept_name = new System.Windows.Forms.TextBox();
-            this.input_dept_cd = new System.Windows.Forms.TextBox();
+            this.txtDeptName = new System.Windows.Forms.TextBox();
+            this.txtDeptCd = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.input_dept_id = new System.Windows.Forms.TextBox();
+            this.txtDeptId = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // btn_cancel
+            // btnCancel
             // 
-            this.btn_cancel.BackColor = System.Drawing.Color.DarkGray;
-            this.btn_cancel.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btn_cancel.ForeColor = System.Drawing.Color.White;
-            this.btn_cancel.Location = new System.Drawing.Point(278, 163);
-            this.btn_cancel.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_cancel.Name = "btn_cancel";
-            this.btn_cancel.Size = new System.Drawing.Size(110, 35);
-            this.btn_cancel.TabIndex = 13;
-            this.btn_cancel.Text = "닫기(ESC)";
-            this.btn_cancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btn_cancel.UseVisualStyleBackColor = false;
-            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            this.btnCancel.BackColor = System.Drawing.Color.DarkGray;
+            this.btnCancel.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(278, 163);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(110, 35);
+            this.btnCancel.TabIndex = 13;
+            this.btnCancel.Text = "닫기(ESC)";
+            this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // btn_act
+            // btnAct
             // 
-            this.btn_act.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btn_act.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btn_act.ForeColor = System.Drawing.Color.White;
-            this.btn_act.Location = new System.Drawing.Point(159, 163);
-            this.btn_act.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_act.Name = "btn_act";
-            this.btn_act.Size = new System.Drawing.Size(110, 35);
-            this.btn_act.TabIndex = 11;
-            this.btn_act.Text = "저장(F4)";
-            this.btn_act.UseVisualStyleBackColor = false;
-            this.btn_act.Click += new System.EventHandler(this.btn_act_Click);
+            this.btnAct.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnAct.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnAct.ForeColor = System.Drawing.Color.White;
+            this.btnAct.Location = new System.Drawing.Point(159, 163);
+            this.btnAct.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAct.Name = "btnAct";
+            this.btnAct.Size = new System.Drawing.Size(110, 35);
+            this.btnAct.TabIndex = 11;
+            this.btnAct.Text = "저장(F4)";
+            this.btnAct.UseVisualStyleBackColor = false;
+            this.btnAct.Click += new System.EventHandler(this.BtnAct_Click);
             // 
-            // input_remark_dc
+            // txtRemarkDc
             // 
-            this.input_remark_dc.Location = new System.Drawing.Point(24, 120);
-            this.input_remark_dc.Name = "input_remark_dc";
-            this.input_remark_dc.Size = new System.Drawing.Size(363, 21);
-            this.input_remark_dc.TabIndex = 10;
-            this.input_remark_dc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.input_remark_dc_KeyDown);
+            this.txtRemarkDc.Location = new System.Drawing.Point(24, 120);
+            this.txtRemarkDc.Name = "txtRemarkDc";
+            this.txtRemarkDc.Size = new System.Drawing.Size(363, 21);
+            this.txtRemarkDc.TabIndex = 10;
+            this.txtRemarkDc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtRemarkDc_KeyDown);
             // 
             // label3
             // 
@@ -86,21 +86,21 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "메모";
             // 
-            // input_dept_name
+            // txtDeptName
             // 
-            this.input_dept_name.Location = new System.Drawing.Point(217, 51);
-            this.input_dept_name.Name = "input_dept_name";
-            this.input_dept_name.Size = new System.Drawing.Size(170, 21);
-            this.input_dept_name.TabIndex = 9;
+            this.txtDeptName.Location = new System.Drawing.Point(217, 51);
+            this.txtDeptName.Name = "txtDeptName";
+            this.txtDeptName.Size = new System.Drawing.Size(170, 21);
+            this.txtDeptName.TabIndex = 9;
             // 
-            // input_dept_cd
+            // txtDeptCd
             // 
-            this.input_dept_cd.Location = new System.Drawing.Point(25, 51);
-            this.input_dept_cd.Name = "input_dept_cd";
-            this.input_dept_cd.ReadOnly = true;
-            this.input_dept_cd.Size = new System.Drawing.Size(170, 21);
-            this.input_dept_cd.TabIndex = 7;
-            this.input_dept_cd.TabStop = false;
+            this.txtDeptCd.Location = new System.Drawing.Point(25, 51);
+            this.txtDeptCd.Name = "txtDeptCd";
+            this.txtDeptCd.ReadOnly = true;
+            this.txtDeptCd.Size = new System.Drawing.Size(170, 21);
+            this.txtDeptCd.TabIndex = 7;
+            this.txtDeptCd.TabStop = false;
             // 
             // label2
             // 
@@ -122,34 +122,34 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "부서코드";
             // 
-            // input_dept_id
+            // txtDeptId
             // 
-            this.input_dept_id.Location = new System.Drawing.Point(25, 172);
-            this.input_dept_id.Name = "input_dept_id";
-            this.input_dept_id.ReadOnly = true;
-            this.input_dept_id.Size = new System.Drawing.Size(50, 21);
-            this.input_dept_id.TabIndex = 14;
-            this.input_dept_id.TabStop = false;
+            this.txtDeptId.Location = new System.Drawing.Point(25, 172);
+            this.txtDeptId.Name = "txtDeptId";
+            this.txtDeptId.ReadOnly = true;
+            this.txtDeptId.Size = new System.Drawing.Size(50, 21);
+            this.txtDeptId.TabIndex = 14;
+            this.txtDeptId.TabStop = false;
             // 
-            // dept_update
+            // DeptUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(414, 211);
-            this.Controls.Add(this.input_dept_id);
-            this.Controls.Add(this.btn_cancel);
-            this.Controls.Add(this.btn_act);
-            this.Controls.Add(this.input_remark_dc);
+            this.Controls.Add(this.txtDeptId);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnAct);
+            this.Controls.Add(this.txtRemarkDc);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.input_dept_name);
-            this.Controls.Add(this.input_dept_cd);
+            this.Controls.Add(this.txtDeptName);
+            this.Controls.Add(this.txtDeptCd);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
-            this.Name = "dept_update";
+            this.Name = "DeptUpdateForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서 수정";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dept_update_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeptUpdateForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,14 +157,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btn_cancel;
-        private System.Windows.Forms.Button btn_act;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnAct;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox input_remark_dc;
-        public System.Windows.Forms.TextBox input_dept_name;
-        public System.Windows.Forms.TextBox input_dept_cd;
-        public System.Windows.Forms.TextBox input_dept_id;
+        public System.Windows.Forms.TextBox txtRemarkDc;
+        public System.Windows.Forms.TextBox txtDeptName;
+        public System.Windows.Forms.TextBox txtDeptCd;
+        public System.Windows.Forms.TextBox txtDeptId;
     }
 }

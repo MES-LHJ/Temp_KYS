@@ -8,8 +8,8 @@ namespace WindowsFormsApp1
 {
     public class CmnDeptCombo
     {
-        public string id { get; set; }
-        public string deptCd { get; set; }
+        public string Id { get; set; }
+        public string DeptCd { get; set; }
         public string deptName { get; set; }
     }
 }

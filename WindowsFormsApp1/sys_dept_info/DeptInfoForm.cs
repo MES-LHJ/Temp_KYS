@@ -13,81 +13,84 @@ using WindowsFormsApp1.sys_user_info;
 namespace WindowsFormsApp1
 {
     public partial class DeptInfoForm : Form
-    {
-        private int ID { get; set; }
+    {        
+        //private int ID { get; set; }
 
         public DeptInfoForm()
         {
             InitializeComponent();
         }
 
-        private void btn_add_Click(object sender, EventArgs e)
+        public void DeptInfo_Load(object sender, EventArgs e)
         {
-            DeptAddForm show_dept_add = new DeptAddForm(this);
-            show_dept_add.Show();
+            DeptSrch();
         }
 
-        private void btn_update_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (this.dataGridView1.RowCount == 0)
+            DeptAddLoad();
+        }
+
+        private void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            DeptUpdate();
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            DeptDelete();
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            DeptClose();
+        }
+
+        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DeptUpdate();
+        }
+
+        private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
             {
-                MessageBox.Show("선택된 데이터가 없습니다.");
-                return;
+                // 추가(F1)
+                case Keys.Enter:
+                    DeptUpdate();
+                    e.SuppressKeyPress = true;
+                    break;
+
+                default:
+                    break;
             }
-
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            string dept_id = row.Cells[0].Value.ToString();
-            string dept_cd = row.Cells[1].Value.ToString();
-            string dept_name = row.Cells[2].Value.ToString();
-            string remark_dc = row.Cells[3].Value.ToString();
-
-            DeptUpdateForm show_dept_update = new DeptUpdateForm(this);
-
-            show_dept_update.input_dept_id.Text = dept_id;
-            show_dept_update.input_dept_cd.Text = dept_cd;
-            show_dept_update.input_dept_name.Text = dept_name;
-            show_dept_update.input_remark_dc.Text = remark_dc;
-            
-            show_dept_update.Show();
         }
 
-        private void btn_delete_Click(object sender, EventArgs e)
+        private void DeptInfoForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (this.dataGridView1.RowCount == 0)
+            switch (e.KeyCode)
             {
-                MessageBox.Show("선택된 데이터가 없습니다.");
-                return;
+                // 추가(F1)
+                case Keys.F1:
+                    DeptAddLoad();
+                    break;
+
+                // 삭제(F7)
+                case Keys.F7:
+                    DeptDelete();
+                    break;
+
+                // 닫기(ESC)
+                case Keys.Escape:
+                    DeptClose();
+                    break;
+
+                default:
+                    break;
             }
-
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            string id = row.Cells[0].Value.ToString();
-            string dept_cd = row.Cells[1].Value.ToString();
-            string dept_name = row.Cells[2].Value.ToString();
-
-            ConnDatabase db = new ConnDatabase();
-            db.Open();
-            
-            string sql = "delete from sys_dept_info where id = "+id;
-
-            if (MessageBox.Show("부서코드: "+dept_cd+"\n부서명: "+dept_name+"\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                DataSet ds = db.GetDataSet(sql);
-                
-                MessageBox.Show("부서코드: "+dept_cd+"\n부서명: "+dept_name+"\n\n데이터가 삭제되었습니다.");
-                dept_info_Load(sender, e);
-            }
-
-            db.Close();
         }
 
-        private void btn_close_Click(object sender, EventArgs e)
-        {
-            this.Visible = false;
-        }
-
-        public void dept_info_Load(object sender, EventArgs e)
+        public void DeptSrch()
         {
             ConnDatabase db = new ConnDatabase();
             db.Open();
@@ -99,48 +102,74 @@ namespace WindowsFormsApp1
             db.Close();
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        public void DeptUpdate()
         {
-            btn_update_Click(sender, e);
+            if (this.dataGridView1.RowCount == 0)
+            {
+                MessageBox.Show("선택된 데이터가 없습니다.");
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+            string deptId = row.Cells["id"].Value?.ToString();
+            string deptCd = row.Cells["dept_cd"].Value?.ToString();
+            string deptName = row.Cells["dept_name"].Value?.ToString();
+            string remarkDc = row.Cells["remark_dc"].Value?.ToString();
+
+            DeptUpdateForm deptUpdateForm = new DeptUpdateForm();
+
+            deptUpdateForm.txtDeptId.Text = deptId;
+            deptUpdateForm.txtDeptCd.Text = deptCd;
+            deptUpdateForm.txtDeptName.Text = deptName;
+            deptUpdateForm.txtRemarkDc.Text = remarkDc;
+
+            this.Close();
+            deptUpdateForm.Show();
         }
 
-        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        public void DeptDelete()
         {
-            switch (e.KeyCode)
+            if (this.dataGridView1.RowCount == 0)
             {
-                // 추가(F1)
-                case Keys.Enter:
-                    btn_update_Click(sender, e);
-                    e.SuppressKeyPress = true;
-                    break;
-
-                default:
-                    break;
+                MessageBox.Show("선택된 데이터가 없습니다.");
+                return;
             }
+
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+            string Id = row.Cells["id"].Value?.ToString();
+            string deptCd = row.Cells["dept_Cd"].Value?.ToString();
+            string deptName = row.Cells["dept_name"].Value?.ToString();
+
+            ConnDatabase db = new ConnDatabase();
+            db.Open();
+
+            string sql = "delete from sys_dept_info where id = " + Id;
+
+            if (MessageBox.Show("부서코드: " + deptCd + "\n부서명: " + deptName + "\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                DataSet ds = db.GetDataSet(sql);
+
+                MessageBox.Show("부서코드: " + deptCd + "\n부서명: " + deptName + "\n\n데이터가 삭제되었습니다.");
+                DeptSrch();
+            }
+
+            db.Close();
         }
 
-        private void dept_info_KeyDown(object sender, KeyEventArgs e)
+        public void DeptAddLoad()
         {
-            switch (e.KeyCode)
-            {
-                // 추가(F1)
-                case Keys.F1:
-                    btn_add_Click(sender, e);
-                    break;
+            this.Close();
+            DeptAddForm deptAddForm = new DeptAddForm();
+            deptAddForm.Show();
+        }
 
-                // 삭제(F7)
-                case Keys.F7:
-                    btn_delete_Click(sender, e);
-                    break;
-
-                // 닫기(ESC)
-                case Keys.Escape:
-                    btn_close_Click(sender, e);
-                    break;
-
-                default:
-                    break;
-            }
+        public void DeptClose()
+        {
+            this.Close();
+            UserInfoForm userInfoForm = new UserInfoForm();
+            userInfoForm.Show();
         }
     }
 }

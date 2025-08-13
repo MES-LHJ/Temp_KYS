@@ -20,6 +20,29 @@ namespace WindowsFormsApp1
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
+            LoginCheck();
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TxtUserPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    LoginCheck();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        
+        private void LoginCheck()
+        {
             string userId = txtUserId.Text;
             string userPass = txtUserPass.Text;
 
@@ -39,28 +62,10 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            UserInfoForm show_user_Info = new UserInfoForm();
-            this.Visible = false;
-            show_user_Info.Show();
-        }
+            UserInfoForm userInfoForm = new UserInfoForm();
 
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
-            this.Visible = false;
-            //this.Close();
-        }
-
-        private void txtUserPass_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Enter:
-                    BtnLogin_Click(sender, e);
-                    break;
-
-                default:
-                    break;
-            }
+            this.Hide();
+            userInfoForm.Show();
         }
     }
 }

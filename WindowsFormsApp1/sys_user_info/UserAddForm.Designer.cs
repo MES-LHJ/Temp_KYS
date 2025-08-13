@@ -28,69 +28,69 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_cancel = new System.Windows.Forms.Button();
-            this.btn_act = new System.Windows.Forms.Button();
-            this.input_remark_dc = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnAct = new System.Windows.Forms.Button();
+            this.txtRemarkDc = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.input_dept_name = new System.Windows.Forms.TextBox();
+            this.txtDeptName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.input_user_name = new System.Windows.Forms.TextBox();
-            this.input_user_id = new System.Windows.Forms.TextBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
+            this.txtUserId = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.input_user_pass = new System.Windows.Forms.TextBox();
-            this.input_log_in_id = new System.Windows.Forms.TextBox();
+            this.txtUserPass = new System.Windows.Forms.TextBox();
+            this.txtLoginId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.input_user_emp_type = new System.Windows.Forms.TextBox();
-            this.input_user_rank = new System.Windows.Forms.TextBox();
+            this.txtUserEmpType = new System.Windows.Forms.TextBox();
+            this.txtUserRank = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.input_user_email = new System.Windows.Forms.TextBox();
-            this.input_user_tel = new System.Windows.Forms.TextBox();
+            this.txtUserEmail = new System.Windows.Forms.TextBox();
+            this.txtUserTel = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.input_user_messenger_id = new System.Windows.Forms.TextBox();
+            this.txtUserMessengerId = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.select_id_dept = new System.Windows.Forms.ComboBox();
+            this.selectDeptCd = new System.Windows.Forms.ComboBox();
             this.input_id_dept = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // btn_cancel
+            // btnCancel
             // 
-            this.btn_cancel.BackColor = System.Drawing.Color.OrangeRed;
-            this.btn_cancel.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btn_cancel.ForeColor = System.Drawing.Color.White;
-            this.btn_cancel.Location = new System.Drawing.Point(473, 390);
-            this.btn_cancel.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_cancel.Name = "btn_cancel";
-            this.btn_cancel.Size = new System.Drawing.Size(110, 35);
-            this.btn_cancel.TabIndex = 14;
-            this.btn_cancel.Text = "취소(ESC)";
-            this.btn_cancel.UseVisualStyleBackColor = false;
-            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            this.btnCancel.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnCancel.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(473, 390);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(110, 35);
+            this.btnCancel.TabIndex = 14;
+            this.btnCancel.Text = "취소(ESC)";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // btn_act
+            // btnAct
             // 
-            this.btn_act.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btn_act.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btn_act.ForeColor = System.Drawing.Color.White;
-            this.btn_act.Location = new System.Drawing.Point(354, 390);
-            this.btn_act.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_act.Name = "btn_act";
-            this.btn_act.Size = new System.Drawing.Size(110, 35);
-            this.btn_act.TabIndex = 13;
-            this.btn_act.Text = "저장(F4)";
-            this.btn_act.UseVisualStyleBackColor = false;
-            this.btn_act.Click += new System.EventHandler(this.btn_act_Click);
+            this.btnAct.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnAct.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnAct.ForeColor = System.Drawing.Color.White;
+            this.btnAct.Location = new System.Drawing.Point(354, 390);
+            this.btnAct.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAct.Name = "btnAct";
+            this.btnAct.Size = new System.Drawing.Size(110, 35);
+            this.btnAct.TabIndex = 13;
+            this.btnAct.Text = "저장(F4)";
+            this.btnAct.UseVisualStyleBackColor = false;
+            this.btnAct.Click += new System.EventHandler(this.BtnAct_Click);
             // 
-            // input_remark_dc
+            // txtRemarkDc
             // 
-            this.input_remark_dc.Location = new System.Drawing.Point(25, 349);
-            this.input_remark_dc.Name = "input_remark_dc";
-            this.input_remark_dc.Size = new System.Drawing.Size(559, 21);
-            this.input_remark_dc.TabIndex = 12;
+            this.txtRemarkDc.Location = new System.Drawing.Point(25, 349);
+            this.txtRemarkDc.Name = "txtRemarkDc";
+            this.txtRemarkDc.Size = new System.Drawing.Size(559, 21);
+            this.txtRemarkDc.TabIndex = 12;
             // 
             // label3
             // 
@@ -102,14 +102,14 @@
             this.label3.TabIndex = 18;
             this.label3.Text = "메모";
             // 
-            // input_dept_name
+            // txtDeptName
             // 
-            this.input_dept_name.Location = new System.Drawing.Point(216, 50);
-            this.input_dept_name.Name = "input_dept_name";
-            this.input_dept_name.ReadOnly = true;
-            this.input_dept_name.Size = new System.Drawing.Size(170, 21);
-            this.input_dept_name.TabIndex = 2;
-            this.input_dept_name.TabStop = false;
+            this.txtDeptName.Location = new System.Drawing.Point(216, 50);
+            this.txtDeptName.Name = "txtDeptName";
+            this.txtDeptName.ReadOnly = true;
+            this.txtDeptName.Size = new System.Drawing.Size(170, 21);
+            this.txtDeptName.TabIndex = 2;
+            this.txtDeptName.TabStop = false;
             // 
             // label2
             // 
@@ -131,19 +131,19 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "부서코드";
             // 
-            // input_user_name
+            // txtUserName
             // 
-            this.input_user_name.Location = new System.Drawing.Point(216, 109);
-            this.input_user_name.Name = "input_user_name";
-            this.input_user_name.Size = new System.Drawing.Size(170, 21);
-            this.input_user_name.TabIndex = 4;
+            this.txtUserName.Location = new System.Drawing.Point(216, 109);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(170, 21);
+            this.txtUserName.TabIndex = 4;
             // 
-            // input_user_id
+            // txtUserId
             // 
-            this.input_user_id.Location = new System.Drawing.Point(24, 109);
-            this.input_user_id.Name = "input_user_id";
-            this.input_user_id.Size = new System.Drawing.Size(170, 21);
-            this.input_user_id.TabIndex = 3;
+            this.txtUserId.Location = new System.Drawing.Point(24, 109);
+            this.txtUserId.Name = "txtUserId";
+            this.txtUserId.Size = new System.Drawing.Size(170, 21);
+            this.txtUserId.TabIndex = 3;
             // 
             // label4
             // 
@@ -165,20 +165,20 @@
             this.label5.TabIndex = 22;
             this.label5.Text = "사원코드";
             // 
-            // input_user_pass
+            // txtUserPass
             // 
-            this.input_user_pass.Location = new System.Drawing.Point(216, 168);
-            this.input_user_pass.Name = "input_user_pass";
-            this.input_user_pass.PasswordChar = '*';
-            this.input_user_pass.Size = new System.Drawing.Size(170, 21);
-            this.input_user_pass.TabIndex = 6;
+            this.txtUserPass.Location = new System.Drawing.Point(216, 168);
+            this.txtUserPass.Name = "txtUserPass";
+            this.txtUserPass.PasswordChar = '*';
+            this.txtUserPass.Size = new System.Drawing.Size(170, 21);
+            this.txtUserPass.TabIndex = 6;
             // 
-            // input_log_in_id
+            // txtLoginId
             // 
-            this.input_log_in_id.Location = new System.Drawing.Point(24, 168);
-            this.input_log_in_id.Name = "input_log_in_id";
-            this.input_log_in_id.Size = new System.Drawing.Size(170, 21);
-            this.input_log_in_id.TabIndex = 5;
+            this.txtLoginId.Location = new System.Drawing.Point(24, 168);
+            this.txtLoginId.Name = "txtLoginId";
+            this.txtLoginId.Size = new System.Drawing.Size(170, 21);
+            this.txtLoginId.TabIndex = 5;
             // 
             // label6
             // 
@@ -200,19 +200,19 @@
             this.label7.TabIndex = 26;
             this.label7.Text = "로그인ID";
             // 
-            // input_user_emp_type
+            // txtUserEmpType
             // 
-            this.input_user_emp_type.Location = new System.Drawing.Point(217, 228);
-            this.input_user_emp_type.Name = "input_user_emp_type";
-            this.input_user_emp_type.Size = new System.Drawing.Size(170, 21);
-            this.input_user_emp_type.TabIndex = 8;
+            this.txtUserEmpType.Location = new System.Drawing.Point(217, 228);
+            this.txtUserEmpType.Name = "txtUserEmpType";
+            this.txtUserEmpType.Size = new System.Drawing.Size(170, 21);
+            this.txtUserEmpType.TabIndex = 8;
             // 
-            // input_user_rank
+            // txtUserRank
             // 
-            this.input_user_rank.Location = new System.Drawing.Point(25, 228);
-            this.input_user_rank.Name = "input_user_rank";
-            this.input_user_rank.Size = new System.Drawing.Size(170, 21);
-            this.input_user_rank.TabIndex = 7;
+            this.txtUserRank.Location = new System.Drawing.Point(25, 228);
+            this.txtUserRank.Name = "txtUserRank";
+            this.txtUserRank.Size = new System.Drawing.Size(170, 21);
+            this.txtUserRank.TabIndex = 7;
             // 
             // label8
             // 
@@ -234,19 +234,19 @@
             this.label9.TabIndex = 30;
             this.label9.Text = "직위";
             // 
-            // input_user_email
+            // txtUserEmail
             // 
-            this.input_user_email.Location = new System.Drawing.Point(218, 287);
-            this.input_user_email.Name = "input_user_email";
-            this.input_user_email.Size = new System.Drawing.Size(170, 21);
-            this.input_user_email.TabIndex = 10;
+            this.txtUserEmail.Location = new System.Drawing.Point(218, 287);
+            this.txtUserEmail.Name = "txtUserEmail";
+            this.txtUserEmail.Size = new System.Drawing.Size(170, 21);
+            this.txtUserEmail.TabIndex = 10;
             // 
-            // input_user_tel
+            // txtUserTel
             // 
-            this.input_user_tel.Location = new System.Drawing.Point(26, 287);
-            this.input_user_tel.Name = "input_user_tel";
-            this.input_user_tel.Size = new System.Drawing.Size(170, 21);
-            this.input_user_tel.TabIndex = 9;
+            this.txtUserTel.Location = new System.Drawing.Point(26, 287);
+            this.txtUserTel.Name = "txtUserTel";
+            this.txtUserTel.Size = new System.Drawing.Size(170, 21);
+            this.txtUserTel.TabIndex = 9;
             // 
             // label10
             // 
@@ -268,12 +268,12 @@
             this.label11.TabIndex = 34;
             this.label11.Text = "휴대전화";
             // 
-            // input_user_messenger_id
+            // txtUserMessengerId
             // 
-            this.input_user_messenger_id.Location = new System.Drawing.Point(414, 287);
-            this.input_user_messenger_id.Name = "input_user_messenger_id";
-            this.input_user_messenger_id.Size = new System.Drawing.Size(170, 21);
-            this.input_user_messenger_id.TabIndex = 11;
+            this.txtUserMessengerId.Location = new System.Drawing.Point(414, 287);
+            this.txtUserMessengerId.Name = "txtUserMessengerId";
+            this.txtUserMessengerId.Size = new System.Drawing.Size(170, 21);
+            this.txtUserMessengerId.TabIndex = 11;
             // 
             // label12
             // 
@@ -285,17 +285,17 @@
             this.label12.TabIndex = 38;
             this.label12.Text = "메신저ID";
             // 
-            // select_id_dept
+            // selectDeptCd
             // 
-            this.select_id_dept.CausesValidation = false;
-            this.select_id_dept.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.select_id_dept.FormattingEnabled = true;
-            this.select_id_dept.Location = new System.Drawing.Point(24, 50);
-            this.select_id_dept.Name = "select_id_dept";
-            this.select_id_dept.Size = new System.Drawing.Size(170, 20);
-            this.select_id_dept.TabIndex = 1;
-            this.select_id_dept.TabStop = false;
-            this.select_id_dept.SelectedIndexChanged += new System.EventHandler(this.select_id_dept_SelectedIndexChanged);
+            this.selectDeptCd.CausesValidation = false;
+            this.selectDeptCd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectDeptCd.FormattingEnabled = true;
+            this.selectDeptCd.Location = new System.Drawing.Point(24, 50);
+            this.selectDeptCd.Name = "selectDeptCd";
+            this.selectDeptCd.Size = new System.Drawing.Size(170, 20);
+            this.selectDeptCd.TabIndex = 1;
+            this.selectDeptCd.TabStop = false;
+            this.selectDeptCd.SelectedIndexChanged += new System.EventHandler(this.selectDeptCd_SelectedIndexChanged);
             // 
             // input_id_dept
             // 
@@ -305,45 +305,45 @@
             this.input_id_dept.Size = new System.Drawing.Size(100, 21);
             this.input_id_dept.TabIndex = 39;
             // 
-            // user_add
+            // UserAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(614, 441);
             this.Controls.Add(this.input_id_dept);
-            this.Controls.Add(this.select_id_dept);
-            this.Controls.Add(this.input_user_messenger_id);
+            this.Controls.Add(this.selectDeptCd);
+            this.Controls.Add(this.txtUserMessengerId);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.input_user_email);
-            this.Controls.Add(this.input_user_tel);
+            this.Controls.Add(this.txtUserEmail);
+            this.Controls.Add(this.txtUserTel);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.input_user_emp_type);
-            this.Controls.Add(this.input_user_rank);
+            this.Controls.Add(this.txtUserEmpType);
+            this.Controls.Add(this.txtUserRank);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.input_user_pass);
-            this.Controls.Add(this.input_log_in_id);
+            this.Controls.Add(this.txtUserPass);
+            this.Controls.Add(this.txtLoginId);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.input_user_name);
-            this.Controls.Add(this.input_user_id);
+            this.Controls.Add(this.txtUserName);
+            this.Controls.Add(this.txtUserId);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.btn_cancel);
-            this.Controls.Add(this.btn_act);
-            this.Controls.Add(this.input_remark_dc);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnAct);
+            this.Controls.Add(this.txtRemarkDc);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.input_dept_name);
+            this.Controls.Add(this.txtDeptName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
-            this.Name = "user_add";
+            this.Name = "UserAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 추가";
-            this.Load += new System.EventHandler(this.user_add_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.user_add_KeyDown);
+            this.Load += new System.EventHandler(this.UserAdd_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserAddForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,32 +351,32 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btn_cancel;
-        private System.Windows.Forms.Button btn_act;
-        private System.Windows.Forms.TextBox input_remark_dc;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnAct;
+        private System.Windows.Forms.TextBox txtRemarkDc;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox input_dept_name;
+        private System.Windows.Forms.TextBox txtDeptName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox input_user_name;
-        private System.Windows.Forms.TextBox input_user_id;
+        private System.Windows.Forms.TextBox txtUserName;
+        private System.Windows.Forms.TextBox txtUserId;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox input_user_pass;
-        private System.Windows.Forms.TextBox input_log_in_id;
+        private System.Windows.Forms.TextBox txtUserPass;
+        private System.Windows.Forms.TextBox txtLoginId;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox input_user_emp_type;
-        private System.Windows.Forms.TextBox input_user_rank;
+        private System.Windows.Forms.TextBox txtUserEmpType;
+        private System.Windows.Forms.TextBox txtUserRank;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox input_user_email;
-        private System.Windows.Forms.TextBox input_user_tel;
+        private System.Windows.Forms.TextBox txtUserEmail;
+        private System.Windows.Forms.TextBox txtUserTel;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox input_user_messenger_id;
+        private System.Windows.Forms.TextBox txtUserMessengerId;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox select_id_dept;
+        private System.Windows.Forms.ComboBox selectDeptCd;
         private System.Windows.Forms.TextBox input_id_dept;
     }
 }

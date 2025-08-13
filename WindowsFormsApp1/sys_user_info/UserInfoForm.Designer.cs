@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_close = new System.Windows.Forms.Label();
-            this.btn_change = new System.Windows.Forms.Label();
-            this.btn_delete = new System.Windows.Forms.Label();
-            this.btn_login = new System.Windows.Forms.Label();
-            this.btn_update = new System.Windows.Forms.Label();
-            this.btn_add = new System.Windows.Forms.Label();
-            this.btn_dept = new System.Windows.Forms.Label();
-            this.btn_srch = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Label();
+            this.btnChange = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Label();
+            this.btnLoginInfo = new System.Windows.Forms.Label();
+            this.btnUpdate = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Label();
+            this.btnDept = new System.Windows.Forms.Label();
+            this.btnSrch = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dept_cd = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,107 +58,106 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightGray;
-            this.panel1.Controls.Add(this.btn_close);
-            this.panel1.Controls.Add(this.btn_change);
-            this.panel1.Controls.Add(this.btn_delete);
-            this.panel1.Controls.Add(this.btn_login);
-            this.panel1.Controls.Add(this.btn_update);
-            this.panel1.Controls.Add(this.btn_add);
-            this.panel1.Controls.Add(this.btn_dept);
-            this.panel1.Controls.Add(this.btn_srch);
+            this.panel1.Controls.Add(this.btnClose);
+            this.panel1.Controls.Add(this.btnChange);
+            this.panel1.Controls.Add(this.btnDelete);
+            this.panel1.Controls.Add(this.btnLoginInfo);
+            this.panel1.Controls.Add(this.btnUpdate);
+            this.panel1.Controls.Add(this.btnAdd);
+            this.panel1.Controls.Add(this.btnDept);
+            this.panel1.Controls.Add(this.btnSrch);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1243, 45);
             this.panel1.TabIndex = 2;
             // 
-            // btn_close
+            // btnClose
             // 
-            this.btn_close.AutoSize = true;
-            this.btn_close.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_close.Location = new System.Drawing.Point(1155, 12);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.Size = new System.Drawing.Size(78, 15);
-            this.btn_close.TabIndex = 8;
-            this.btn_close.Text = "닫기(ESC)";
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            this.btnClose.AutoSize = true;
+            this.btnClose.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnClose.Location = new System.Drawing.Point(1155, 12);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(78, 15);
+            this.btnClose.TabIndex = 8;
+            this.btnClose.Text = "닫기(ESC)";
+            this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
-            // btn_change
+            // btnChange
             // 
-            this.btn_change.AutoSize = true;
-            this.btn_change.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_change.Location = new System.Drawing.Point(1070, 12);
-            this.btn_change.Name = "btn_change";
-            this.btn_change.Size = new System.Drawing.Size(67, 15);
-            this.btn_change.TabIndex = 7;
-            this.btn_change.Text = "자료변환";
-            this.btn_change.Click += new System.EventHandler(this.btn_change_Click);
+            this.btnChange.AutoSize = true;
+            this.btnChange.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnChange.Location = new System.Drawing.Point(1070, 12);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.Size = new System.Drawing.Size(67, 15);
+            this.btnChange.TabIndex = 7;
+            this.btnChange.Text = "자료변환";
             // 
-            // btn_delete
+            // btnDelete
             // 
-            this.btn_delete.AutoSize = true;
-            this.btn_delete.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_delete.Location = new System.Drawing.Point(988, 12);
-            this.btn_delete.Name = "btn_delete";
-            this.btn_delete.Size = new System.Drawing.Size(65, 15);
-            this.btn_delete.TabIndex = 6;
-            this.btn_delete.Text = "삭제(F7)";
-            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
+            this.btnDelete.AutoSize = true;
+            this.btnDelete.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnDelete.Location = new System.Drawing.Point(988, 12);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(65, 15);
+            this.btnDelete.TabIndex = 6;
+            this.btnDelete.Text = "삭제(F7)";
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
-            // btn_login
+            // btnLoginInfo
             // 
-            this.btn_login.AutoSize = true;
-            this.btn_login.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_login.Location = new System.Drawing.Point(891, 12);
-            this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(82, 15);
-            this.btn_login.TabIndex = 5;
-            this.btn_login.Text = "로그인정보";
-            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
+            this.btnLoginInfo.AutoSize = true;
+            this.btnLoginInfo.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnLoginInfo.Location = new System.Drawing.Point(891, 12);
+            this.btnLoginInfo.Name = "btnLoginInfo";
+            this.btnLoginInfo.Size = new System.Drawing.Size(82, 15);
+            this.btnLoginInfo.TabIndex = 5;
+            this.btnLoginInfo.Text = "로그인정보";
+            this.btnLoginInfo.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
-            // btn_update
+            // btnUpdate
             // 
-            this.btn_update.AutoSize = true;
-            this.btn_update.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_update.Location = new System.Drawing.Point(837, 12);
-            this.btn_update.Name = "btn_update";
-            this.btn_update.Size = new System.Drawing.Size(37, 15);
-            this.btn_update.TabIndex = 4;
-            this.btn_update.Text = "수정";
-            this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
+            this.btnUpdate.AutoSize = true;
+            this.btnUpdate.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnUpdate.Location = new System.Drawing.Point(837, 12);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(37, 15);
+            this.btnUpdate.TabIndex = 4;
+            this.btnUpdate.Text = "수정";
+            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
-            // btn_add
+            // btnAdd
             // 
-            this.btn_add.AutoSize = true;
-            this.btn_add.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_add.Location = new System.Drawing.Point(758, 12);
-            this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(65, 15);
-            this.btn_add.TabIndex = 3;
-            this.btn_add.Text = "추가(F1)";
-            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
+            this.btnAdd.AutoSize = true;
+            this.btnAdd.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnAdd.Location = new System.Drawing.Point(758, 12);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(65, 15);
+            this.btnAdd.TabIndex = 3;
+            this.btnAdd.Text = "추가(F1)";
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
-            // btn_dept
+            // btnDept
             // 
-            this.btn_dept.AutoSize = true;
-            this.btn_dept.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_dept.Location = new System.Drawing.Point(618, 12);
-            this.btn_dept.Name = "btn_dept";
-            this.btn_dept.Size = new System.Drawing.Size(37, 15);
-            this.btn_dept.TabIndex = 2;
-            this.btn_dept.Text = "부서";
-            this.btn_dept.Click += new System.EventHandler(this.BtnDept_Click);
+            this.btnDept.AutoSize = true;
+            this.btnDept.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnDept.Location = new System.Drawing.Point(618, 12);
+            this.btnDept.Name = "btnDept";
+            this.btnDept.Size = new System.Drawing.Size(37, 15);
+            this.btnDept.TabIndex = 2;
+            this.btnDept.Text = "부서";
+            this.btnDept.Click += new System.EventHandler(this.BtnDept_Click);
             // 
-            // btn_srch
+            // btnSrch
             // 
-            this.btn_srch.AutoSize = true;
-            this.btn_srch.Font = new System.Drawing.Font("굴림", 11F);
-            this.btn_srch.Location = new System.Drawing.Point(675, 12);
-            this.btn_srch.Name = "btn_srch";
-            this.btn_srch.Size = new System.Drawing.Size(65, 15);
-            this.btn_srch.TabIndex = 1;
-            this.btn_srch.Text = "조회(F2)";
-            this.btn_srch.Click += new System.EventHandler(this.btn_srch_Click);
+            this.btnSrch.AutoSize = true;
+            this.btnSrch.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnSrch.Location = new System.Drawing.Point(675, 12);
+            this.btnSrch.Name = "btnSrch";
+            this.btnSrch.Size = new System.Drawing.Size(65, 15);
+            this.btnSrch.TabIndex = 1;
+            this.btnSrch.Text = "조회(F2)";
+            this.btnSrch.Click += new System.EventHandler(this.BtnSrch_Click);
             // 
             // label1
             // 
@@ -196,9 +195,9 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1243, 300);
             this.dataGridView1.TabIndex = 3;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
-            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridView1_CellFormatting);
+            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView1_KeyDown);
             // 
             // dept_cd
             // 
@@ -284,7 +283,7 @@
             this.remark_dc.Name = "remark_dc";
             this.remark_dc.ReadOnly = true;
             // 
-            // user_info
+            // UserInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -292,11 +291,11 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.KeyPreview = true;
-            this.Name = "user_info";
+            this.Name = "UserInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서사원";
             this.Load += new System.EventHandler(this.UserInfo_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.user_info_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserInfoForm_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -307,14 +306,14 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label btn_close;
-        private System.Windows.Forms.Label btn_change;
-        private System.Windows.Forms.Label btn_delete;
-        private System.Windows.Forms.Label btn_login;
-        private System.Windows.Forms.Label btn_update;
-        private System.Windows.Forms.Label btn_add;
-        private System.Windows.Forms.Label btn_dept;
-        private System.Windows.Forms.Label btn_srch;
+        private System.Windows.Forms.Label btnClose;
+        private System.Windows.Forms.Label btnChange;
+        private System.Windows.Forms.Label btnDelete;
+        private System.Windows.Forms.Label btnLoginInfo;
+        private System.Windows.Forms.Label btnUpdate;
+        private System.Windows.Forms.Label btnAdd;
+        private System.Windows.Forms.Label btnDept;
+        private System.Windows.Forms.Label btnSrch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dept_cd;

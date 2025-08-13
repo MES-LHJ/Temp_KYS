@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 class ConnDatabase
 {
-    string connString = @"Data Source=DESKTOP-3E4KCVF\SQLEXPRESS;Initial Catalog=project;Integrated Security=True";
+    private string connString = @"Data Source=DESKTOP-3E4KCVF\SQLEXPRESS;Initial Catalog=project;Integrated Security=True";
   
     public SqlConnection conn;
 
@@ -53,13 +53,13 @@ class ConnDatabase
         return ds;
     }
     
-    public int KK(string sql)
+    public int TestQuery1(string sql)
     {
         var aa = new SqlCommand(sql, conn);
         return aa.ExecuteNonQuery();
     }
 
-    public int EE(string sql)
+    public int TestQuery2(string sql)
     {
         var aa = new SqlCommand(sql, conn);
         return (int)aa.ExecuteScalar();

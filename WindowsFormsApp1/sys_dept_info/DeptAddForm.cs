@@ -13,20 +13,17 @@ namespace WindowsFormsApp1
 {
     public partial class DeptAddForm : Form
     {
-        DeptInfoForm _frm1;
-
-        public DeptAddForm(DeptInfoForm _frm2)
+        public DeptAddForm()
         {
             InitializeComponent();
-            _frm1 = _frm2;
         }
 
-        private void input_remark_dc_KeyDown(object sender, KeyEventArgs e)
+        private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                    btn_act_Click(sender, e);
+                    DeptReg();
                     break;
 
                 default:
@@ -34,47 +31,17 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void btn_act_Click(object sender, EventArgs e)
+        private void BtnAct_Click(object sender, EventArgs e)
         {
-            string dept_cd = input_dept_cd.Text.ToString();
-            string dept_name = input_dept_name.Text.ToString();
-            string remark_dc = input_remark_dc.Text.ToString();
-            
-            if(dept_cd == "")
-            {
-                MessageBox.Show("부서코드가 입력되지 않았습니다.");
-                input_dept_cd.Focus();
-                return;
-
-            } else if(dept_name == "")
-            {
-                MessageBox.Show("부서명이 입력되지 않았습니다.");
-                input_dept_name.Focus();
-                return;
-            }
-
-            ConnDatabase db = new ConnDatabase();
-            db.Open();
-
-            string sql = "insert into sys_dept_info values (" + "\'" + dept_cd + "\', \'" + dept_name + "\', \'" + remark_dc + "" +"');";
-            
-            DataSet ds = db.GetDataSet(sql);
-
-            db.Close();
-
-            MessageBox.Show("처리되었습니다.");
-
-            _frm1.dept_info_Load(sender, e);
-
-            this.Visible = false;
+            DeptReg();
         }
 
-        private void btn_cancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
+            DeptLoad();
         }
 
-        private void dept_add_KeyDown(object sender, KeyEventArgs e)
+        private void DeptAddForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -85,17 +52,59 @@ namespace WindowsFormsApp1
 
                 // 저장(F4)
                 case Keys.F4:
-                    btn_act_Click(sender, e);
+                    DeptReg();
                     break;
 
                 // 닫기(ESC)
                 case Keys.Escape:
-                    btn_cancel_Click(sender, e);
+                    DeptLoad();
                     break;
 
                 default:
                     break;
             }
+        }
+
+        private void DeptReg()
+        {
+            string deptCd = txtDeptCd.Text.ToString();
+            string deptName = txtDeptName.Text.ToString();
+            string remarkDc = txtRemarkDc.Text.ToString();
+
+            if (string.IsNullOrEmpty(deptCd))
+            {
+                MessageBox.Show("부서코드가 입력되지 않았습니다.");
+                txtDeptCd.Focus();
+                return;
+
+            }
+            else if (string.IsNullOrEmpty(deptName))
+            {
+                MessageBox.Show("부서명이 입력되지 않았습니다.");
+                txtDeptName.Focus();
+                return;
+            }
+
+            ConnDatabase db = new ConnDatabase();
+            db.Open();
+
+            string sql = "insert into sys_dept_info values (" + "\'" + deptCd + "\', \'" + deptName + "\', \'" + remarkDc + "" + "');";
+
+            DataSet ds = db.GetDataSet(sql);
+
+            db.Close();
+
+            MessageBox.Show("처리되었습니다.");
+
+            DeptLoad();
+        }
+
+        private void DeptLoad()
+        {
+            this.Close();
+
+            DeptInfoForm deptInfoForm = new DeptInfoForm();
+            deptInfoForm.Show();
         }
     }
 }

@@ -56,58 +56,58 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="sys_dept_info\dept_update.cs">
+    <Compile Include="sys_dept_info\DeptUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sys_dept_info\dept_update.Designer.cs">
-      <DependentUpon>dept_update.cs</DependentUpon>
+    <Compile Include="sys_dept_info\DeptUpdateForm.Designer.cs">
+      <DependentUpon>DeptUpdateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="sys_dept_info\dept_info.cs">
+    <Compile Include="sys_dept_info\DeptInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sys_dept_info\dept_info.Designer.cs">
-      <DependentUpon>dept_info.cs</DependentUpon>
+    <Compile Include="sys_dept_info\DeptInfoForm.Designer.cs">
+      <DependentUpon>DeptInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="sys_dept_info\dept_add.cs">
+    <Compile Include="sys_dept_info\DeptAddForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sys_dept_info\dept_add.Designer.cs">
-      <DependentUpon>dept_add.cs</DependentUpon>
+    <Compile Include="sys_dept_info\DeptAddForm.Designer.cs">
+      <DependentUpon>DeptAddForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="index.cs">
+    <Compile Include="IndexForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="index.Designer.cs">
-      <DependentUpon>index.cs</DependentUpon>
+    <Compile Include="IndexForm.Designer.cs">
+      <DependentUpon>IndexForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sys_user_info\user_add.cs">
+    <Compile Include="sys_user_info\UserAddForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sys_user_info\user_add.Designer.cs">
-      <DependentUpon>user_add.cs</DependentUpon>
+    <Compile Include="sys_user_info\UserAddForm.Designer.cs">
+      <DependentUpon>UserAddForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="sys_user_info\user_info.cs">
+    <Compile Include="sys_user_info\UserInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sys_user_info\user_info.Designer.cs">
-      <DependentUpon>user_info.cs</DependentUpon>
+    <Compile Include="sys_user_info\UserInfoForm.Designer.cs">
+      <DependentUpon>UserInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="sys_user_info\user_update.cs">
+    <Compile Include="sys_user_info\UserUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sys_user_info\user_update.Designer.cs">
-      <DependentUpon>user_update.cs</DependentUpon>
+    <Compile Include="sys_user_info\UserUpdateForm.Designer.cs">
+      <DependentUpon>UserUpdateForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="sys_dept_info\dept_add.resx">
-      <DependentUpon>dept_add.cs</DependentUpon>
+    <EmbeddedResource Include="sys_dept_info\DeptAddForm.resx">
+      <DependentUpon>DeptAddForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sys_dept_info\dept_info.resx">
-      <DependentUpon>dept_info.cs</DependentUpon>
+    <EmbeddedResource Include="sys_dept_info\DeptInfoForm.resx">
+      <DependentUpon>DeptInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="index.resx">
-      <DependentUpon>index.cs</DependentUpon>
+    <EmbeddedResource Include="IndexForm.resx">
+      <DependentUpon>IndexForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -118,17 +118,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="sys_dept_info\dept_update.resx">
-      <DependentUpon>dept_update.cs</DependentUpon>
+    <EmbeddedResource Include="sys_dept_info\DeptUpdateForm.resx">
+      <DependentUpon>DeptUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sys_user_info\user_add.resx">
-      <DependentUpon>user_add.cs</DependentUpon>
+    <EmbeddedResource Include="sys_user_info\UserAddForm.resx">
+      <DependentUpon>UserAddForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sys_user_info\user_info.resx">
-      <DependentUpon>user_info.cs</DependentUpon>
+    <EmbeddedResource Include="sys_user_info\UserInfoForm.resx">
+      <DependentUpon>UserInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sys_user_info\user_update.resx">
-      <DependentUpon>user_update.cs</DependentUpon>
+    <EmbeddedResource Include="sys_user_info\UserUpdateForm.resx">
+      <DependentUpon>UserUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>

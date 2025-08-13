@@ -12,38 +12,41 @@ namespace WindowsFormsApp1.sys_user_info
 {
     public partial class UserUpdateForm : Form
     {
-        private List<CmnDeptCombo> combo_list = new List<CmnDeptCombo>();
+        private List<CmnDeptCombo> comboList = new List<CmnDeptCombo>();
 
         public UserUpdateForm()
         {
             InitializeComponent();
         }
 
-        private void btn_act_Click(object sender, EventArgs e)
+        private void BtnAct_Click(object sender, EventArgs e)
         {
-            string user_id = input_user_id.Text.ToString();
-            string user_name = input_user_name.Text.ToString();
+            string userId = txtUserId.Text.ToString();
+            string userName = txtUserName.Text.ToString();
 
-            MessageBox.Show(user_id + " " + user_name);
+            MessageBox.Show(userId + " " + userName);
         }
 
-        private void btn_cancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
+            UserInfoForm userInfoForm = new UserInfoForm();
+
+            this.Close();
+            userInfoForm.Show();
         }
 
-        private void user_update_KeyDown(object sender, KeyEventArgs e)
+        private void UserUpdateForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 // 저장(F4)
                 case Keys.F4:
-                    btn_act_Click(sender, e);
+                    BtnAct_Click(sender, e);
                     break;
 
                 // 닫기(ESC)
                 case Keys.Escape:
-                    btn_cancel_Click(sender, e);
+                    BtnCancel_Click(sender, e);
                     break;
 
                 default:
