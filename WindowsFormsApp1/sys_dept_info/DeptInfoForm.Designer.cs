@@ -35,10 +35,10 @@
             this.btnAdd = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dept_cd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dept_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.remark_dc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptCd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemarkDc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -65,7 +65,6 @@
             this.btnClose.Size = new System.Drawing.Size(78, 15);
             this.btnClose.TabIndex = 8;
             this.btnClose.Text = "닫기(ESC)";
-            this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // btnDelete
             // 
@@ -76,7 +75,6 @@
             this.btnDelete.Size = new System.Drawing.Size(65, 15);
             this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "삭제(F7)";
-            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // btnUpdate
             // 
@@ -87,7 +85,6 @@
             this.btnUpdate.Size = new System.Drawing.Size(37, 15);
             this.btnUpdate.TabIndex = 4;
             this.btnUpdate.Text = "수정";
-            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // btnAdd
             // 
@@ -98,7 +95,6 @@
             this.btnAdd.Size = new System.Drawing.Size(65, 15);
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "추가(F1)";
-            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // label1
             // 
@@ -118,10 +114,10 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dept_cd,
-            this.dept_name,
-            this.remark_dc,
-            this.id});
+            this.DeptCd,
+            this.DeptName,
+            this.RemarkDc,
+            this.Id});
             this.dataGridView1.Location = new System.Drawing.Point(12, 73);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -129,37 +125,35 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(480, 294);
             this.dataGridView1.TabIndex = 4;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
-            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView1_KeyDown);
             // 
-            // dept_cd
+            // DeptCd
             // 
-            this.dept_cd.DataPropertyName = "dept_cd";
-            this.dept_cd.HeaderText = "부서코드";
-            this.dept_cd.Name = "dept_cd";
-            this.dept_cd.ReadOnly = true;
+            this.DeptCd.DataPropertyName = "DeptCd";
+            this.DeptCd.HeaderText = "부서코드";
+            this.DeptCd.Name = "DeptCd";
+            this.DeptCd.ReadOnly = true;
             // 
-            // dept_name
+            // DeptName
             // 
-            this.dept_name.DataPropertyName = "dept_name";
-            this.dept_name.HeaderText = "부서명";
-            this.dept_name.Name = "dept_name";
-            this.dept_name.ReadOnly = true;
+            this.DeptName.DataPropertyName = "DeptName";
+            this.DeptName.HeaderText = "부서명";
+            this.DeptName.Name = "DeptName";
+            this.DeptName.ReadOnly = true;
             // 
-            // remark_dc
+            // RemarkDc
             // 
-            this.remark_dc.DataPropertyName = "remark_dc";
-            this.remark_dc.HeaderText = "비고";
-            this.remark_dc.Name = "remark_dc";
-            this.remark_dc.ReadOnly = true;
+            this.RemarkDc.DataPropertyName = "RemarkDc";
+            this.RemarkDc.HeaderText = "비고";
+            this.RemarkDc.Name = "RemarkDc";
+            this.RemarkDc.ReadOnly = true;
             // 
-            // id
+            // Id
             // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Column1";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
             // 
             // DeptInfoForm
             // 
@@ -172,8 +166,6 @@
             this.Name = "DeptInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서";
-            this.Load += new System.EventHandler(this.DeptInfo_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeptInfoForm_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -190,9 +182,9 @@
         private System.Windows.Forms.Label btnAdd;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dept_cd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dept_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn remark_dc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeptCd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeptName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RemarkDc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
     }
 }

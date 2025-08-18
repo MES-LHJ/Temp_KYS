@@ -13,10 +13,59 @@ namespace WindowsFormsApp1
 {
     public partial class DeptUpdateForm : Form
     {
+        private Dept DataDeptInfo = new Dept();
 
-        public DeptUpdateForm()
+        public void SetData(Dept dept)
+        {
+            DataDeptInfo = dept;
+            if (DataDeptInfo != null)
+            {
+                txtDeptCd.Text = DataDeptInfo.DeptCd;
+                txtDeptName.Text = DataDeptInfo.DeptName;
+                txtRemarkDc.Text = DataDeptInfo.RemarkDc;
+            }
+
+            this.ActiveControl = txtDeptCd;
+        }
+
+        private void InitEvent()
+        {
+            this.KeyDown += DeptUpdateForm_KeyDown;
+            txtRemarkDc.KeyDown += TxtRemarkDc_KeyDown;
+
+            btnAct.Click += BtnAct_Click;
+            btnCancel.Click += BtnCancel_Click;
+        }
+
+        public DeptUpdateForm(Dept dept)
         {
             InitializeComponent();
+            SetData(dept);
+            InitEvent();
+        }
+
+        private void DeptUpdateForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                // 엔터키
+                case Keys.Enter:
+                    this.SelectNextControl(this.ActiveControl, true, true, true, false);
+                    break;
+
+                // 저장(F4)
+                case Keys.F4:
+                    DeptReg();
+                    break;
+
+                // 닫기(ESC)
+                case Keys.Escape:
+                    DeptClose();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
@@ -39,67 +88,58 @@ namespace WindowsFormsApp1
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            DeptLoad();
-        }
-
-        private void DeptUpdateForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                // 엔터키
-                case Keys.Enter:
-                    this.SelectNextControl(this.ActiveControl, true, true, true, false);
-                    break;
-
-                // 저장(F4)
-                case Keys.F4:
-                    DeptReg();
-                    break;
-
-                // 닫기(ESC)
-                case Keys.Escape:
-                    DeptLoad();
-                    break;
-
-                default:
-                    break;
-            }
+            DeptClose();
         }
 
         private void DeptReg()
         {
-            int Id = int.Parse(txtDeptId.Text);
-            string deptCd = txtDeptCd.Text.ToString();
-            string deptName = txtDeptName.Text.ToString();
-            string remarkDc = txtRemarkDc.Text.ToString();
+            if (DataDeptInfo == null) return;
 
-            if (string.IsNullOrEmpty(deptName))
+            DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
+            DataDeptInfo.DeptName = txtDeptName.Text.Trim();
+            DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
+
+            if (string.IsNullOrEmpty(DataDeptInfo.DeptCd))
+            {
+                MessageBox.Show("부서코드가 입력되지 않았습니다.");
+                txtDeptCd.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(DataDeptInfo.DeptName))
             {
                 MessageBox.Show("부서명이 입력되지 않았습니다.");
                 txtDeptName.Focus();
                 return;
             }
 
-            ConnDatabase db = new ConnDatabase();
-            db.Open();
+            int result = ConnDatabase.Instance.UpdateDept(DataDeptInfo);
 
-            string sql = "update sys_dept_info set dept_name=\'" + deptName + "\', remark_dc = \'" + remarkDc + "\' where id=" + Id;
-
-            DataSet ds = db.GetDataSet(sql);
-
-            db.Close();
-
-            MessageBox.Show("처리되었습니다.");
-
-            DeptLoad();
+            if (result > 0)
+            {
+                MessageBox.Show("수정되었습니다.");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else if (result == -1)
+            {
+                MessageBox.Show("이미 존재하는 부서코드 입니다.");
+                txtDeptCd.Focus();
+            }
+            else if (result == -2)
+            {
+                MessageBox.Show("수정 중 오류가 발생했습니다.");
+            }
+            else
+            {
+                MessageBox.Show("수정에 실패했습니다.");
+            }
         }
 
-        private void DeptLoad()
+        private void DeptClose()
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
-
-            DeptInfoForm deptInfoForm = new DeptInfoForm();
-            deptInfoForm.Show();
         }
     }
 }

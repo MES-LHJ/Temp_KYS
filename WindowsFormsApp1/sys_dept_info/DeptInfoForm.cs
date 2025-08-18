@@ -13,57 +13,32 @@ using WindowsFormsApp1.sys_user_info;
 namespace WindowsFormsApp1
 {
     public partial class DeptInfoForm : Form
-    {        
-        //private int ID { get; set; }
+    {
+        private BindingList<Dept> deptList = new BindingList<Dept>();
+
+        private void InitEvents()
+        {
+            this.Load += DeptInfo_Load;
+            this.KeyDown += DeptInfoForm_KeyDown;
+            
+            btnAdd.Click += BtnAdd_Click;
+            btnUpdate.Click += BtnUpdate_Click;
+            btnDelete.Click += BtnDelete_Click;
+            btnClose.Click += BtnClose_Click;
+
+            dataGridView1.CellDoubleClick += DataGridView1_CellDoubleClick;
+            dataGridView1.KeyDown += DataGridView1_KeyDown;
+        }
 
         public DeptInfoForm()
         {
             InitializeComponent();
+            InitEvents();
         }
 
         public void DeptInfo_Load(object sender, EventArgs e)
         {
             DeptSrch();
-        }
-
-        private void BtnAdd_Click(object sender, EventArgs e)
-        {
-            DeptAddLoad();
-        }
-
-        private void BtnUpdate_Click(object sender, EventArgs e)
-        {
-            DeptUpdate();
-        }
-
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-            DeptDelete();
-        }
-
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
-            DeptClose();
-        }
-
-        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            DeptUpdate();
-        }
-
-        private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                // 추가(F1)
-                case Keys.Enter:
-                    DeptUpdate();
-                    e.SuppressKeyPress = true;
-                    break;
-
-                default:
-                    break;
-            }
         }
 
         private void DeptInfoForm_KeyDown(object sender, KeyEventArgs e)
@@ -90,86 +65,131 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            DeptAddLoad();
+        }
+
+        private void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            DeptUpdateLoad();
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            DeptDelete();
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            DeptClose();
+        }
+
+        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DeptUpdateLoad();
+        }
+
+        private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                // 추가(F1)
+                case Keys.Enter:
+                    DeptUpdateLoad();
+                    e.SuppressKeyPress = true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public void DeptSrch()
         {
-            ConnDatabase db = new ConnDatabase();
-            db.Open();
-
-            string sql = "select * from sys_dept_info order by dept_cd, dept_name";
-
-            DataSet ds = db.GetDataSet(sql);
-            dataGridView1.DataSource = ds.Tables[0];
-            db.Close();
-        }
-
-        public void DeptUpdate()
-        {
-            if (this.dataGridView1.RowCount == 0)
-            {
-                MessageBox.Show("선택된 데이터가 없습니다.");
-                return;
-            }
-
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            string deptId = row.Cells["id"].Value?.ToString();
-            string deptCd = row.Cells["dept_cd"].Value?.ToString();
-            string deptName = row.Cells["dept_name"].Value?.ToString();
-            string remarkDc = row.Cells["remark_dc"].Value?.ToString();
-
-            DeptUpdateForm deptUpdateForm = new DeptUpdateForm();
-
-            deptUpdateForm.txtDeptId.Text = deptId;
-            deptUpdateForm.txtDeptCd.Text = deptCd;
-            deptUpdateForm.txtDeptName.Text = deptName;
-            deptUpdateForm.txtRemarkDc.Text = remarkDc;
-
-            this.Close();
-            deptUpdateForm.Show();
-        }
-
-        public void DeptDelete()
-        {
-            if (this.dataGridView1.RowCount == 0)
-            {
-                MessageBox.Show("선택된 데이터가 없습니다.");
-                return;
-            }
-
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            string Id = row.Cells["id"].Value?.ToString();
-            string deptCd = row.Cells["dept_Cd"].Value?.ToString();
-            string deptName = row.Cells["dept_name"].Value?.ToString();
-
-            ConnDatabase db = new ConnDatabase();
-            db.Open();
-
-            string sql = "delete from sys_dept_info where id = " + Id;
-
-            if (MessageBox.Show("부서코드: " + deptCd + "\n부서명: " + deptName + "\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                DataSet ds = db.GetDataSet(sql);
-
-                MessageBox.Show("부서코드: " + deptCd + "\n부서명: " + deptName + "\n\n데이터가 삭제되었습니다.");
-                DeptSrch();
-            }
-
-            db.Close();
+            deptList = ConnDatabase.Instance.GetDept();
+            dataGridView1.DataSource = deptList;
         }
 
         public void DeptAddLoad()
         {
-            this.Close();
-            DeptAddForm deptAddForm = new DeptAddForm();
-            deptAddForm.Show();
+            var deptAddForm = FormManager.Instance.GetDeptAddForm();
+            if (deptAddForm.ShowDialog() == DialogResult.OK)
+            {
+                DeptSrch();
+            }
+        }
+
+        public void DeptUpdateLoad()
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("선택된 데이터가 없습니다.");
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+            var dept = new Dept
+            {
+                Id = Convert.ToInt32(row.Cells["Id"].Value),
+                DeptCd = row.Cells["DeptCd"].Value?.ToString(),
+                DeptName = row.Cells["DeptName"].Value?.ToString(),
+                RemarkDc = row.Cells["RemarkDc"].Value?.ToString()
+            };
+
+            var deptUpdateForm = FormManager.Instance.GetDeptUpdateForm(dept);
+            if (deptUpdateForm.ShowDialog() == DialogResult.OK)
+            {
+                DeptSrch();
+            }
+        }
+
+        public void DeptDelete()
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("선택된 데이터가 없습니다.");
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+            var dept = new Dept
+            {
+                Id = Convert.ToInt32(row.Cells["Id"].Value),
+                DeptCd = row.Cells["DeptCd"].Value?.ToString(),
+                DeptName = row.Cells["DeptName"].Value?.ToString()
+            };
+
+            if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                int result = ConnDatabase.Instance.DeleteDept(dept.Id);
+
+                if (result > 0)
+                {
+                    MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n데이터가 삭제되었습니다.");
+                    DeptSrch();
+                }
+                else if (result == -1)
+                {
+                    MessageBox.Show("이미 사용중인 부서 데이터는 삭제할 수 없습니다.");
+                }
+                else if (result == -2)
+                {
+                    MessageBox.Show("삭제 중 오류가 발생했습니다.");
+                }
+                else
+                {
+                    MessageBox.Show("삭제에 실패했습니다");
+                }
+            }
         }
 
         public void DeptClose()
         {
             this.Close();
-            UserInfoForm userInfoForm = new UserInfoForm();
-            userInfoForm.Show();
+            FormManager.Instance.GetUserInfoForm().Show();
         }
     }
 }

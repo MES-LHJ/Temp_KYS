@@ -36,7 +36,6 @@
             this.txtDeptCd = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtDeptId = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -52,7 +51,6 @@
             this.btnCancel.Text = "닫기(ESC)";
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnAct
             // 
@@ -66,7 +64,6 @@
             this.btnAct.TabIndex = 11;
             this.btnAct.Text = "저장(F4)";
             this.btnAct.UseVisualStyleBackColor = false;
-            this.btnAct.Click += new System.EventHandler(this.BtnAct_Click);
             // 
             // txtRemarkDc
             // 
@@ -74,7 +71,6 @@
             this.txtRemarkDc.Name = "txtRemarkDc";
             this.txtRemarkDc.Size = new System.Drawing.Size(363, 21);
             this.txtRemarkDc.TabIndex = 10;
-            this.txtRemarkDc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtRemarkDc_KeyDown);
             // 
             // label3
             // 
@@ -97,10 +93,8 @@
             // 
             this.txtDeptCd.Location = new System.Drawing.Point(25, 51);
             this.txtDeptCd.Name = "txtDeptCd";
-            this.txtDeptCd.ReadOnly = true;
             this.txtDeptCd.Size = new System.Drawing.Size(170, 21);
             this.txtDeptCd.TabIndex = 7;
-            this.txtDeptCd.TabStop = false;
             // 
             // label2
             // 
@@ -122,21 +116,11 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "부서코드";
             // 
-            // txtDeptId
-            // 
-            this.txtDeptId.Location = new System.Drawing.Point(25, 172);
-            this.txtDeptId.Name = "txtDeptId";
-            this.txtDeptId.ReadOnly = true;
-            this.txtDeptId.Size = new System.Drawing.Size(50, 21);
-            this.txtDeptId.TabIndex = 14;
-            this.txtDeptId.TabStop = false;
-            // 
             // DeptUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(414, 211);
-            this.Controls.Add(this.txtDeptId);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAct);
             this.Controls.Add(this.txtRemarkDc);
@@ -149,7 +133,6 @@
             this.Name = "DeptUpdateForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서 수정";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeptUpdateForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,6 +148,5 @@
         public System.Windows.Forms.TextBox txtRemarkDc;
         public System.Windows.Forms.TextBox txtDeptName;
         public System.Windows.Forms.TextBox txtDeptCd;
-        public System.Windows.Forms.TextBox txtDeptId;
     }
 }

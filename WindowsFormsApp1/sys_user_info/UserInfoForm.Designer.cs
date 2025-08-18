@@ -39,18 +39,20 @@
             this.btnSrch = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dept_cd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dept_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_login_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_pass = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_rank = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_emp_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_tel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_messenger_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.remark_dc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptCd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserLoginId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserPass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserRank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserEmpType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserTel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserMessengerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemarkDc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdDept = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -81,7 +83,6 @@
             this.btnClose.Size = new System.Drawing.Size(78, 15);
             this.btnClose.TabIndex = 8;
             this.btnClose.Text = "닫기(ESC)";
-            this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // btnChange
             // 
@@ -102,7 +103,6 @@
             this.btnDelete.Size = new System.Drawing.Size(65, 15);
             this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "삭제(F7)";
-            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // btnLoginInfo
             // 
@@ -113,7 +113,6 @@
             this.btnLoginInfo.Size = new System.Drawing.Size(82, 15);
             this.btnLoginInfo.TabIndex = 5;
             this.btnLoginInfo.Text = "로그인정보";
-            this.btnLoginInfo.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // btnUpdate
             // 
@@ -124,7 +123,6 @@
             this.btnUpdate.Size = new System.Drawing.Size(37, 15);
             this.btnUpdate.TabIndex = 4;
             this.btnUpdate.Text = "수정";
-            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // btnAdd
             // 
@@ -135,7 +133,6 @@
             this.btnAdd.Size = new System.Drawing.Size(65, 15);
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "추가(F1)";
-            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnDept
             // 
@@ -146,7 +143,6 @@
             this.btnDept.Size = new System.Drawing.Size(37, 15);
             this.btnDept.TabIndex = 2;
             this.btnDept.Text = "부서";
-            this.btnDept.Click += new System.EventHandler(this.BtnDept_Click);
             // 
             // btnSrch
             // 
@@ -157,7 +153,6 @@
             this.btnSrch.Size = new System.Drawing.Size(65, 15);
             this.btnSrch.TabIndex = 1;
             this.btnSrch.Text = "조회(F2)";
-            this.btnSrch.Click += new System.EventHandler(this.BtnSrch_Click);
             // 
             // label1
             // 
@@ -176,18 +171,20 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dept_cd,
-            this.dept_name,
-            this.user_id,
-            this.user_name,
-            this.user_login_id,
-            this.user_pass,
-            this.user_rank,
-            this.user_emp_type,
-            this.user_tel,
-            this.user_email,
-            this.user_messenger_id,
-            this.remark_dc});
+            this.DeptCd,
+            this.DeptName,
+            this.UserId,
+            this.UserName,
+            this.UserLoginId,
+            this.UserPass,
+            this.UserRank,
+            this.UserEmpType,
+            this.UserTel,
+            this.UserEmail,
+            this.UserMessengerId,
+            this.RemarkDc,
+            this.Id,
+            this.IdDept});
             this.dataGridView1.Location = new System.Drawing.Point(12, 72);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -195,93 +192,106 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1243, 300);
             this.dataGridView1.TabIndex = 3;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
-            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridView1_CellFormatting);
-            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView1_KeyDown);
             // 
-            // dept_cd
+            // DeptCd
             // 
-            this.dept_cd.DataPropertyName = "dept_cd";
-            this.dept_cd.HeaderText = "부서코드";
-            this.dept_cd.Name = "dept_cd";
-            this.dept_cd.ReadOnly = true;
+            this.DeptCd.DataPropertyName = "DeptCd";
+            this.DeptCd.HeaderText = "부서코드";
+            this.DeptCd.Name = "DeptCd";
+            this.DeptCd.ReadOnly = true;
             // 
-            // dept_name
+            // DeptName
             // 
-            this.dept_name.DataPropertyName = "dept_name";
-            this.dept_name.HeaderText = "부서명";
-            this.dept_name.Name = "dept_name";
-            this.dept_name.ReadOnly = true;
+            this.DeptName.DataPropertyName = "DeptName";
+            this.DeptName.HeaderText = "부서명";
+            this.DeptName.Name = "DeptName";
+            this.DeptName.ReadOnly = true;
             // 
-            // user_id
+            // UserId
             // 
-            this.user_id.DataPropertyName = "user_id";
-            this.user_id.HeaderText = "사원코드";
-            this.user_id.Name = "user_id";
-            this.user_id.ReadOnly = true;
+            this.UserId.DataPropertyName = "UserId";
+            this.UserId.HeaderText = "사원코드";
+            this.UserId.Name = "UserId";
+            this.UserId.ReadOnly = true;
             // 
-            // user_name
+            // UserName
             // 
-            this.user_name.DataPropertyName = "user_name";
-            this.user_name.HeaderText = "사원명";
-            this.user_name.Name = "user_name";
-            this.user_name.ReadOnly = true;
+            this.UserName.DataPropertyName = "UserName";
+            this.UserName.HeaderText = "사원명";
+            this.UserName.Name = "UserName";
+            this.UserName.ReadOnly = true;
             // 
-            // user_login_id
+            // UserLoginId
             // 
-            this.user_login_id.DataPropertyName = "user_login_id";
-            this.user_login_id.HeaderText = "로그인ID";
-            this.user_login_id.Name = "user_login_id";
-            this.user_login_id.ReadOnly = true;
+            this.UserLoginId.DataPropertyName = "UserLoginId";
+            this.UserLoginId.HeaderText = "로그인ID";
+            this.UserLoginId.Name = "UserLoginId";
+            this.UserLoginId.ReadOnly = true;
             // 
-            // user_pass
+            // UserPass
             // 
-            this.user_pass.DataPropertyName = "user_pass";
-            this.user_pass.HeaderText = "비밀번호";
-            this.user_pass.Name = "user_pass";
-            this.user_pass.ReadOnly = true;
+            this.UserPass.DataPropertyName = "UserPass";
+            this.UserPass.HeaderText = "비밀번호";
+            this.UserPass.Name = "UserPass";
+            this.UserPass.ReadOnly = true;
             // 
-            // user_rank
+            // UserRank
             // 
-            this.user_rank.DataPropertyName = "user_rank";
-            this.user_rank.HeaderText = "직위";
-            this.user_rank.Name = "user_rank";
-            this.user_rank.ReadOnly = true;
+            this.UserRank.DataPropertyName = "UserRank";
+            this.UserRank.HeaderText = "직위";
+            this.UserRank.Name = "UserRank";
+            this.UserRank.ReadOnly = true;
             // 
-            // user_emp_type
+            // UserEmpType
             // 
-            this.user_emp_type.DataPropertyName = "user_emp_type";
-            this.user_emp_type.HeaderText = "고용형태";
-            this.user_emp_type.Name = "user_emp_type";
-            this.user_emp_type.ReadOnly = true;
+            this.UserEmpType.DataPropertyName = "UserEmpType";
+            this.UserEmpType.HeaderText = "고용형태";
+            this.UserEmpType.Name = "UserEmpType";
+            this.UserEmpType.ReadOnly = true;
             // 
-            // user_tel
+            // UserTel
             // 
-            this.user_tel.DataPropertyName = "user_tel";
-            this.user_tel.HeaderText = "휴대전화";
-            this.user_tel.Name = "user_tel";
-            this.user_tel.ReadOnly = true;
+            this.UserTel.DataPropertyName = "UserTel";
+            this.UserTel.HeaderText = "휴대전화";
+            this.UserTel.Name = "UserTel";
+            this.UserTel.ReadOnly = true;
             // 
-            // user_email
+            // UserEmail
             // 
-            this.user_email.DataPropertyName = "user_email";
-            this.user_email.HeaderText = "이메일";
-            this.user_email.Name = "user_email";
-            this.user_email.ReadOnly = true;
+            this.UserEmail.DataPropertyName = "UserEmail";
+            this.UserEmail.HeaderText = "이메일";
+            this.UserEmail.Name = "UserEmail";
+            this.UserEmail.ReadOnly = true;
             // 
-            // user_messenger_id
+            // UserMessengerId
             // 
-            this.user_messenger_id.DataPropertyName = "user_messenger_id";
-            this.user_messenger_id.HeaderText = "메신저ID";
-            this.user_messenger_id.Name = "user_messenger_id";
-            this.user_messenger_id.ReadOnly = true;
+            this.UserMessengerId.DataPropertyName = "UserMessengerId";
+            this.UserMessengerId.HeaderText = "메신저ID";
+            this.UserMessengerId.Name = "UserMessengerId";
+            this.UserMessengerId.ReadOnly = true;
             // 
-            // remark_dc
+            // RemarkDc
             // 
-            this.remark_dc.DataPropertyName = "remark_dc";
-            this.remark_dc.HeaderText = "비고";
-            this.remark_dc.Name = "remark_dc";
-            this.remark_dc.ReadOnly = true;
+            this.RemarkDc.DataPropertyName = "RemarkDc";
+            this.RemarkDc.HeaderText = "비고";
+            this.RemarkDc.Name = "RemarkDc";
+            this.RemarkDc.ReadOnly = true;
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // IdDept
+            // 
+            this.IdDept.DataPropertyName = "IdDept";
+            this.IdDept.HeaderText = "IdDept";
+            this.IdDept.Name = "IdDept";
+            this.IdDept.ReadOnly = true;
+            this.IdDept.Visible = false;
             // 
             // UserInfoForm
             // 
@@ -294,8 +304,6 @@
             this.Name = "UserInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서사원";
-            this.Load += new System.EventHandler(this.UserInfo_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserInfoForm_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -316,17 +324,19 @@
         private System.Windows.Forms.Label btnSrch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dept_cd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dept_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_login_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_pass;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_rank;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_emp_type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_tel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_messenger_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn remark_dc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeptCd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeptName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserLoginId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserPass;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserRank;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserEmpType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserTel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserEmail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserMessengerId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RemarkDc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdDept;
     }
 }

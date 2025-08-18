@@ -16,21 +16,34 @@ namespace WindowsFormsApp1
 {
     public partial class UserInfoForm : Form
     {
+        private BindingList<User> userList;
+
+        private void InitEvents()
+        {
+            this.KeyDown += UserInfoForm_KeyDown;
+
+            btnDept.Click += BtnDept_Click;
+            btnSrch.Click += BtnSrch_Click;
+            btnAdd.Click += BtnAdd_Click;
+            btnUpdate.Click += BtnUpdate_Click;
+            btnLoginInfo.Click += BtnLoginInfo_Click;
+            btnDelete.Click += BtnDelete_Click;
+            btnChange.Click += BtnChange_Click;
+            btnClose.Click += BtnClose_Click;
+
+            dataGridView1.CellDoubleClick += DataGridView1_CellDoubleClick;
+            dataGridView1.KeyDown += DataGridView1_KeyDown;
+        }
+
         public UserInfoForm()
         {
             InitializeComponent();
-        }
-
-        private void UserInfo_Load(object sender, EventArgs e)
-        {
-            //UserSrch();
+            InitEvents();
         }
 
         private void BtnDept_Click(object sender, EventArgs e)
         {
-            DeptInfoForm deptInfoForm = new DeptInfoForm();
-            this.Close();
-            deptInfoForm.Show();
+            DeptInfoLoad();
         }
 
         private void BtnSrch_Click(object sender, EventArgs e)
@@ -40,73 +53,46 @@ namespace WindowsFormsApp1
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            UserAddForm userAddForm = new UserAddForm();
-            this.Close();
-            userAddForm.Show();
+            UserAddLoad();
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            if (this.dataGridView1.RowCount == 0) 
-            {
-                MessageBox.Show("선택된 데이터가 없습니다.");
-                return;
-            }
-
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            string userId = row.Cells["user_id"].Value?.ToString();
-            string userName = row.Cells["user_name"].Value?.ToString();
-
-            UserUpdateForm userUpdateForm = new UserUpdateForm();
-
-            userUpdateForm.txtUserId.Text = userId;
-            userUpdateForm.txtUserName.Text = userName;
-
-            this.Close();
-            userUpdateForm.Show();
+            UserUpdateLoad();
         }
 
-        private void BtnLogin_Click(object sender, EventArgs e)
+        private void BtnLoginInfo_Click(object sender, EventArgs e)
         {
 
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (this.dataGridView1.RowCount == 0)
-            {
-                MessageBox.Show("선택된 데이터가 없습니다.");
-                return;
-            }
+            UserDelete();
+        }
 
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
+        private void BtnChange_Click(object sender, EventArgs e)
+        {
 
-            string userId = row.Cells["user_id"].Value?.ToString();
-            string userName = row.Cells["user_name"].Value?.ToString();
-
-            MessageBox.Show("사원코드: " + userId + ", 사원명: " + userName);
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            IndexForm indexForm = new IndexForm();
-            this.Close();
-            indexForm.Show();
+            UserClose();
         }
 
         private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 5)
-            {
-                e.Value = "**********";
-                e.FormattingApplied = true;
-            }
+            var data = sender as DataGridView;
+
+            var cell = data.Rows[e.RowIndex].Cells["UserPass"];
+            cell.Value = "**********";
+            e.FormattingApplied = true;
         }
 
         private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            BtnUpdate_Click(sender, e);
+            UserUpdateLoad();
         }
 
         private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
@@ -115,7 +101,7 @@ namespace WindowsFormsApp1
             {
                 // 추가(F1)
                 case Keys.Enter:
-                    BtnUpdate_Click(sender, e);
+                    UserAddLoad();
                     e.SuppressKeyPress = true;
                     break;
 
@@ -130,7 +116,7 @@ namespace WindowsFormsApp1
             {
                 // 추가(F1)
                 case Keys.F1:
-                    BtnAdd_Click(sender, e);
+                    UserAddLoad();
                     break;
 
                 // 조회(F2)
@@ -140,12 +126,12 @@ namespace WindowsFormsApp1
 
                 // 삭제(F7)
                 case Keys.F7:
-                    BtnDelete_Click(sender, e);
+                    UserDelete();
                     break;
 
                 // 닫기(ESC)
                 case Keys.Escape:
-                    BtnClose_Click(sender, e);
+                    UserClose();
                     break;
 
                 default:
@@ -153,20 +139,102 @@ namespace WindowsFormsApp1
             }
         }
 
+        public void DeptInfoLoad()
+        {
+            var deptInfoForm = FormManager.Instance.GetDeptInfoForm();
+            deptInfoForm.ShowDialog();
+            UserSrch();
+        }
+
         private void UserSrch()
         {
-            ConnDatabase db = new ConnDatabase();
-            db.Open();
+            userList = ConnDatabase.Instance.GetUser();
+            dataGridView1.DataSource = userList;
+        }
 
-            string sql = "select dept_cd, dept_name, user_id, user_name, user_login_id, user_pass, " +
-                "user_rank, user_emp_type, user_tel, user_email, user_messenger_id, t1.remark_dc " +
-                "from sys_user_info t1 inner join sys_dept_info t2 on t1.id_dept = t2.id " +
-                "where user_id <> 'master' order by user_id, user_name";
-            Debug.WriteLine(sql);
-            DataSet ds = db.GetDataSet(sql);
-            dataGridView1.DataSource = ds.Tables[0];
+        public void UserAddLoad()
+        {
+            var userAddForm = FormManager.Instance.GetUserAddForm();
+            if (userAddForm.ShowDialog() == DialogResult.OK)
+            {
+                UserSrch();
+            }
+        }
 
-            db.Close();
+        public void UserUpdateLoad()
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("선택된 데이터가 없습니다.");
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+            var user = new User
+            {
+                Id = Convert.ToInt32(row.Cells["Id"].Value),
+                UserId = row.Cells["UserId"].Value?.ToString(),
+                UserName = row.Cells["UserName"].Value?.ToString(),
+                UserRank = row.Cells["UserRank"].Value?.ToString(),
+                UserEmpType = row.Cells["UserEmpType"].Value?.ToString(),
+                UserTel = row.Cells["UserTel"].Value?.ToString(),
+                UserEmail = row.Cells["UserEmail"].Value?.ToString(),
+                UserMessengerId = row.Cells["UserMessengerId"].Value?.ToString(),
+                RemarkDc = row.Cells["RemarkDc"].Value?.ToString(),
+                IdDept = Convert.ToInt32(row.Cells["IdDept"].Value),
+                DeptCd = row.Cells["DeptCd"].Value?.ToString(),
+                DeptName = row.Cells["DeptName"].Value?.ToString()
+            };
+
+            var userUpdateForm = FormManager.Instance.GetUserUpdateForm(user);
+            if (userUpdateForm.ShowDialog() == DialogResult.OK)
+            {
+                UserSrch();
+            }
+        }
+
+        public void UserDelete()
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("선택된 데이터가 없습니다.");
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+            var user = new User
+            {
+                Id = Convert.ToInt32(row.Cells["Id"].Value),
+                UserId = row.Cells["UserId"].Value?.ToString(),
+                UserName = row.Cells["UserName"].Value?.ToString()
+            };
+
+            if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                int result = ConnDatabase.Instance.DeleteUser(user.Id);
+
+                if (result > 0)
+                {
+                    MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n데이터가 삭제되었습니다.");
+                    UserSrch();
+                }
+                else if (result == -2)
+                {
+                    MessageBox.Show("삭제 중 오류가 발생했습니다.");
+                }
+                else
+                {
+                    MessageBox.Show("삭제에 실패했습니다");
+                }
+            }
+        }
+
+        public void UserClose()
+        {
+            this.Close();
+            FormManager.Instance.GetIndexForm().Show();
         }
     }
 }

@@ -48,7 +48,6 @@
             this.btnClose.TabIndex = 11;
             this.btnClose.Text = "닫기";
             this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // btnLogin
             // 
@@ -62,7 +61,6 @@
             this.btnLogin.TabIndex = 10;
             this.btnLogin.Text = "로그인";
             this.btnLogin.UseVisualStyleBackColor = false;
-            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // txtUserPass
             // 
@@ -71,7 +69,6 @@
             this.txtUserPass.PasswordChar = '*';
             this.txtUserPass.Size = new System.Drawing.Size(187, 21);
             this.txtUserPass.TabIndex = 9;
-            this.txtUserPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtUserPass_KeyDown);
             // 
             // txtUserId
             // 

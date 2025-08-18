@@ -12,11 +12,24 @@ namespace WindowsFormsApp1.sys_user_info
 {
     public partial class UserUpdateForm : Form
     {
-        private List<CmnDeptCombo> comboList = new List<CmnDeptCombo>();
+        private User DataUserInfo = new User();
 
-        public UserUpdateForm()
+        public UserUpdateForm(User user)
         {
             InitializeComponent();
+            SetData(user);
+        }
+
+        public void SetData(User user)
+        {
+            DataUserInfo = user;
+            if (DataUserInfo != null)
+            {
+                txtUserId.Text = DataUserInfo.DeptCd;
+                txtUserName.Text = DataUserInfo.DeptName;
+            }
+
+            this.ActiveControl = txtUserName;
         }
 
         private void BtnAct_Click(object sender, EventArgs e)

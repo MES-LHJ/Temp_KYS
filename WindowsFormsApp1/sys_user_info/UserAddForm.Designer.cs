@@ -40,7 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtUserPass = new System.Windows.Forms.TextBox();
-            this.txtLoginId = new System.Windows.Forms.TextBox();
+            this.txtUserLoginId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtUserEmpType = new System.Windows.Forms.TextBox();
@@ -54,7 +54,6 @@
             this.txtUserMessengerId = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.selectDeptCd = new System.Windows.Forms.ComboBox();
-            this.input_id_dept = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -69,7 +68,6 @@
             this.btnCancel.TabIndex = 14;
             this.btnCancel.Text = "취소(ESC)";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnAct
             // 
@@ -83,7 +81,6 @@
             this.btnAct.TabIndex = 13;
             this.btnAct.Text = "저장(F4)";
             this.btnAct.UseVisualStyleBackColor = false;
-            this.btnAct.Click += new System.EventHandler(this.BtnAct_Click);
             // 
             // txtRemarkDc
             // 
@@ -173,12 +170,12 @@
             this.txtUserPass.Size = new System.Drawing.Size(170, 21);
             this.txtUserPass.TabIndex = 6;
             // 
-            // txtLoginId
+            // txtUserLoginId
             // 
-            this.txtLoginId.Location = new System.Drawing.Point(24, 168);
-            this.txtLoginId.Name = "txtLoginId";
-            this.txtLoginId.Size = new System.Drawing.Size(170, 21);
-            this.txtLoginId.TabIndex = 5;
+            this.txtUserLoginId.Location = new System.Drawing.Point(24, 168);
+            this.txtUserLoginId.Name = "txtUserLoginId";
+            this.txtUserLoginId.Size = new System.Drawing.Size(170, 21);
+            this.txtUserLoginId.TabIndex = 5;
             // 
             // label6
             // 
@@ -294,16 +291,6 @@
             this.selectDeptCd.Name = "selectDeptCd";
             this.selectDeptCd.Size = new System.Drawing.Size(170, 20);
             this.selectDeptCd.TabIndex = 1;
-            this.selectDeptCd.TabStop = false;
-            this.selectDeptCd.SelectedIndexChanged += new System.EventHandler(this.selectDeptCd_SelectedIndexChanged);
-            // 
-            // input_id_dept
-            // 
-            this.input_id_dept.Location = new System.Drawing.Point(26, 398);
-            this.input_id_dept.Name = "input_id_dept";
-            this.input_id_dept.ReadOnly = true;
-            this.input_id_dept.Size = new System.Drawing.Size(100, 21);
-            this.input_id_dept.TabIndex = 39;
             // 
             // UserAddForm
             // 
@@ -311,7 +298,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(614, 441);
-            this.Controls.Add(this.input_id_dept);
             this.Controls.Add(this.selectDeptCd);
             this.Controls.Add(this.txtUserMessengerId);
             this.Controls.Add(this.label12);
@@ -324,7 +310,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtUserPass);
-            this.Controls.Add(this.txtLoginId);
+            this.Controls.Add(this.txtUserLoginId);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtUserName);
@@ -342,8 +328,6 @@
             this.Name = "UserAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 추가";
-            this.Load += new System.EventHandler(this.UserAdd_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserAddForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,7 +347,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtUserPass;
-        private System.Windows.Forms.TextBox txtLoginId;
+        private System.Windows.Forms.TextBox txtUserLoginId;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtUserEmpType;
@@ -377,6 +361,5 @@
         private System.Windows.Forms.TextBox txtUserMessengerId;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox selectDeptCd;
-        private System.Windows.Forms.TextBox input_id_dept;
     }
 }

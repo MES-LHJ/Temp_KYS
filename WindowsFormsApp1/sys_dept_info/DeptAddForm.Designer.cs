@@ -88,7 +88,6 @@
             this.txtRemarkDc.Name = "txtRemarkDc";
             this.txtRemarkDc.Size = new System.Drawing.Size(363, 21);
             this.txtRemarkDc.TabIndex = 3;
-            this.txtRemarkDc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtRemarkDc_KeyDown);
             // 
             // btnCancel
             // 
@@ -103,7 +102,6 @@
             this.btnCancel.Text = "취소(ESC)";
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnAct
             // 
@@ -117,7 +115,6 @@
             this.btnAct.TabIndex = 4;
             this.btnAct.Text = "저장(F4)";
             this.btnAct.UseVisualStyleBackColor = false;
-            this.btnAct.Click += new System.EventHandler(this.BtnAct_Click);
             // 
             // DeptAddForm
             // 
@@ -136,7 +133,6 @@
             this.Name = "DeptAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "부서 추가";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeptAddForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
