@@ -23,6 +23,9 @@ namespace WindowsFormsApp1
             this.Load += UserAdd_Load;
             this.KeyDown += UserAddForm_KeyDown;
             selectDeptCd.SelectionChangeCommitted += SelectDeptCd_SelectionChangeCommitted;
+            txtRemarkDc.KeyDown += TxtRemarkDc_KeyDown;
+            chkUserGender1.CheckedChanged += ChkUserGender1_CheckedChanged;
+            chkUserGender2.CheckedChanged += ChkUserGender2_CheckedChanged;
 
             btnAct.Click += BtnAct_Click;
             btnCancel.Click += BtnCancel_Click;
@@ -77,6 +80,16 @@ namespace WindowsFormsApp1
             DataUserInfo.IdDept = selectedDept.Id;
         }
 
+        private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUserGender1.Checked) chkUserGender2.Checked = false;
+        }
+
+        private void ChkUserGender2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUserGender2.Checked) chkUserGender1.Checked = false;
+        }
+
         private void BtnAct_Click(object sender, EventArgs e)
         {
             UserReg();
@@ -85,6 +98,19 @@ namespace WindowsFormsApp1
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             UserClose();
+        }
+
+        private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    UserReg();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public void ResetForm()
@@ -102,6 +128,9 @@ namespace WindowsFormsApp1
             txtUserEmail.Text = string.Empty;
             txtUserMessengerId.Text = string.Empty;
             txtRemarkDc.Text = string.Empty;
+
+            chkUserGender1.Checked = false;
+            chkUserGender2.Checked = false;
 
             DataUserInfo.IdDept = 0;
 
@@ -123,6 +152,7 @@ namespace WindowsFormsApp1
             DataUserInfo.UserPass = txtUserPass.Text.Trim();
             DataUserInfo.UserRank = txtUserRank.Text.Trim();
             DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
+            DataUserInfo.UserGender = chkUserGender1.Checked ? "M" : chkUserGender2.Checked ? "F" : "";
             DataUserInfo.UserTel = txtUserTel.Text.Trim();
             DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
             DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
@@ -156,31 +186,49 @@ namespace WindowsFormsApp1
                 return;
             }
 
+            // 비밀번호 유효성 검사
+            if (!Validator.ValidatePassword(DataUserInfo.UserPass))
+            {
+                MessageBox.Show("비밀번호는 최소 8자리 이상이어야 하며, 영어와 숫자를 포함해야 합니다.");
+                txtUserPass.Focus();
+                return;
+            }
+
+            // 이메일 유효성 검사
+            if (!string.IsNullOrEmpty(DataUserInfo.UserEmail) && !Validator.ValidateEmail(DataUserInfo.UserEmail))
+            {
+                MessageBox.Show("올바른 이메일 형식이 아닙니다.");
+                txtUserEmail.Focus();
+                return;
+            }
+
             int result = ConnDatabase.Instance.AddUser(DataUserInfo);
 
-            if (result > 0)
+            switch (result)
             {
-                MessageBox.Show("저장되었습니다.");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else if (result == -1)
-            {
-                MessageBox.Show("이미 존재하는 사원코드 입니다.");
-                txtUserId.Focus();
-            }
-            else if (result == -2)
-            {
-                MessageBox.Show("이미 존재하는 로그인ID 입니다.");
-                txtUserLoginId.Focus();
-            }
-            else if (result == -3)
-            {
-                MessageBox.Show("저장 중 오류가 발생했습니다.");
-            }
-            else
-            {
-                MessageBox.Show("저장에 실패했습니다.");
+                case int n when n > 0:
+                    MessageBox.Show("저장되었습니다.");
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                    break;
+
+                case -1:
+                    MessageBox.Show("이미 존재하는 사원코드 입니다.");
+                    txtUserId.Focus();
+                    break;
+
+                case -2:
+                    MessageBox.Show("이미 존재하는 로그인ID 입니다.");
+                    txtUserLoginId.Focus();
+                    break;
+
+                case -3:
+                    MessageBox.Show("저장 중 오류가 발생했습니다.");
+                    break;
+
+                default:
+                    MessageBox.Show("저장에 실패했습니다.");
+                    break;
             }
         }
 

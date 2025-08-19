@@ -31,12 +31,12 @@ class ConnDatabase
     // 로그인 조회
     public User LoginAct(User user)
     {
-        string sql = "SELECT * FROM sys_user_info WHERE user_id = @user_id and user_pass = @user_pass";
+        string sql = "SELECT * FROM sys_user_info WHERE user_login_id = @user_login_id and user_pass = @user_pass";
 
         using (SqlConnection conn = new SqlConnection(connectionString))
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
-            cmd.Parameters.Add("@user_id", SqlDbType.NVarChar).Value = user.UserId;
+            cmd.Parameters.Add("@user_login_id", SqlDbType.NVarChar).Value = user.UserLoginId;
             cmd.Parameters.Add("@user_pass", SqlDbType.NVarChar).Value = user.UserPass;
 
             conn.Open();
@@ -64,7 +64,7 @@ class ConnDatabase
         var users = new BindingList<User>();
 
         string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_login_id, " +
-            "user_pass, user_rank, user_emp_type, user_tel, user_email, user_messenger_id, t1.remark_dc " +
+            "user_pass, user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc " +
             "FROM sys_user_info T1 INNER JOIN sys_dept_info T2 ON T1.id_dept = T2.id " +
             "WHERE user_id <> 'master' ORDER BY user_id, user_name";
 
@@ -85,6 +85,7 @@ class ConnDatabase
                         UserLoginId = reader.GetString(reader.GetOrdinal("user_login_id")),
                         UserRank = reader.IsDBNull(reader.GetOrdinal("user_rank")) ? null : reader.GetString(reader.GetOrdinal("user_rank")),
                         UserEmpType = reader.IsDBNull(reader.GetOrdinal("user_emp_type")) ? null : reader.GetString(reader.GetOrdinal("user_emp_type")),
+                        UserGender = reader.IsDBNull(reader.GetOrdinal("user_gender")) ? null : reader.GetString(reader.GetOrdinal("user_gender")),
                         UserTel = reader.IsDBNull(reader.GetOrdinal("user_tel")) ? null : reader.GetString(reader.GetOrdinal("user_tel")),
                         UserEmail = reader.IsDBNull(reader.GetOrdinal("user_email")) ? null : reader.GetString(reader.GetOrdinal("user_email")),
                         UserMessengerId = reader.IsDBNull(reader.GetOrdinal("user_messenger_id")) ? null : reader.GetString(reader.GetOrdinal("user_messenger_id")),
@@ -139,8 +140,8 @@ class ConnDatabase
                 conn.Close();
             }
 
-            string sql = "INSERT INTO sys_user_info (user_id, user_name, user_pass, user_login_id, id_dept, user_rank, user_emp_type, user_tel, user_email, user_messenger_id, remark_dc) " +
-                "VALUES (@user_id, @user_name, @user_pass, @user_login_id, @id_dept, @user_rank, @user_emp_type, @user_tel, @user_email, @user_messenger_id, @remark_dc)";
+            string sql = "INSERT INTO sys_user_info (user_id, user_name, user_pass, user_login_id, id_dept, user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, remark_dc) " +
+                "VALUES (@user_id, @user_name, @user_pass, @user_login_id, @id_dept, @user_rank, @user_emp_type, @user_gender, @user_tel, @user_email, @user_messenger_id, @remark_dc)";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -152,9 +153,11 @@ class ConnDatabase
                 cmd.Parameters.Add("@id_dept", SqlDbType.Int).Value = user.IdDept;
                 cmd.Parameters.Add("@user_rank", SqlDbType.NVarChar).Value = user.UserRank;
                 cmd.Parameters.Add("@user_emp_type", SqlDbType.NVarChar).Value = user.UserEmpType;
+                cmd.Parameters.Add("@user_gender", SqlDbType.NVarChar).Value = user.UserGender;
                 cmd.Parameters.Add("@user_tel", SqlDbType.NVarChar).Value = user.UserTel;
                 cmd.Parameters.Add("@user_email", SqlDbType.NVarChar).Value = user.UserEmail;
                 cmd.Parameters.Add("@user_messenger_id", SqlDbType.NVarChar).Value = user.UserMessengerId;
+               
                 cmd.Parameters.Add("@remark_dc", SqlDbType.NVarChar).Value = user.RemarkDc;
 
                 conn.Open();
@@ -173,7 +176,8 @@ class ConnDatabase
     {
         try
         {
-            string checkSql = "SELECT COUNT(*) FROM sys_user_info WHERE user_id = @user_cd AND id <> @id";
+            // 사원코드 중복 체크
+            string checkSql = "SELECT COUNT(*) FROM sys_user_info WHERE user_id = @user_id AND id <> @id";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand checkCmd = new SqlCommand(checkSql, conn))
@@ -190,8 +194,8 @@ class ConnDatabase
                 }
             }
 
-            string sql = "UPDATE sys_user_info SET id_dept = @id_dept, user_id = @user_id, user_name = @user_name, " +
-                "user_rank = @user_rank, user_emp_type = @user_emp_type, user_tel = @user_tel, user_email = @user_email, " +
+            string sql = "UPDATE sys_user_info SET id_dept = @id_dept, user_id = @user_id, user_name = @user_name, user_rank = @user_rank, " +
+                "user_emp_type = @user_emp_type, user_gender = @user_gender, user_tel = @user_tel, user_email = @user_email, " +
                 "user_messenger_id = @user_messenger_id, remark_dc = @remark_dc WHERE id = @id";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -203,6 +207,7 @@ class ConnDatabase
                 cmd.Parameters.Add("@user_name", SqlDbType.NVarChar).Value = user.UserName;
                 cmd.Parameters.Add("@user_rank", SqlDbType.NVarChar).Value = user.UserRank;
                 cmd.Parameters.Add("@user_emp_type", SqlDbType.NVarChar).Value = user.UserEmpType;
+                cmd.Parameters.Add("@user_gender", SqlDbType.NVarChar).Value = user.UserGender;
                 cmd.Parameters.Add("@user_tel", SqlDbType.NVarChar).Value = user.UserTel;
                 cmd.Parameters.Add("@user_email", SqlDbType.NVarChar).Value = user.UserEmail;
                 cmd.Parameters.Add("@user_messenger_id", SqlDbType.NVarChar).Value = user.UserMessengerId;

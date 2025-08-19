@@ -47,6 +47,7 @@
             this.UserPass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserRank = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserEmpType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserGender = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserTel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserMessengerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -168,7 +169,7 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DeptCd,
@@ -179,6 +180,7 @@
             this.UserPass,
             this.UserRank,
             this.UserEmpType,
+            this.UserGender,
             this.UserTel,
             this.UserEmail,
             this.UserMessengerId,
@@ -196,84 +198,131 @@
             // DeptCd
             // 
             this.DeptCd.DataPropertyName = "DeptCd";
+            this.DeptCd.FillWeight = 329.9492F;
             this.DeptCd.HeaderText = "부서코드";
+            this.DeptCd.MinimumWidth = 80;
             this.DeptCd.Name = "DeptCd";
             this.DeptCd.ReadOnly = true;
+            this.DeptCd.Width = 80;
             // 
             // DeptName
             // 
             this.DeptName.DataPropertyName = "DeptName";
+            this.DeptName.FillWeight = 0.5536773F;
             this.DeptName.HeaderText = "부서명";
+            this.DeptName.MinimumWidth = 90;
             this.DeptName.Name = "DeptName";
             this.DeptName.ReadOnly = true;
+            this.DeptName.Width = 90;
             // 
             // UserId
             // 
             this.UserId.DataPropertyName = "UserId";
+            this.UserId.FillWeight = 1.003919F;
             this.UserId.HeaderText = "사원코드";
+            this.UserId.MinimumWidth = 90;
             this.UserId.Name = "UserId";
             this.UserId.ReadOnly = true;
+            this.UserId.Width = 90;
             // 
             // UserName
             // 
             this.UserName.DataPropertyName = "UserName";
+            this.UserName.FillWeight = 1.832871F;
             this.UserName.HeaderText = "사원명";
+            this.UserName.MinimumWidth = 90;
             this.UserName.Name = "UserName";
             this.UserName.ReadOnly = true;
+            this.UserName.Width = 90;
             // 
             // UserLoginId
             // 
             this.UserLoginId.DataPropertyName = "UserLoginId";
+            this.UserLoginId.FillWeight = 3.359073F;
             this.UserLoginId.HeaderText = "로그인ID";
+            this.UserLoginId.MinimumWidth = 90;
             this.UserLoginId.Name = "UserLoginId";
             this.UserLoginId.ReadOnly = true;
+            this.UserLoginId.Width = 90;
             // 
             // UserPass
             // 
             this.UserPass.DataPropertyName = "UserPass";
+            this.UserPass.FillWeight = 24.98168F;
             this.UserPass.HeaderText = "비밀번호";
+            this.UserPass.MinimumWidth = 90;
             this.UserPass.Name = "UserPass";
             this.UserPass.ReadOnly = true;
+            this.UserPass.Width = 90;
             // 
             // UserRank
             // 
             this.UserRank.DataPropertyName = "UserRank";
+            this.UserRank.FillWeight = 11.34239F;
             this.UserRank.HeaderText = "직위";
+            this.UserRank.MinimumWidth = 90;
             this.UserRank.Name = "UserRank";
             this.UserRank.ReadOnly = true;
+            this.UserRank.Width = 90;
             // 
             // UserEmpType
             // 
             this.UserEmpType.DataPropertyName = "UserEmpType";
+            this.UserEmpType.FillWeight = 20.86727F;
             this.UserEmpType.HeaderText = "고용형태";
+            this.UserEmpType.MinimumWidth = 90;
             this.UserEmpType.Name = "UserEmpType";
             this.UserEmpType.ReadOnly = true;
+            this.UserEmpType.Width = 90;
+            // 
+            // UserGender
+            // 
+            this.UserGender.DataPropertyName = "UserGender";
+            this.UserGender.FillWeight = 24.63215F;
+            this.UserGender.HeaderText = "성별";
+            this.UserGender.MinimumWidth = 90;
+            this.UserGender.Name = "UserGender";
+            this.UserGender.ReadOnly = true;
+            this.UserGender.Width = 90;
             // 
             // UserTel
             // 
             this.UserTel.DataPropertyName = "UserTel";
+            this.UserTel.FillWeight = 70.69044F;
             this.UserTel.HeaderText = "휴대전화";
+            this.UserTel.MinimumWidth = 90;
             this.UserTel.Name = "UserTel";
             this.UserTel.ReadOnly = true;
+            this.UserTel.Width = 90;
             // 
             // UserEmail
             // 
             this.UserEmail.DataPropertyName = "UserEmail";
+            this.UserEmail.FillWeight = 130.1342F;
             this.UserEmail.HeaderText = "이메일";
+            this.UserEmail.MinimumWidth = 90;
             this.UserEmail.Name = "UserEmail";
             this.UserEmail.ReadOnly = true;
+            this.UserEmail.Width = 90;
             // 
             // UserMessengerId
             // 
             this.UserMessengerId.DataPropertyName = "UserMessengerId";
+            this.UserMessengerId.FillWeight = 239.5774F;
             this.UserMessengerId.HeaderText = "메신저ID";
+            this.UserMessengerId.MinimumWidth = 90;
             this.UserMessengerId.Name = "UserMessengerId";
             this.UserMessengerId.ReadOnly = true;
+            this.UserMessengerId.Width = 90;
             // 
             // RemarkDc
             // 
+            this.RemarkDc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.RemarkDc.DataPropertyName = "RemarkDc";
+            this.RemarkDc.FillWeight = 441.0756F;
             this.RemarkDc.HeaderText = "비고";
+            this.RemarkDc.MaxInputLength = 50;
+            this.RemarkDc.MinimumWidth = 120;
             this.RemarkDc.Name = "RemarkDc";
             this.RemarkDc.ReadOnly = true;
             // 
@@ -281,6 +330,7 @@
             // 
             this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 100;
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
@@ -289,9 +339,11 @@
             // 
             this.IdDept.DataPropertyName = "IdDept";
             this.IdDept.HeaderText = "IdDept";
+            this.IdDept.MinimumWidth = 50;
             this.IdDept.Name = "IdDept";
             this.IdDept.ReadOnly = true;
             this.IdDept.Visible = false;
+            this.IdDept.Width = 65;
             // 
             // UserInfoForm
             // 
@@ -332,6 +384,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn UserPass;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserRank;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserEmpType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserGender;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserTel;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserEmail;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserMessengerId;

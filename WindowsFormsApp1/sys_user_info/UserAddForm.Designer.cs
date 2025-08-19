@@ -54,6 +54,9 @@
             this.txtUserMessengerId = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.selectDeptCd = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.chkUserGender1 = new System.Windows.Forms.CheckBox();
+            this.chkUserGender2 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -65,7 +68,7 @@
             this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(110, 35);
-            this.btnCancel.TabIndex = 14;
+            this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "취소(ESC)";
             this.btnCancel.UseVisualStyleBackColor = false;
             // 
@@ -78,7 +81,7 @@
             this.btnAct.Margin = new System.Windows.Forms.Padding(0);
             this.btnAct.Name = "btnAct";
             this.btnAct.Size = new System.Drawing.Size(110, 35);
-            this.btnAct.TabIndex = 13;
+            this.btnAct.TabIndex = 15;
             this.btnAct.Text = "저장(F4)";
             this.btnAct.UseVisualStyleBackColor = false;
             // 
@@ -87,7 +90,7 @@
             this.txtRemarkDc.Location = new System.Drawing.Point(25, 349);
             this.txtRemarkDc.Name = "txtRemarkDc";
             this.txtRemarkDc.Size = new System.Drawing.Size(559, 21);
-            this.txtRemarkDc.TabIndex = 12;
+            this.txtRemarkDc.TabIndex = 14;
             // 
             // label3
             // 
@@ -236,14 +239,14 @@
             this.txtUserEmail.Location = new System.Drawing.Point(218, 287);
             this.txtUserEmail.Name = "txtUserEmail";
             this.txtUserEmail.Size = new System.Drawing.Size(170, 21);
-            this.txtUserEmail.TabIndex = 10;
+            this.txtUserEmail.TabIndex = 12;
             // 
             // txtUserTel
             // 
             this.txtUserTel.Location = new System.Drawing.Point(26, 287);
             this.txtUserTel.Name = "txtUserTel";
             this.txtUserTel.Size = new System.Drawing.Size(170, 21);
-            this.txtUserTel.TabIndex = 9;
+            this.txtUserTel.TabIndex = 11;
             // 
             // label10
             // 
@@ -270,7 +273,7 @@
             this.txtUserMessengerId.Location = new System.Drawing.Point(414, 287);
             this.txtUserMessengerId.Name = "txtUserMessengerId";
             this.txtUserMessengerId.Size = new System.Drawing.Size(170, 21);
-            this.txtUserMessengerId.TabIndex = 11;
+            this.txtUserMessengerId.TabIndex = 13;
             // 
             // label12
             // 
@@ -292,12 +295,45 @@
             this.selectDeptCd.Size = new System.Drawing.Size(170, 20);
             this.selectDeptCd.TabIndex = 1;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Black;
+            this.label13.Location = new System.Drawing.Point(412, 207);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 12);
+            this.label13.TabIndex = 39;
+            this.label13.Text = "성별";
+            // 
+            // chkUserGender1
+            // 
+            this.chkUserGender1.AutoSize = true;
+            this.chkUserGender1.Location = new System.Drawing.Point(414, 230);
+            this.chkUserGender1.Name = "chkUserGender1";
+            this.chkUserGender1.Size = new System.Drawing.Size(36, 16);
+            this.chkUserGender1.TabIndex = 9;
+            this.chkUserGender1.Text = "남";
+            this.chkUserGender1.UseVisualStyleBackColor = true;
+            // 
+            // chkUserGender2
+            // 
+            this.chkUserGender2.AutoSize = true;
+            this.chkUserGender2.Location = new System.Drawing.Point(456, 230);
+            this.chkUserGender2.Name = "chkUserGender2";
+            this.chkUserGender2.Size = new System.Drawing.Size(36, 16);
+            this.chkUserGender2.TabIndex = 10;
+            this.chkUserGender2.Text = "여";
+            this.chkUserGender2.UseVisualStyleBackColor = true;
+            // 
             // UserAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(614, 441);
+            this.Controls.Add(this.chkUserGender2);
+            this.Controls.Add(this.chkUserGender1);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.selectDeptCd);
             this.Controls.Add(this.txtUserMessengerId);
             this.Controls.Add(this.label12);
@@ -361,5 +397,8 @@
         private System.Windows.Forms.TextBox txtUserMessengerId;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox selectDeptCd;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox chkUserGender1;
+        private System.Windows.Forms.CheckBox chkUserGender2;
     }
 }

@@ -150,7 +150,7 @@
             // Id
             // 
             this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Column1";
+            this.Id.HeaderText = "Id";
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;

@@ -94,7 +94,6 @@ namespace WindowsFormsApp1
         {
             switch (e.KeyCode)
             {
-                // 추가(F1)
                 case Keys.Enter:
                     DeptUpdateLoad();
                     e.SuppressKeyPress = true;

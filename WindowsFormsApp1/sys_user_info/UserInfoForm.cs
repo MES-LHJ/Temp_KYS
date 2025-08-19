@@ -31,6 +31,7 @@ namespace WindowsFormsApp1
             btnChange.Click += BtnChange_Click;
             btnClose.Click += BtnClose_Click;
 
+            dataGridView1.CellFormatting += DataGridView1_CellFormatting;
             dataGridView1.CellDoubleClick += DataGridView1_CellDoubleClick;
             dataGridView1.KeyDown += DataGridView1_KeyDown;
         }
@@ -84,10 +85,33 @@ namespace WindowsFormsApp1
         private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var data = sender as DataGridView;
+            var columnName = data.Columns[e.ColumnIndex].Name;
 
-            var cell = data.Rows[e.RowIndex].Cells["UserPass"];
-            cell.Value = "**********";
-            e.FormattingApplied = true;
+            if (e.RowIndex < 0 || e.RowIndex >= data.Rows.Count) return;
+
+            if (columnName == "UserPass")
+            {
+                e.Value = "**********";
+                e.FormattingApplied = true;
+            }
+
+            if (columnName == "UserGender")
+            {
+                var cellValue = data.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
+                switch (cellValue)
+                {
+                    case "M":
+                        e.Value = "남";
+                        break;
+                    case "F":
+                        e.Value = "여";
+                        break;
+                    default:
+                        e.Value = "";
+                        break;
+                }
+                e.FormattingApplied = true;
+            }
         }
 
         private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -99,9 +123,8 @@ namespace WindowsFormsApp1
         {
             switch (e.KeyCode)
             {
-                // 추가(F1)
                 case Keys.Enter:
-                    UserAddLoad();
+                    UserUpdateLoad();
                     e.SuppressKeyPress = true;
                     break;
 
@@ -178,6 +201,7 @@ namespace WindowsFormsApp1
                 UserName = row.Cells["UserName"].Value?.ToString(),
                 UserRank = row.Cells["UserRank"].Value?.ToString(),
                 UserEmpType = row.Cells["UserEmpType"].Value?.ToString(),
+                UserGender = row.Cells["UserGender"].Value?.ToString(),
                 UserTel = row.Cells["UserTel"].Value?.ToString(),
                 UserEmail = row.Cells["UserEmail"].Value?.ToString(),
                 UserMessengerId = row.Cells["UserMessengerId"].Value?.ToString(),

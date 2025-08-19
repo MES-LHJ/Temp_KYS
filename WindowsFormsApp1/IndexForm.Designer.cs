@@ -31,7 +31,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtUserPass = new System.Windows.Forms.TextBox();
-            this.txtUserId = new System.Windows.Forms.TextBox();
+            this.txtUserLoginId = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -70,12 +70,12 @@
             this.txtUserPass.Size = new System.Drawing.Size(187, 21);
             this.txtUserPass.TabIndex = 9;
             // 
-            // txtUserId
+            // txtUserLoginId
             // 
-            this.txtUserId.Location = new System.Drawing.Point(21, 51);
-            this.txtUserId.Name = "txtUserId";
-            this.txtUserId.Size = new System.Drawing.Size(187, 21);
-            this.txtUserId.TabIndex = 8;
+            this.txtUserLoginId.Location = new System.Drawing.Point(21, 51);
+            this.txtUserLoginId.Name = "txtUserLoginId";
+            this.txtUserLoginId.Size = new System.Drawing.Size(187, 21);
+            this.txtUserLoginId.TabIndex = 8;
             // 
             // label2
             // 
@@ -103,7 +103,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtUserPass);
-            this.Controls.Add(this.txtUserId);
+            this.Controls.Add(this.txtUserLoginId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "IndexForm";
@@ -119,7 +119,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.TextBox txtUserPass;
-        private System.Windows.Forms.TextBox txtUserId;
+        private System.Windows.Forms.TextBox txtUserLoginId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

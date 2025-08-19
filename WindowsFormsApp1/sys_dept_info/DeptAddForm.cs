@@ -108,24 +108,26 @@ namespace WindowsFormsApp1
 
             int result = ConnDatabase.Instance.AddDept(DataDeptInfo);
 
-            if (result > 0)
+            switch (result)
             {
-                MessageBox.Show("저장되었습니다.");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else if (result == -1)
-            {
-                MessageBox.Show("이미 존재하는 부서코드 입니다.");
-                txtDeptCd.Focus();
-            }
-            else if (result == -2)
-            {
-                MessageBox.Show("저장 중 오류가 발생했습니다.");
-            }
-            else
-            {
-                MessageBox.Show("저장에 실패했습니다.");
+                case int n when n > 0:
+                    MessageBox.Show("저장되었습니다.");
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                    break;
+
+                case -1:
+                    MessageBox.Show("이미 존재하는 부서코드 입니다.");
+                    txtDeptCd.Focus();
+                    break;
+
+                case -2:
+                    MessageBox.Show("저장 중 오류가 발생했습니다.");
+                    break;
+
+                default:
+                    MessageBox.Show("저장에 실패했습니다.");
+                    break;
             }
         }
 

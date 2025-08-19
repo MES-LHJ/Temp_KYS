@@ -54,7 +54,7 @@ namespace WindowsFormsApp1
         {
             User LoginUser = new User
             {
-                UserId = txtUserId.Text,
+                UserLoginId = txtUserLoginId.Text,
                 UserPass = txtUserPass.Text
             };
 

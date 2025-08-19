@@ -40,16 +40,19 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
-            this.txtUserId = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnAct = new System.Windows.Forms.Button();
             this.txtRemarkDc = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtDeptName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtUserId = new System.Windows.Forms.TextBox();
+            this.chkUserGender2 = new System.Windows.Forms.CheckBox();
+            this.chkUserGender1 = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // selectDeptCd
@@ -122,14 +125,14 @@
             this.txtUserEmpType.Location = new System.Drawing.Point(217, 173);
             this.txtUserEmpType.Name = "txtUserEmpType";
             this.txtUserEmpType.Size = new System.Drawing.Size(170, 21);
-            this.txtUserEmpType.TabIndex = 46;
+            this.txtUserEmpType.TabIndex = 44;
             // 
             // txtUserRank
             // 
             this.txtUserRank.Location = new System.Drawing.Point(25, 173);
             this.txtUserRank.Name = "txtUserRank";
             this.txtUserRank.Size = new System.Drawing.Size(170, 21);
-            this.txtUserRank.TabIndex = 45;
+            this.txtUserRank.TabIndex = 43;
             // 
             // label8
             // 
@@ -158,15 +161,6 @@
             this.txtUserName.Size = new System.Drawing.Size(170, 21);
             this.txtUserName.TabIndex = 42;
             // 
-            // txtUserId
-            // 
-            this.txtUserId.Location = new System.Drawing.Point(24, 111);
-            this.txtUserId.Name = "txtUserId";
-            this.txtUserId.ReadOnly = true;
-            this.txtUserId.Size = new System.Drawing.Size(170, 21);
-            this.txtUserId.TabIndex = 41;
-            this.txtUserId.TabStop = false;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -187,19 +181,18 @@
             this.label5.TabIndex = 56;
             this.label5.Text = "사원코드";
             // 
-            // btnCancel
+            // btnClose
             // 
-            this.btnCancel.BackColor = System.Drawing.Color.OrangeRed;
-            this.btnCancel.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(473, 335);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(110, 35);
-            this.btnCancel.TabIndex = 52;
-            this.btnCancel.Text = "취소(ESC)";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            this.btnClose.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnClose.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.Location = new System.Drawing.Point(473, 335);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(110, 35);
+            this.btnClose.TabIndex = 52;
+            this.btnClose.Text = "취소(ESC)";
+            this.btnClose.UseVisualStyleBackColor = false;
             // 
             // btnAct
             // 
@@ -213,7 +206,6 @@
             this.btnAct.TabIndex = 51;
             this.btnAct.Text = "저장(F4)";
             this.btnAct.UseVisualStyleBackColor = false;
-            this.btnAct.Click += new System.EventHandler(this.BtnAct_Click);
             // 
             // txtRemarkDc
             // 
@@ -261,11 +253,52 @@
             this.label1.TabIndex = 53;
             this.label1.Text = "부서코드";
             // 
+            // txtUserId
+            // 
+            this.txtUserId.Location = new System.Drawing.Point(26, 111);
+            this.txtUserId.Name = "txtUserId";
+            this.txtUserId.Size = new System.Drawing.Size(170, 21);
+            this.txtUserId.TabIndex = 41;
+            // 
+            // chkUserGender2
+            // 
+            this.chkUserGender2.AutoSize = true;
+            this.chkUserGender2.Location = new System.Drawing.Point(456, 175);
+            this.chkUserGender2.Name = "chkUserGender2";
+            this.chkUserGender2.Size = new System.Drawing.Size(36, 16);
+            this.chkUserGender2.TabIndex = 46;
+            this.chkUserGender2.Text = "여";
+            this.chkUserGender2.UseVisualStyleBackColor = true;
+            // 
+            // chkUserGender1
+            // 
+            this.chkUserGender1.AutoSize = true;
+            this.chkUserGender1.Location = new System.Drawing.Point(414, 175);
+            this.chkUserGender1.Name = "chkUserGender1";
+            this.chkUserGender1.Size = new System.Drawing.Size(36, 16);
+            this.chkUserGender1.TabIndex = 45;
+            this.chkUserGender1.Text = "남";
+            this.chkUserGender1.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Black;
+            this.label13.Location = new System.Drawing.Point(412, 152);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 12);
+            this.label13.TabIndex = 67;
+            this.label13.Text = "성별";
+            // 
             // UserUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 385);
+            this.Controls.Add(this.chkUserGender2);
+            this.Controls.Add(this.chkUserGender1);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.txtUserId);
             this.Controls.Add(this.selectDeptCd);
             this.Controls.Add(this.txtUserMessengerId);
             this.Controls.Add(this.label12);
@@ -278,10 +311,9 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtUserName);
-            this.Controls.Add(this.txtUserId);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnAct);
             this.Controls.Add(this.txtRemarkDc);
             this.Controls.Add(this.label3);
@@ -292,7 +324,6 @@
             this.Name = "UserUpdateForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 수정";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserUpdateForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,14 +337,13 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnAct;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox selectDeptCd;
         public System.Windows.Forms.TextBox txtUserName;
-        public System.Windows.Forms.TextBox txtUserId;
         public System.Windows.Forms.TextBox txtDeptName;
         public System.Windows.Forms.TextBox txtUserMessengerId;
         public System.Windows.Forms.TextBox txtUserEmail;
@@ -321,5 +351,9 @@
         public System.Windows.Forms.TextBox txtUserEmpType;
         public System.Windows.Forms.TextBox txtUserRank;
         public System.Windows.Forms.TextBox txtRemarkDc;
+        private System.Windows.Forms.TextBox txtUserId;
+        private System.Windows.Forms.CheckBox chkUserGender2;
+        private System.Windows.Forms.CheckBox chkUserGender1;
+        private System.Windows.Forms.Label label13;
     }
 }
