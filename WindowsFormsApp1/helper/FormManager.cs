@@ -4,36 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApp1.sys_user_info;
-
-namespace WindowsFormsApp1
+using WindowsFormsApp1.sys_dept_info;
+namespace WindowsFormsApp1.helper
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public string UserId { get; set; }
-        public string UserName { get; set; }
-        public string UserPass { get; set; }
-        public string UserLoginId { get; set; }
-        public string UserRank { get; set; }
-        public string UserEmpType { get; set; }
-        public string UserGender { get; set; }
-        public string UserTel { get; set; }
-        public string UserEmail { get; set; }
-        public string UserMessengerId { get; set; }
-        public string RemarkDc { get; set; }
-        public int IdDept { get; set; }
-        public string DeptCd { get; set; }
-        public string DeptName { get; set; }
-    }
-
-    public class Dept 
-    { 
-        public int Id { get; set; }
-        public string DeptCd { get; set; } 
-        public string DeptName { get; set; } 
-        public string RemarkDc { get; set; } 
-    }
-
     public class FormManager
     {
         private static IndexForm indexForm;
@@ -63,6 +36,11 @@ namespace WindowsFormsApp1
             }
         }
 
+        //public void SetIndex(IndexForm form)
+        //{
+        //    indexForm = form;
+        //}
+
         public IndexForm GetIndexForm()
         {
             if (indexForm == null || indexForm.IsDisposed)
@@ -82,7 +60,7 @@ namespace WindowsFormsApp1
             if (userAddForm == null || userAddForm.IsDisposed)
                 userAddForm = new UserAddForm();
 
-            userAddForm.ResetForm();
+            //userAddForm.ResetForm();
             return userAddForm;
         }
 
@@ -107,7 +85,7 @@ namespace WindowsFormsApp1
             if (deptAddForm == null || deptAddForm.IsDisposed)
                 deptAddForm = new DeptAddForm();
 
-            deptAddForm.ResetForm();
+            //deptAddForm.ResetForm();
 
             return deptAddForm;
         }
@@ -120,27 +98,6 @@ namespace WindowsFormsApp1
                 deptUpdateForm.SetData(dept);
 
             return deptUpdateForm;
-        }
-    }
-
-    //유효성검사
-    public static class Validator
-    {
-        // 비밀번호: 최소 8자리, 영어+숫자 포함
-        public static bool ValidatePassword(string password)
-        {
-            if (string.IsNullOrEmpty(password)) return false;
-            var regex = new System.Text.RegularExpressions.Regex(@"^(?=.*[A-Za-z])(?=.*\d).{8,}$");
-            return regex.IsMatch(password);
-        }
-
-        // 이메일: 일반 형식 체크
-        public static bool ValidateEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email)) return false;
-            var regex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-
-            return regex.IsMatch(email);
         }
     }
 }

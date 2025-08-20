@@ -9,14 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using WindowsFormsApp1.helper;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.sys_user_info
 {
     public partial class UserAddForm : Form
     {
         private User DataUserInfo = new User();
         private BindingList<Dept> deptComboList = new BindingList<Dept>();
 
+        public bool UserInsertFg { get; private set; } = false;
 
         private void InitEvent()
         {
@@ -42,8 +44,8 @@ namespace WindowsFormsApp1
             deptComboList = ConnDatabase.Instance.GetDept();
 
             selectDeptCd.DataSource = deptComboList;
-            selectDeptCd.DisplayMember = "DeptCd";
-            selectDeptCd.ValueMember = "Id";
+            selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+            selectDeptCd.ValueMember = nameof(Dept.Id);
             selectDeptCd.SelectedIndex = -1;
             txtDeptName.Text = "";
         }
@@ -76,8 +78,6 @@ namespace WindowsFormsApp1
         {
             Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
             txtDeptName.Text = selectedDept.DeptName;
-
-            DataUserInfo.IdDept = selectedDept.Id;
         }
 
         private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
@@ -113,73 +113,61 @@ namespace WindowsFormsApp1
             }
         }
 
-        public void ResetForm()
-        {
-            selectDeptCd.SelectedIndex = -1;
-            txtDeptName.Text = string.Empty;
+        //public void ResetForm()
+        //{
+        //    selectDeptCd.SelectedIndex = -1;
+        //    txtDeptName.Text = string.Empty;
 
-            txtUserId.Text = string.Empty;
-            txtUserName.Text = string.Empty;
-            txtUserLoginId.Text = string.Empty;
-            txtUserPass.Text = string.Empty;
-            txtUserRank.Text = string.Empty;
-            txtUserEmpType.Text = string.Empty;
-            txtUserTel.Text = string.Empty;
-            txtUserEmail.Text = string.Empty;
-            txtUserMessengerId.Text = string.Empty;
-            txtRemarkDc.Text = string.Empty;
+        //    txtUserId.Text = string.Empty;
+        //    txtUserName.Text = string.Empty;
+        //    txtUserLoginId.Text = string.Empty;
+        //    txtUserPass.Text = string.Empty;
+        //    txtUserRank.Text = string.Empty;
+        //    txtUserEmpType.Text = string.Empty;
+        //    txtUserTel.Text = string.Empty;
+        //    txtUserEmail.Text = string.Empty;
+        //    txtUserMessengerId.Text = string.Empty;
+        //    txtRemarkDc.Text = string.Empty;
 
-            chkUserGender1.Checked = false;
-            chkUserGender2.Checked = false;
+        //    chkUserGender1.Checked = false;
+        //    chkUserGender2.Checked = false;
 
-            DataUserInfo.IdDept = 0;
+        //    DataUserInfo.IdDept = 0;
 
-            this.ActiveControl = selectDeptCd;
-        }
+        //    this.ActiveControl = selectDeptCd;
+        //}
 
         private void UserReg()
         {
-            if (DataUserInfo.IdDept == 0)
+            if (selectDeptCd.SelectedIndex < 0)
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
                 selectDeptCd.Focus();
                 return;
             }
 
-            DataUserInfo.UserId = txtUserId.Text.Trim();
-            DataUserInfo.UserName = txtUserName.Text.Trim();
-            DataUserInfo.UserLoginId = txtUserLoginId.Text.Trim();
-            DataUserInfo.UserPass = txtUserPass.Text.Trim();
-            DataUserInfo.UserRank = txtUserRank.Text.Trim();
-            DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
-            DataUserInfo.UserGender = chkUserGender1.Checked ? "M" : chkUserGender2.Checked ? "F" : "";
-            DataUserInfo.UserTel = txtUserTel.Text.Trim();
-            DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
-            DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
-            DataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
-
-            if (string.IsNullOrEmpty(DataUserInfo.UserId))
+            if (string.IsNullOrEmpty(txtUserId.Text.Trim()))
             {
                 MessageBox.Show("사원코드가 입력되지 않았습니다.");
                 txtUserId.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(DataUserInfo.UserName))
+            if (string.IsNullOrEmpty(txtUserName.Text.Trim()))
             {
                 MessageBox.Show("사원명이 입력되지 않았습니다.");
                 txtUserName.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(DataUserInfo.UserLoginId))
+            if (string.IsNullOrEmpty(txtUserLoginId.Text.Trim()))
             {
                 MessageBox.Show("로그인ID가 입력되지 않았습니다.");
                 txtUserLoginId.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(DataUserInfo.UserPass))
+            if (string.IsNullOrEmpty(txtUserPass.Text.Trim()))
             {
                 MessageBox.Show("비밀번호가 입력되지 않았습니다.");
                 txtUserPass.Focus();
@@ -187,7 +175,7 @@ namespace WindowsFormsApp1
             }
 
             // 비밀번호 유효성 검사
-            if (!Validator.ValidatePassword(DataUserInfo.UserPass))
+            if (!Validator.ValidatePassword(txtUserPass.Text.Trim()))
             {
                 MessageBox.Show("비밀번호는 최소 8자리 이상이어야 하며, 영어와 숫자를 포함해야 합니다.");
                 txtUserPass.Focus();
@@ -195,20 +183,33 @@ namespace WindowsFormsApp1
             }
 
             // 이메일 유효성 검사
-            if (!string.IsNullOrEmpty(DataUserInfo.UserEmail) && !Validator.ValidateEmail(DataUserInfo.UserEmail))
+            if (!string.IsNullOrEmpty(txtUserEmail.Text.Trim()) && !Validator.ValidateEmail(txtUserEmail.Text.Trim()))
             {
                 MessageBox.Show("올바른 이메일 형식이 아닙니다.");
                 txtUserEmail.Focus();
                 return;
             }
 
+            DataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
+            DataUserInfo.UserId = txtUserId.Text.Trim();
+            DataUserInfo.UserName = txtUserName.Text.Trim();
+            DataUserInfo.UserLoginId = txtUserLoginId.Text.Trim();
+            DataUserInfo.UserPass = txtUserPass.Text.Trim();
+            DataUserInfo.UserRank = txtUserRank.Text.Trim();
+            DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
+            DataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+            DataUserInfo.UserTel = txtUserTel.Text.Trim();
+            DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
+            DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
+            DataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
+
             int result = ConnDatabase.Instance.AddUser(DataUserInfo);
 
             switch (result)
             {
                 case int n when n > 0:
+                    UserInsertFg = true;
                     MessageBox.Show("저장되었습니다.");
-                    this.DialogResult = DialogResult.OK;
                     this.Close();
                     break;
 
@@ -234,7 +235,7 @@ namespace WindowsFormsApp1
 
         private void UserClose()
         {
-            this.DialogResult = DialogResult.Cancel;
+            UserInsertFg = false;
             this.Close();
         }
     }

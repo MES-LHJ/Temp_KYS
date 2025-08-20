@@ -8,12 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.helper;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.sys_dept_info
 {
     public partial class DeptAddForm : Form
     {
         private Dept DataDeptInfo = new Dept();
+
+        public bool DeptInsertFg { get; private set; } = false;
 
         private void InitEvent()
         {
@@ -77,42 +80,42 @@ namespace WindowsFormsApp1
             DeptClose();
         }
 
-        public void ResetForm()
-        {
-            txtDeptCd.Text = string.Empty;
-            txtDeptName.Text = string.Empty;
-            txtRemarkDc.Text = string.Empty;
+        //public void ResetForm()
+        //{
+        //    txtDeptCd.Text = string.Empty;
+        //    txtDeptName.Text = string.Empty;
+        //    txtRemarkDc.Text = string.Empty;
 
-            this.ActiveControl = txtDeptCd;
-        }
+        //    this.ActiveControl = txtDeptCd;
+        //}
 
         private void DeptReg()
         {
-            DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
-            DataDeptInfo.DeptName = txtDeptName.Text.Trim();
-            DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
-
-            if (string.IsNullOrEmpty(DataDeptInfo.DeptCd))
+            if (string.IsNullOrEmpty(txtDeptCd.Text.Trim()))
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
                 txtDeptCd.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(DataDeptInfo.DeptName))
+            if (string.IsNullOrEmpty(txtDeptName.Text.Trim()))
             {
                 MessageBox.Show("부서명이 입력되지 않았습니다.");
                 txtDeptName.Focus();
                 return;
             }
 
+            DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
+            DataDeptInfo.DeptName = txtDeptName.Text.Trim();
+            DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
+
             int result = ConnDatabase.Instance.AddDept(DataDeptInfo);
 
             switch (result)
             {
                 case int n when n > 0:
+                    DeptInsertFg = true;
                     MessageBox.Show("저장되었습니다.");
-                    this.DialogResult = DialogResult.OK;
                     this.Close();
                     break;
 
@@ -133,7 +136,7 @@ namespace WindowsFormsApp1
 
         private void DeptClose()
         {
-            this.DialogResult = DialogResult.Cancel;
+            DeptInsertFg = false;
             this.Close();
         }
     }

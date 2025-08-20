@@ -10,9 +10,10 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.sys_user_info;
+using WindowsFormsApp1.helper;
+using WindowsFormsApp1.sys_dept_info;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.sys_user_info
 {
     public partial class UserInfoForm : Form
     {
@@ -20,6 +21,7 @@ namespace WindowsFormsApp1
 
         private void InitEvents()
         {
+            this.Load += UserInfoForm_Load;
             this.KeyDown += UserInfoForm_KeyDown;
 
             btnDept.Click += BtnDept_Click;
@@ -40,6 +42,49 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             InitEvents();
+        }
+
+        public void UserInfoForm_Load(object sender, EventArgs e)
+        {
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                IndexForm indexForm = new IndexForm();
+                indexForm.ShowDialog();
+
+                if (!indexForm.LoginSuccess)
+                {
+                    this.Close();
+                }
+            });
+        }
+
+        private void UserInfoForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                // 추가(F1)
+                case Keys.F1:
+                    UserAddLoad();
+                    break;
+
+                // 조회(F2)
+                case Keys.F2:
+                    UserSrch();
+                    break;
+
+                // 삭제(F7)
+                case Keys.F7:
+                    UserDelete();
+                    break;
+
+                // 닫기(ESC)
+                case Keys.Escape:
+                    UserClose();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void BtnDept_Click(object sender, EventArgs e)
@@ -89,28 +134,28 @@ namespace WindowsFormsApp1
 
             if (e.RowIndex < 0 || e.RowIndex >= data.Rows.Count) return;
 
-            if (columnName == "UserPass")
+            switch (columnName)
             {
-                e.Value = "**********";
-                e.FormattingApplied = true;
-            }
+                case nameof(User.UserPass):
+                    e.Value = "**********";
+                    e.FormattingApplied = true;
+                    break;
 
-            if (columnName == "UserGender")
-            {
-                var cellValue = data.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
-                switch (cellValue)
-                {
-                    case "M":
+                case nameof(User.UserGender):
+                    var cellValue = data.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
+                    if (cellValue == nameof(User.Gender.Male))
+                    {
                         e.Value = "남";
-                        break;
-                    case "F":
+                    }
+                    else if (cellValue == nameof(User.Gender.FeMale))
+                    {
                         e.Value = "여";
-                        break;
-                    default:
+                    }
+                    else
                         e.Value = "";
-                        break;
-                }
-                e.FormattingApplied = true;
+
+                    e.FormattingApplied = true;
+                    break;
             }
         }
 
@@ -133,40 +178,15 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void UserInfoForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                // 추가(F1)
-                case Keys.F1:
-                    UserAddLoad();
-                    break;
-
-                // 조회(F2)
-                case Keys.F2:
-                    UserSrch();
-                    break;
-
-                // 삭제(F7)
-                case Keys.F7:
-                    UserDelete();
-                    break;
-
-                // 닫기(ESC)
-                case Keys.Escape:
-                    UserClose();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
         public void DeptInfoLoad()
         {
-            var deptInfoForm = FormManager.Instance.GetDeptInfoForm();
+            DeptInfoForm deptInfoForm = new DeptInfoForm();
             deptInfoForm.ShowDialog();
-            UserSrch();
+
+            if(deptInfoForm.DeptChangeFg)
+            {
+                UserSrch();
+            }
         }
 
         private void UserSrch()
@@ -177,8 +197,10 @@ namespace WindowsFormsApp1
 
         public void UserAddLoad()
         {
-            var userAddForm = FormManager.Instance.GetUserAddForm();
-            if (userAddForm.ShowDialog() == DialogResult.OK)
+            UserAddForm userAddForm = new UserAddForm();
+            userAddForm.ShowDialog();
+
+            if(userAddForm.UserInsertFg)
             {
                 UserSrch();
             }
@@ -196,23 +218,25 @@ namespace WindowsFormsApp1
 
             var user = new User
             {
-                Id = Convert.ToInt32(row.Cells["Id"].Value),
-                UserId = row.Cells["UserId"].Value?.ToString(),
-                UserName = row.Cells["UserName"].Value?.ToString(),
-                UserRank = row.Cells["UserRank"].Value?.ToString(),
-                UserEmpType = row.Cells["UserEmpType"].Value?.ToString(),
-                UserGender = row.Cells["UserGender"].Value?.ToString(),
-                UserTel = row.Cells["UserTel"].Value?.ToString(),
-                UserEmail = row.Cells["UserEmail"].Value?.ToString(),
-                UserMessengerId = row.Cells["UserMessengerId"].Value?.ToString(),
-                RemarkDc = row.Cells["RemarkDc"].Value?.ToString(),
-                IdDept = Convert.ToInt32(row.Cells["IdDept"].Value),
-                DeptCd = row.Cells["DeptCd"].Value?.ToString(),
-                DeptName = row.Cells["DeptName"].Value?.ToString()
+                Id = Convert.ToInt32(row.Cells[nameof(User.Id)].Value),
+                UserId = row.Cells[nameof(User.UserId)].Value?.ToString(),
+                UserName = row.Cells[nameof(User.UserName)].Value?.ToString(),
+                UserRank = row.Cells[nameof(User.UserRank)].Value?.ToString(),
+                UserEmpType = row.Cells[nameof(User.UserEmpType)].Value?.ToString(),
+                UserGender = (User.Gender)Convert.ToInt32(row.Cells[nameof(User.UserGender)].Value),
+                UserTel = row.Cells[nameof(User.UserTel)].Value?.ToString(),
+                UserEmail = row.Cells[nameof(User.UserEmail)].Value?.ToString(),
+                UserMessengerId = row.Cells[nameof(User.UserMessengerId)].Value?.ToString(),
+                RemarkDc = row.Cells[nameof(User.RemarkDc)].Value?.ToString(),
+                IdDept = Convert.ToInt32(row.Cells[nameof(User.IdDept)].Value),
+                DeptCd = row.Cells[nameof(User.DeptCd)].Value?.ToString(),
+                DeptName = row.Cells[nameof(User.DeptName)].Value?.ToString()
             };
 
-            var userUpdateForm = FormManager.Instance.GetUserUpdateForm(user);
-            if (userUpdateForm.ShowDialog() == DialogResult.OK)
+            UserUpdateForm userUpdateForm = new UserUpdateForm(user);
+            userUpdateForm.ShowDialog();
+
+            if (userUpdateForm.UserUpdateFg)
             {
                 UserSrch();
             }
@@ -230,9 +254,9 @@ namespace WindowsFormsApp1
 
             var user = new User
             {
-                Id = Convert.ToInt32(row.Cells["Id"].Value),
-                UserId = row.Cells["UserId"].Value?.ToString(),
-                UserName = row.Cells["UserName"].Value?.ToString()
+                Id = Convert.ToInt32(row.Cells[nameof(User.Id)].Value),
+                UserId = row.Cells[nameof(User.UserId)].Value?.ToString(),
+                UserName = row.Cells[nameof(User.UserName)].Value?.ToString()
             };
 
             if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -258,7 +282,6 @@ namespace WindowsFormsApp1
         public void UserClose()
         {
             this.Close();
-            FormManager.Instance.GetIndexForm().Show();
         }
     }
 }

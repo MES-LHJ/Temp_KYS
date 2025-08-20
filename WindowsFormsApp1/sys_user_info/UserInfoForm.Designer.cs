@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace WindowsFormsApp1.sys_user_info
 {
     partial class UserInfoForm
     {

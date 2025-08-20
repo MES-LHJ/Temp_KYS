@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.helper;
 
 namespace WindowsFormsApp1.sys_user_info
 {
@@ -14,6 +15,8 @@ namespace WindowsFormsApp1.sys_user_info
     {
         private BindingList<Dept> deptComboList = new BindingList<Dept>();
         private User DataUserInfo = new User();
+
+        public bool UserUpdateFg { get; private set; } = false;
 
         public void SetData(User user)
         {
@@ -24,15 +27,15 @@ namespace WindowsFormsApp1.sys_user_info
                 txtUserName.Text = DataUserInfo.UserName;
                 txtUserRank.Text = DataUserInfo.UserRank;
                 txtUserEmpType.Text = DataUserInfo.UserEmpType;
-                chkUserGender1.Checked = DataUserInfo.UserGender == "M";
-                chkUserGender2.Checked = DataUserInfo.UserGender == "F";
+                chkUserGender1.Checked = DataUserInfo.UserGender == User.Gender.Male;
+                chkUserGender2.Checked = DataUserInfo.UserGender == User.Gender.FeMale;
                 txtUserTel.Text = DataUserInfo.UserTel;
                 txtUserEmail.Text = DataUserInfo.UserEmail;
                 txtUserMessengerId.Text = DataUserInfo.UserMessengerId;
                 txtRemarkDc.Text = DataUserInfo.RemarkDc;
             }
 
-            this.ActiveControl = txtUserId;
+            this.ActiveControl = selectDeptCd;
         }
 
         private void InitEvent()
@@ -59,8 +62,8 @@ namespace WindowsFormsApp1.sys_user_info
             deptComboList = ConnDatabase.Instance.GetDept();
 
             selectDeptCd.DataSource = deptComboList;
-            selectDeptCd.DisplayMember = "DeptCd";
-            selectDeptCd.ValueMember = "Id";
+            selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+            selectDeptCd.ValueMember = nameof(Dept.Id);
             selectDeptCd.SelectedValue = DataUserInfo.IdDept;
             txtDeptName.Text = DataUserInfo.DeptName;
         }
@@ -93,8 +96,6 @@ namespace WindowsFormsApp1.sys_user_info
         {
             Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
             txtDeptName.Text = selectedDept.DeptName;
-
-            DataUserInfo.IdDept = selectedDept.Id;
         }
 
         private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
@@ -132,33 +133,21 @@ namespace WindowsFormsApp1.sys_user_info
 
         private void UserReg()
         {
-            if (DataUserInfo.IdDept == 0)
+            if (selectDeptCd.SelectedIndex < 0)
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
                 selectDeptCd.Focus();
                 return;
             }
 
-            DataUserInfo.Id = DataUserInfo.Id;
-            DataUserInfo.IdDept = DataUserInfo.IdDept;
-            DataUserInfo.UserId = txtUserId.Text.Trim();
-            DataUserInfo.UserName = txtUserName.Text.Trim();
-            DataUserInfo.UserRank = txtUserRank.Text.Trim();
-            DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
-            DataUserInfo.UserGender = chkUserGender1.Checked ? "M" : chkUserGender2.Checked ? "F" : "";
-            DataUserInfo.UserTel = txtUserTel.Text.Trim();
-            DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
-            DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
-            DataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
-
-            if (string.IsNullOrEmpty(DataUserInfo.UserId))
+            if (string.IsNullOrEmpty(txtUserId.Text.Trim()))
             {
                 MessageBox.Show("사원코드가 입력되지 않았습니다.");
                 txtUserId.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(DataUserInfo.UserName))
+            if (string.IsNullOrEmpty(txtUserName.Text.Trim()))
             {
                 MessageBox.Show("사원명이 입력되지 않았습니다.");
                 txtUserName.Focus();
@@ -166,20 +155,31 @@ namespace WindowsFormsApp1.sys_user_info
             }
 
             // 이메일 유효성 검사
-            if (!string.IsNullOrEmpty(DataUserInfo.UserEmail) && !Validator.ValidateEmail(DataUserInfo.UserEmail))
+            if (!string.IsNullOrEmpty(txtUserEmail.Text.Trim()) && !Validator.ValidateEmail(txtUserEmail.Text.Trim()))
             {
                 MessageBox.Show("올바른 이메일 형식이 아닙니다.");
                 txtUserEmail.Focus();
                 return;
             }
 
+            DataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
+            DataUserInfo.UserId = txtUserId.Text.Trim();
+            DataUserInfo.UserName = txtUserName.Text.Trim();
+            DataUserInfo.UserRank = txtUserRank.Text.Trim();
+            DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
+            DataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+            DataUserInfo.UserTel = txtUserTel.Text.Trim();
+            DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
+            DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
+            DataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
+
             int result = ConnDatabase.Instance.UpdateUser(DataUserInfo);
 
             switch (result)
             {
                 case int n when n > 0:
+                    UserUpdateFg = true;
                     MessageBox.Show("저장되었습니다.");
-                    this.DialogResult = DialogResult.OK;
                     this.Close();
                     break;
 
@@ -200,7 +200,7 @@ namespace WindowsFormsApp1.sys_user_info
 
         private void UserClose()
         {
-            this.DialogResult = DialogResult.Cancel;
+            UserUpdateFg = false;
             this.Close();
         }
     }

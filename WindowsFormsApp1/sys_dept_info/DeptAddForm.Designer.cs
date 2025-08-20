@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace WindowsFormsApp1.sys_dept_info
 {
     partial class DeptAddForm
     {

@@ -46,7 +46,7 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(110, 35);
             this.btnClose.TabIndex = 11;
-            this.btnClose.Text = "닫기";
+            this.btnClose.Text = "닫기(ESC)";
             this.btnClose.UseVisualStyleBackColor = false;
             // 
             // btnLogin
@@ -106,6 +106,7 @@
             this.Controls.Add(this.txtUserLoginId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.KeyPreview = true;
             this.Name = "IndexForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "로그인정보";

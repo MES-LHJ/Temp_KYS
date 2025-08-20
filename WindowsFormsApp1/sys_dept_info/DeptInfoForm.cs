@@ -8,17 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.helper;
 using WindowsFormsApp1.sys_user_info;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.sys_dept_info
 {
     public partial class DeptInfoForm : Form
     {
         private BindingList<Dept> deptList = new BindingList<Dept>();
 
+        public bool DeptChangeFg { get; private set; } = false;
+
         private void InitEvents()
         {
-            this.Load += DeptInfo_Load;
+            this.Load += DeptInfoForm_Load;
             this.KeyDown += DeptInfoForm_KeyDown;
             
             btnAdd.Click += BtnAdd_Click;
@@ -36,7 +39,7 @@ namespace WindowsFormsApp1
             InitEvents();
         }
 
-        public void DeptInfo_Load(object sender, EventArgs e)
+        public void DeptInfoForm_Load(object sender, EventArgs e)
         {
             DeptSrch();
         }
@@ -112,10 +115,13 @@ namespace WindowsFormsApp1
 
         public void DeptAddLoad()
         {
-            var deptAddForm = FormManager.Instance.GetDeptAddForm();
-            if (deptAddForm.ShowDialog() == DialogResult.OK)
+            DeptAddForm deptAddForm = new DeptAddForm();
+            deptAddForm.ShowDialog();
+
+            if (deptAddForm.DeptInsertFg)
             {
                 DeptSrch();
+                DeptChangeFg = true;
             }
         }
 
@@ -131,16 +137,19 @@ namespace WindowsFormsApp1
 
             var dept = new Dept
             {
-                Id = Convert.ToInt32(row.Cells["Id"].Value),
-                DeptCd = row.Cells["DeptCd"].Value?.ToString(),
-                DeptName = row.Cells["DeptName"].Value?.ToString(),
-                RemarkDc = row.Cells["RemarkDc"].Value?.ToString()
+                Id = Convert.ToInt32(row.Cells[nameof(Dept.Id)].Value),
+                DeptCd = row.Cells[nameof(Dept.DeptCd)].Value?.ToString(),
+                DeptName = row.Cells[nameof(Dept.DeptName)].Value?.ToString(),
+                RemarkDc = row.Cells[nameof(Dept.RemarkDc)].Value?.ToString()
             };
 
-            var deptUpdateForm = FormManager.Instance.GetDeptUpdateForm(dept);
-            if (deptUpdateForm.ShowDialog() == DialogResult.OK)
+            DeptUpdateForm deptUpdateForm = new DeptUpdateForm(dept);
+            deptUpdateForm.ShowDialog();
+
+            if (deptUpdateForm.DeptUpdateFg)
             {
                 DeptSrch();
+                DeptChangeFg = true;
             }
         }
 
@@ -156,9 +165,9 @@ namespace WindowsFormsApp1
 
             var dept = new Dept
             {
-                Id = Convert.ToInt32(row.Cells["Id"].Value),
-                DeptCd = row.Cells["DeptCd"].Value?.ToString(),
-                DeptName = row.Cells["DeptName"].Value?.ToString()
+                Id = Convert.ToInt32(row.Cells[nameof(Dept.Id)].Value),
+                DeptCd = row.Cells[nameof(Dept.DeptCd)].Value?.ToString(),
+                DeptName = row.Cells[nameof(Dept.DeptName)].Value?.ToString()
             };
 
             if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -188,7 +197,6 @@ namespace WindowsFormsApp1
         public void DeptClose()
         {
             this.Close();
-            FormManager.Instance.GetUserInfoForm().Show();
         }
     }
 }
