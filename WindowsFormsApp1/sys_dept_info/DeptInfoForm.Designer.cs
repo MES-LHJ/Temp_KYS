@@ -39,6 +39,8 @@
             this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RemarkDc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnChange = new System.Windows.Forms.Label();
+            this.btnChart = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -46,6 +48,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightGray;
+            this.panel1.Controls.Add(this.btnChart);
+            this.panel1.Controls.Add(this.btnChange);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.btnUpdate);
@@ -53,14 +57,14 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(480, 43);
+            this.panel1.Size = new System.Drawing.Size(660, 43);
             this.panel1.TabIndex = 3;
             // 
             // btnClose
             // 
             this.btnClose.AutoSize = true;
             this.btnClose.Font = new System.Drawing.Font("굴림", 11F);
-            this.btnClose.Location = new System.Drawing.Point(378, 12);
+            this.btnClose.Location = new System.Drawing.Point(579, 14);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(78, 15);
             this.btnClose.TabIndex = 8;
@@ -70,7 +74,7 @@
             // 
             this.btnDelete.AutoSize = true;
             this.btnDelete.Font = new System.Drawing.Font("굴림", 11F);
-            this.btnDelete.Location = new System.Drawing.Point(307, 12);
+            this.btnDelete.Location = new System.Drawing.Point(508, 14);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(65, 15);
             this.btnDelete.TabIndex = 6;
@@ -80,7 +84,7 @@
             // 
             this.btnUpdate.AutoSize = true;
             this.btnUpdate.Font = new System.Drawing.Font("굴림", 11F);
-            this.btnUpdate.Location = new System.Drawing.Point(264, 12);
+            this.btnUpdate.Location = new System.Drawing.Point(465, 14);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(37, 15);
             this.btnUpdate.TabIndex = 4;
@@ -90,7 +94,7 @@
             // 
             this.btnAdd.AutoSize = true;
             this.btnAdd.Font = new System.Drawing.Font("굴림", 11F);
-            this.btnAdd.Location = new System.Drawing.Point(193, 12);
+            this.btnAdd.Location = new System.Drawing.Point(394, 14);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(65, 15);
             this.btnAdd.TabIndex = 3;
@@ -123,7 +127,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(480, 294);
+            this.dataGridView1.Size = new System.Drawing.Size(660, 310);
             this.dataGridView1.TabIndex = 4;
             // 
             // DeptCd
@@ -155,11 +159,31 @@
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
             // 
+            // btnChange
+            // 
+            this.btnChange.AutoSize = true;
+            this.btnChange.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnChange.Location = new System.Drawing.Point(323, 14);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.Size = new System.Drawing.Size(67, 15);
+            this.btnChange.TabIndex = 9;
+            this.btnChange.Text = "자료변환";
+            // 
+            // btnChart
+            // 
+            this.btnChart.AutoSize = true;
+            this.btnChart.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnChart.Location = new System.Drawing.Point(280, 14);
+            this.btnChart.Name = "btnChart";
+            this.btnChart.Size = new System.Drawing.Size(37, 15);
+            this.btnChart.TabIndex = 10;
+            this.btnChart.Text = "차트";
+            // 
             // DeptInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 401);
+            this.ClientSize = new System.Drawing.Size(684, 411);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.KeyPreview = true;
@@ -186,5 +210,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DeptName;
         private System.Windows.Forms.DataGridViewTextBoxColumn RemarkDc;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.Label btnChart;
+        private System.Windows.Forms.Label btnChange;
     }
 }

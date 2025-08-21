@@ -388,5 +388,35 @@ namespace WindowsFormsApp1.helper
                 return -2;
             }
         }
+
+        // 부서별 사원수
+        public List<DeptUserCnt> GetDeptUserCnt()
+        {
+            var deptUserCnt = new List<DeptUserCnt>();
+
+            string sql = "SELECT dept_name, COUNT(id_dept) as user_cnt " +
+                "FROM sys_dept_info T1 LEFT JOIN sys_user_info T2 ON T1.id = T2.id_dept " +
+                "GROUP BY dept_name ORDER BY dept_name";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        deptUserCnt.Add(new DeptUserCnt
+                        {
+                            
+                            DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
+                            UserCnt = reader.GetInt32(reader.GetOrdinal("user_cnt"))
+                        });
+                    }
+                }
+            }
+
+            return deptUserCnt;
+        }
     }
 }

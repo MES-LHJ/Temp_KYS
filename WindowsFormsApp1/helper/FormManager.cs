@@ -36,15 +36,15 @@ namespace WindowsFormsApp1.helper
             }
         }
 
-        //public void SetIndex(IndexForm form)
-        //{
-        //    indexForm = form;
-        //}
+        public void SetIndexForm(IndexForm form)
+        {
+            indexForm = form;
+        }
 
         public IndexForm GetIndexForm()
         {
-            if (indexForm == null || indexForm.IsDisposed)
-                indexForm = new IndexForm();
+            //if (indexForm == null || indexForm.IsDisposed)
+            //    indexForm = new IndexForm();
             return indexForm;
         }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClosedXML;
+using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -119,7 +121,59 @@ namespace WindowsFormsApp1.sys_user_info
 
         private void BtnChange_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("조회된 데이터가 없습니다.");
+                return;
+            }
 
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Excel 파일|*.xlsx";
+                sfd.Title = "파일 경로를 선택하세요";
+                sfd.FileName = $"사원목록_{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    using (var workBook = new ClosedXML.Excel.XLWorkbook())
+                    {
+                        var workSheet = workBook.Worksheets.Add("사원정보");
+
+                        var visibleColumns = dataGridView1.Columns
+                            .Cast<DataGridViewColumn>()
+                            .Where(c => c.Visible)
+                            .OrderBy(c => c.DisplayIndex)
+                            .ToList();
+
+                        var dataTable = new DataTable();
+                        for (int i=0; i<visibleColumns.Count; i++)
+                        {
+                            dataTable.Columns.Add(visibleColumns[i].HeaderText);
+                        }
+
+                        for (int j=0; j<dataGridView1.Rows.Count; j++)
+                        {
+                            var row = dataGridView1.Rows[j];
+                            if (row.IsNewRow) continue;
+
+                            var dataRow = dataTable.NewRow();
+
+                            for (int k=0; k<visibleColumns.Count; k++)
+                            {
+                                dataRow[k] = row.Cells[visibleColumns[k].Index].FormattedValue ?? "";
+                            }
+
+                            dataTable.Rows.Add(dataRow);
+                        }
+
+                        var table = workSheet.Cell(1, 1).InsertTable(dataTable, "사원정보", true);
+
+                        workSheet.Columns().Width = 15;
+
+                        workBook.SaveAs(sfd.FileName);
+                    }
+                }
+            }
         }
 
         private void BtnClose_Click(object sender, EventArgs e)

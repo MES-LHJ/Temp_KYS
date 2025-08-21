@@ -57,6 +57,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.chkUserGender1 = new System.Windows.Forms.CheckBox();
             this.chkUserGender2 = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -325,12 +327,21 @@
             this.chkUserGender2.Text = "여";
             this.chkUserGender2.UseVisualStyleBackColor = true;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(418, 29);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(160, 160);
+            this.pictureBox1.TabIndex = 40;
+            this.pictureBox1.TabStop = false;
+            // 
             // UserAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(614, 441);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.chkUserGender2);
             this.Controls.Add(this.chkUserGender1);
             this.Controls.Add(this.label13);
@@ -364,6 +375,7 @@
             this.Name = "UserAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 추가";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -400,5 +412,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox chkUserGender1;
         private System.Windows.Forms.CheckBox chkUserGender2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
