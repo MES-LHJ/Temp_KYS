@@ -53,6 +53,9 @@
             this.chkUserGender2 = new System.Windows.Forms.CheckBox();
             this.chkUserGender1 = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.btnClearImage = new System.Windows.Forms.Button();
+            this.userImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.userImage)).BeginInit();
             this.SuspendLayout();
             // 
             // selectDeptCd
@@ -63,7 +66,7 @@
             "관리부",
             "영업부",
             "개발부"});
-            this.selectDeptCd.Location = new System.Drawing.Point(24, 52);
+            this.selectDeptCd.Location = new System.Drawing.Point(24, 50);
             this.selectDeptCd.Name = "selectDeptCd";
             this.selectDeptCd.Size = new System.Drawing.Size(170, 20);
             this.selectDeptCd.TabIndex = 39;
@@ -71,7 +74,7 @@
             // 
             // txtUserMessengerId
             // 
-            this.txtUserMessengerId.Location = new System.Drawing.Point(414, 232);
+            this.txtUserMessengerId.Location = new System.Drawing.Point(414, 288);
             this.txtUserMessengerId.Name = "txtUserMessengerId";
             this.txtUserMessengerId.Size = new System.Drawing.Size(170, 21);
             this.txtUserMessengerId.TabIndex = 49;
@@ -80,7 +83,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(412, 211);
+            this.label12.Location = new System.Drawing.Point(412, 267);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(52, 12);
             this.label12.TabIndex = 64;
@@ -88,14 +91,14 @@
             // 
             // txtUserEmail
             // 
-            this.txtUserEmail.Location = new System.Drawing.Point(218, 232);
+            this.txtUserEmail.Location = new System.Drawing.Point(218, 288);
             this.txtUserEmail.Name = "txtUserEmail";
             this.txtUserEmail.Size = new System.Drawing.Size(170, 21);
             this.txtUserEmail.TabIndex = 48;
             // 
             // txtUserTel
             // 
-            this.txtUserTel.Location = new System.Drawing.Point(26, 232);
+            this.txtUserTel.Location = new System.Drawing.Point(26, 288);
             this.txtUserTel.Name = "txtUserTel";
             this.txtUserTel.Size = new System.Drawing.Size(170, 21);
             this.txtUserTel.TabIndex = 47;
@@ -104,7 +107,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(216, 211);
+            this.label10.Location = new System.Drawing.Point(216, 267);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(41, 12);
             this.label10.TabIndex = 63;
@@ -114,7 +117,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(23, 211);
+            this.label11.Location = new System.Drawing.Point(23, 267);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 62;
@@ -122,14 +125,14 @@
             // 
             // txtUserEmpType
             // 
-            this.txtUserEmpType.Location = new System.Drawing.Point(217, 173);
+            this.txtUserEmpType.Location = new System.Drawing.Point(217, 229);
             this.txtUserEmpType.Name = "txtUserEmpType";
             this.txtUserEmpType.Size = new System.Drawing.Size(170, 21);
             this.txtUserEmpType.TabIndex = 44;
             // 
             // txtUserRank
             // 
-            this.txtUserRank.Location = new System.Drawing.Point(25, 173);
+            this.txtUserRank.Location = new System.Drawing.Point(25, 229);
             this.txtUserRank.Name = "txtUserRank";
             this.txtUserRank.Size = new System.Drawing.Size(170, 21);
             this.txtUserRank.TabIndex = 43;
@@ -138,7 +141,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(215, 152);
+            this.label8.Location = new System.Drawing.Point(215, 208);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 61;
@@ -148,7 +151,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(22, 152);
+            this.label9.Location = new System.Drawing.Point(22, 208);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 12);
             this.label9.TabIndex = 60;
@@ -156,7 +159,7 @@
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(216, 111);
+            this.txtUserName.Location = new System.Drawing.Point(216, 109);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(170, 21);
             this.txtUserName.TabIndex = 42;
@@ -165,7 +168,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(214, 90);
+            this.label4.Location = new System.Drawing.Point(214, 88);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 57;
@@ -175,7 +178,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(21, 90);
+            this.label5.Location = new System.Drawing.Point(21, 88);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 56;
@@ -186,7 +189,7 @@
             this.btnClose.BackColor = System.Drawing.Color.OrangeRed;
             this.btnClose.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(473, 335);
+            this.btnClose.Location = new System.Drawing.Point(473, 391);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(110, 35);
@@ -199,7 +202,7 @@
             this.btnAct.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnAct.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnAct.ForeColor = System.Drawing.Color.White;
-            this.btnAct.Location = new System.Drawing.Point(354, 335);
+            this.btnAct.Location = new System.Drawing.Point(354, 391);
             this.btnAct.Margin = new System.Windows.Forms.Padding(0);
             this.btnAct.Name = "btnAct";
             this.btnAct.Size = new System.Drawing.Size(110, 35);
@@ -209,7 +212,7 @@
             // 
             // txtRemarkDc
             // 
-            this.txtRemarkDc.Location = new System.Drawing.Point(25, 294);
+            this.txtRemarkDc.Location = new System.Drawing.Point(25, 350);
             this.txtRemarkDc.Name = "txtRemarkDc";
             this.txtRemarkDc.Size = new System.Drawing.Size(559, 21);
             this.txtRemarkDc.TabIndex = 50;
@@ -218,7 +221,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(24, 269);
+            this.label3.Location = new System.Drawing.Point(24, 329);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 55;
@@ -226,7 +229,7 @@
             // 
             // txtDeptName
             // 
-            this.txtDeptName.Location = new System.Drawing.Point(216, 52);
+            this.txtDeptName.Location = new System.Drawing.Point(216, 50);
             this.txtDeptName.Name = "txtDeptName";
             this.txtDeptName.ReadOnly = true;
             this.txtDeptName.Size = new System.Drawing.Size(170, 21);
@@ -237,7 +240,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(214, 31);
+            this.label2.Location = new System.Drawing.Point(214, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 54;
@@ -247,7 +250,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(21, 31);
+            this.label1.Location = new System.Drawing.Point(21, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 53;
@@ -255,7 +258,7 @@
             // 
             // txtUserId
             // 
-            this.txtUserId.Location = new System.Drawing.Point(26, 111);
+            this.txtUserId.Location = new System.Drawing.Point(26, 109);
             this.txtUserId.Name = "txtUserId";
             this.txtUserId.Size = new System.Drawing.Size(170, 21);
             this.txtUserId.TabIndex = 41;
@@ -263,7 +266,7 @@
             // chkUserGender2
             // 
             this.chkUserGender2.AutoSize = true;
-            this.chkUserGender2.Location = new System.Drawing.Point(456, 175);
+            this.chkUserGender2.Location = new System.Drawing.Point(456, 231);
             this.chkUserGender2.Name = "chkUserGender2";
             this.chkUserGender2.Size = new System.Drawing.Size(36, 16);
             this.chkUserGender2.TabIndex = 46;
@@ -273,7 +276,7 @@
             // chkUserGender1
             // 
             this.chkUserGender1.AutoSize = true;
-            this.chkUserGender1.Location = new System.Drawing.Point(414, 175);
+            this.chkUserGender1.Location = new System.Drawing.Point(414, 231);
             this.chkUserGender1.Name = "chkUserGender1";
             this.chkUserGender1.Size = new System.Drawing.Size(36, 16);
             this.chkUserGender1.TabIndex = 45;
@@ -284,17 +287,41 @@
             // 
             this.label13.AutoSize = true;
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(412, 152);
+            this.label13.Location = new System.Drawing.Point(412, 208);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(29, 12);
             this.label13.TabIndex = 67;
             this.label13.Text = "성별";
             // 
+            // btnClearImage
+            // 
+            this.btnClearImage.BackColor = System.Drawing.Color.DarkGray;
+            this.btnClearImage.ForeColor = System.Drawing.Color.White;
+            this.btnClearImage.Location = new System.Drawing.Point(414, 162);
+            this.btnClearImage.Name = "btnClearImage";
+            this.btnClearImage.Size = new System.Drawing.Size(150, 30);
+            this.btnClearImage.TabIndex = 69;
+            this.btnClearImage.TabStop = false;
+            this.btnClearImage.Text = "이미지 비우기";
+            this.btnClearImage.UseVisualStyleBackColor = false;
+            // 
+            // userImage
+            // 
+            this.userImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.userImage.Location = new System.Drawing.Point(414, 12);
+            this.userImage.Name = "userImage";
+            this.userImage.Size = new System.Drawing.Size(150, 150);
+            this.userImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.userImage.TabIndex = 68;
+            this.userImage.TabStop = false;
+            // 
             // UserUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 385);
+            this.ClientSize = new System.Drawing.Size(614, 441);
+            this.Controls.Add(this.btnClearImage);
+            this.Controls.Add(this.userImage);
             this.Controls.Add(this.chkUserGender2);
             this.Controls.Add(this.chkUserGender1);
             this.Controls.Add(this.label13);
@@ -324,6 +351,7 @@
             this.Name = "UserUpdateForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 수정";
+            ((System.ComponentModel.ISupportInitialize)(this.userImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,5 +383,7 @@
         private System.Windows.Forms.CheckBox chkUserGender2;
         private System.Windows.Forms.CheckBox chkUserGender1;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnClearImage;
+        private System.Windows.Forms.PictureBox userImage;
     }
 }

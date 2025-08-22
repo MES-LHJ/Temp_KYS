@@ -54,6 +54,7 @@
             this.RemarkDc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdDept = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -186,7 +187,8 @@
             this.UserMessengerId,
             this.RemarkDc,
             this.Id,
-            this.IdDept});
+            this.IdDept,
+            this.UserImage});
             this.dataGridView1.Location = new System.Drawing.Point(12, 72);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -345,6 +347,15 @@
             this.IdDept.Visible = false;
             this.IdDept.Width = 65;
             // 
+            // UserImage
+            // 
+            this.UserImage.DataPropertyName = "UserImage";
+            this.UserImage.HeaderText = "UserImage";
+            this.UserImage.Name = "UserImage";
+            this.UserImage.ReadOnly = true;
+            this.UserImage.Visible = false;
+            this.UserImage.Width = 91;
+            // 
             // UserInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -391,5 +402,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RemarkDc;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdDept;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserImage;
     }
 }

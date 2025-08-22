@@ -27,6 +27,7 @@ namespace WindowsFormsApp1.helper
         public string UserEmail { get; set; }
         public string UserMessengerId { get; set; }
         public string RemarkDc { get; set; }
+        public string UserImage { get; set; } = "";
         public int IdDept { get; set; }
         public string DeptCd { get; set; }
         public string DeptName { get; set; }

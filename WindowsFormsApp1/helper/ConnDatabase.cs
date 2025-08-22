@@ -62,8 +62,8 @@ namespace WindowsFormsApp1.helper
         {
             var users = new BindingList<User>();
 
-            string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_login_id, " +
-                "user_pass, user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc " +
+            string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_login_id, user_pass, " +
+                "user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc, user_image " +
                 "FROM sys_user_info T1 INNER JOIN sys_dept_info T2 ON T1.id_dept = T2.id " +
                 "WHERE user_id <> 'master' ORDER BY user_id, user_name";
 
@@ -89,6 +89,7 @@ namespace WindowsFormsApp1.helper
                             UserEmail = reader.IsDBNull(reader.GetOrdinal("user_email")) ? null : reader.GetString(reader.GetOrdinal("user_email")),
                             UserMessengerId = reader.IsDBNull(reader.GetOrdinal("user_messenger_id")) ? null : reader.GetString(reader.GetOrdinal("user_messenger_id")),
                             RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc")),
+                            UserImage = reader.IsDBNull(reader.GetOrdinal("user_image")) ? null : reader.GetString(reader.GetOrdinal("user_image")),
                             IdDept = reader.GetInt32(reader.GetOrdinal("id_dept")),
                             DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
                             DeptName = reader.GetString(reader.GetOrdinal("dept_name"))
@@ -139,8 +140,11 @@ namespace WindowsFormsApp1.helper
                     conn.Close();
                 }
 
-                string sql = "INSERT INTO sys_user_info (user_id, user_name, user_pass, user_login_id, id_dept, user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, remark_dc) " +
-                    "VALUES (@user_id, @user_name, @user_pass, @user_login_id, @id_dept, @user_rank, @user_emp_type, @user_gender, @user_tel, @user_email, @user_messenger_id, @remark_dc)";
+                string sql = "INSERT INTO sys_user_info (user_id, user_name, user_pass, user_login_id, id_dept, user_rank, user_emp_type, " +
+                    "user_gender, user_tel, user_email, user_messenger_id, remark_dc, user_image) " +
+                    "VALUES (@user_id, @user_name, @user_pass, @user_login_id, @id_dept, @user_rank, @user_emp_type, " +
+                    "@user_gender, @user_tel, @user_email, @user_messenger_id, @remark_dc, @user_image);" +
+                    "SELECT CONVERT(INT, SCOPE_IDENTITY());";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -156,11 +160,11 @@ namespace WindowsFormsApp1.helper
                     cmd.Parameters.Add("@user_tel", SqlDbType.NVarChar).Value = user.UserTel;
                     cmd.Parameters.Add("@user_email", SqlDbType.NVarChar).Value = user.UserEmail;
                     cmd.Parameters.Add("@user_messenger_id", SqlDbType.NVarChar).Value = user.UserMessengerId;
-
                     cmd.Parameters.Add("@remark_dc", SqlDbType.NVarChar).Value = user.RemarkDc;
+                    cmd.Parameters.Add("@user_image", SqlDbType.NVarChar).Value = user.UserImage;
 
                     conn.Open();
-                    return cmd.ExecuteNonQuery();
+                    return (int)cmd.ExecuteScalar();
                 }
             }
             catch (Exception ex)
@@ -195,7 +199,7 @@ namespace WindowsFormsApp1.helper
 
                 string sql = "UPDATE sys_user_info SET id_dept = @id_dept, user_id = @user_id, user_name = @user_name, user_rank = @user_rank, " +
                     "user_emp_type = @user_emp_type, user_gender = @user_gender, user_tel = @user_tel, user_email = @user_email, " +
-                    "user_messenger_id = @user_messenger_id, remark_dc = @remark_dc WHERE id = @id";
+                    "user_messenger_id = @user_messenger_id, remark_dc = @remark_dc, user_image = @user_image WHERE id = @id";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -211,6 +215,7 @@ namespace WindowsFormsApp1.helper
                     cmd.Parameters.Add("@user_email", SqlDbType.NVarChar).Value = user.UserEmail;
                     cmd.Parameters.Add("@user_messenger_id", SqlDbType.NVarChar).Value = user.UserMessengerId;
                     cmd.Parameters.Add("@remark_dc", SqlDbType.NVarChar).Value = user.RemarkDc;
+                    cmd.Parameters.Add("@user_image", SqlDbType.NVarChar).Value = user.UserImage;
 
                     conn.Open();
                     return cmd.ExecuteNonQuery();
@@ -242,7 +247,31 @@ namespace WindowsFormsApp1.helper
             catch (Exception ex)
             {
                 Debug.WriteLine($"DeleteDept Error: {ex.Message}");
-                return -2;
+                return -1;
+            }
+        }
+
+        // 사원 이미지 업데이트
+        public int UpdateUserImage(int id, string filePath)
+        {
+            try
+            {
+                string sql = "UPDATE sys_user_info SET user_image = @user_image WHERE id = @id";
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    cmd.Parameters.Add("@user_image", SqlDbType.NVarChar).Value = filePath;
+
+                    conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"UpdateUser Error: {ex.Message}");
+                return -1;
             }
         }
 

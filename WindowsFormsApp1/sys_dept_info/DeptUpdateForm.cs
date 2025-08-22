@@ -58,7 +58,7 @@ namespace WindowsFormsApp1.sys_dept_info
 
                 // 저장(F4)
                 case Keys.F4:
-                    DeptReg();
+                    DeptUpdateCheck();
                     break;
 
                 // 닫기(ESC)
@@ -76,7 +76,7 @@ namespace WindowsFormsApp1.sys_dept_info
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                    DeptReg();
+                    DeptUpdateCheck();
                     break;
 
                 default:
@@ -86,12 +86,29 @@ namespace WindowsFormsApp1.sys_dept_info
 
         private void BtnAct_Click(object sender, EventArgs e)
         {
-            DeptReg();
+            DeptUpdateCheck();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             DeptClose();
+        }
+
+        private void DeptUpdateCheck()
+        {
+            bool fieldUpdateFg = false;
+
+            if (!fieldUpdateFg && txtDeptCd.Text.Trim() != DataDeptInfo.DeptCd) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtDeptName.Text.Trim() != DataDeptInfo.DeptName) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtRemarkDc.Text.Trim() != DataDeptInfo.RemarkDc) fieldUpdateFg = true;
+
+            if (!fieldUpdateFg)
+            {
+                MessageBox.Show("수정된 데이터가 없습니다.");
+                return;
+            }
+
+            DeptReg();
         }
 
         private void DeptReg()
@@ -112,32 +129,35 @@ namespace WindowsFormsApp1.sys_dept_info
                 return;
             }
 
-            DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
-            DataDeptInfo.DeptName = txtDeptName.Text.Trim();
-            DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
-
-            int result = ConnDatabase.Instance.UpdateDept(DataDeptInfo);
-
-            switch (result)
+            if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                case int n when n > 0:
-                    DeptUpdateFg = true;
-                    MessageBox.Show("수정되었습니다.");
-                    this.Close();
-                    break;
+                DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
+                DataDeptInfo.DeptName = txtDeptName.Text.Trim();
+                DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
 
-                case -1:
-                    MessageBox.Show("이미 존재하는 부서코드 입니다.");
-                    txtDeptCd.Focus();
-                    break;
+                int result = ConnDatabase.Instance.UpdateDept(DataDeptInfo);
 
-                case -2:
-                    MessageBox.Show("수정 중 오류가 발생했습니다.");
-                    break;
+                switch (result)
+                {
+                    case int n when n > 0:
+                        DeptUpdateFg = true;
+                        MessageBox.Show("수정되었습니다.");
+                        this.Close();
+                        break;
 
-                default:
-                    MessageBox.Show("수정에 실패했습니다.");
-                    break;
+                    case -1:
+                        MessageBox.Show("이미 존재하는 부서코드 입니다.");
+                        txtDeptCd.Focus();
+                        break;
+
+                    case -2:
+                        MessageBox.Show("수정 중 오류가 발생했습니다.");
+                        break;
+
+                    default:
+                        MessageBox.Show("수정에 실패했습니다.");
+                        break;
+                }
             }
         }
 

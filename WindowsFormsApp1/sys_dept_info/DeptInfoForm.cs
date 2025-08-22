@@ -235,7 +235,7 @@ namespace WindowsFormsApp1.sys_dept_info
                 DeptName = row.Cells[nameof(Dept.DeptName)].Value?.ToString()
             };
 
-            if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 int result = ConnDatabase.Instance.DeleteDept(dept.Id);
 

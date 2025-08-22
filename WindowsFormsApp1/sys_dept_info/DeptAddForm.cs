@@ -105,32 +105,35 @@ namespace WindowsFormsApp1.sys_dept_info
                 return;
             }
 
-            DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
-            DataDeptInfo.DeptName = txtDeptName.Text.Trim();
-            DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
-
-            int result = ConnDatabase.Instance.AddDept(DataDeptInfo);
-
-            switch (result)
+            if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                case int n when n > 0:
-                    DeptInsertFg = true;
-                    MessageBox.Show("저장되었습니다.");
-                    this.Close();
-                    break;
+                DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
+                DataDeptInfo.DeptName = txtDeptName.Text.Trim();
+                DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
 
-                case -1:
-                    MessageBox.Show("이미 존재하는 부서코드 입니다.");
-                    txtDeptCd.Focus();
-                    break;
+                int result = ConnDatabase.Instance.AddDept(DataDeptInfo);
 
-                case -2:
-                    MessageBox.Show("저장 중 오류가 발생했습니다.");
-                    break;
+                switch (result)
+                {
+                    case int n when n > 0:
+                        DeptInsertFg = true;
+                        MessageBox.Show("저장되었습니다.");
+                        this.Close();
+                        break;
 
-                default:
-                    MessageBox.Show("저장에 실패했습니다.");
-                    break;
+                    case -1:
+                        MessageBox.Show("이미 존재하는 부서코드 입니다.");
+                        txtDeptCd.Focus();
+                        break;
+
+                    case -2:
+                        MessageBox.Show("저장 중 오류가 발생했습니다.");
+                        break;
+
+                    default:
+                        MessageBox.Show("저장에 실패했습니다.");
+                        break;
+                }
             }
         }
 

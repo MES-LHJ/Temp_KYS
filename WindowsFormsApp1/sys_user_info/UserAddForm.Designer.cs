@@ -57,8 +57,9 @@
             this.label13 = new System.Windows.Forms.Label();
             this.chkUserGender1 = new System.Windows.Forms.CheckBox();
             this.chkUserGender2 = new System.Windows.Forms.CheckBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.userImage = new System.Windows.Forms.PictureBox();
+            this.btnClearImage = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.userImage)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -327,13 +328,27 @@
             this.chkUserGender2.Text = "여";
             this.chkUserGender2.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // userImage
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(418, 29);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(160, 160);
-            this.pictureBox1.TabIndex = 40;
-            this.pictureBox1.TabStop = false;
+            this.userImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.userImage.Location = new System.Drawing.Point(414, 12);
+            this.userImage.Name = "userImage";
+            this.userImage.Size = new System.Drawing.Size(150, 150);
+            this.userImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.userImage.TabIndex = 40;
+            this.userImage.TabStop = false;
+            // 
+            // btnClearImage
+            // 
+            this.btnClearImage.BackColor = System.Drawing.Color.DarkGray;
+            this.btnClearImage.ForeColor = System.Drawing.Color.White;
+            this.btnClearImage.Location = new System.Drawing.Point(414, 162);
+            this.btnClearImage.Name = "btnClearImage";
+            this.btnClearImage.Size = new System.Drawing.Size(150, 30);
+            this.btnClearImage.TabIndex = 41;
+            this.btnClearImage.TabStop = false;
+            this.btnClearImage.Text = "이미지 비우기";
+            this.btnClearImage.UseVisualStyleBackColor = false;
             // 
             // UserAddForm
             // 
@@ -341,7 +356,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(614, 441);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnClearImage);
+            this.Controls.Add(this.userImage);
             this.Controls.Add(this.chkUserGender2);
             this.Controls.Add(this.chkUserGender1);
             this.Controls.Add(this.label13);
@@ -375,7 +391,7 @@
             this.Name = "UserAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "사원 추가";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -412,6 +428,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox chkUserGender1;
         private System.Windows.Forms.CheckBox chkUserGender2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox userImage;
+        private System.Windows.Forms.Button btnClearImage;
     }
 }

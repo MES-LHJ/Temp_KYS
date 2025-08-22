@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
@@ -282,6 +283,7 @@ namespace WindowsFormsApp1.sys_user_info
                 UserEmail = row.Cells[nameof(User.UserEmail)].Value?.ToString(),
                 UserMessengerId = row.Cells[nameof(User.UserMessengerId)].Value?.ToString(),
                 RemarkDc = row.Cells[nameof(User.RemarkDc)].Value?.ToString(),
+                UserImage = row.Cells[nameof(User.UserImage)].Value?.ToString(),
                 IdDept = Convert.ToInt32(row.Cells[nameof(User.IdDept)].Value),
                 DeptCd = row.Cells[nameof(User.DeptCd)].Value?.ToString(),
                 DeptName = row.Cells[nameof(User.DeptName)].Value?.ToString()
@@ -310,25 +312,53 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 Id = Convert.ToInt32(row.Cells[nameof(User.Id)].Value),
                 UserId = row.Cells[nameof(User.UserId)].Value?.ToString(),
-                UserName = row.Cells[nameof(User.UserName)].Value?.ToString()
+                UserName = row.Cells[nameof(User.UserName)].Value?.ToString(),
+                UserImage = row.Cells[nameof(User.UserImage)].Value?.ToString()
             };
 
-            if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 int result = ConnDatabase.Instance.DeleteUser(user.Id);
 
                 if (result > 0)
                 {
+                    if (!string.IsNullOrEmpty(user.UserImage))
+                    {
+                        UserImageDelete(user.Id);
+                    }
+
                     MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n데이터가 삭제되었습니다.");
                     UserSrch();
                 }
-                else if (result == -2)
+                else if (result == -1)
                 {
                     MessageBox.Show("삭제 중 오류가 발생했습니다.");
                 }
                 else
                 {
                     MessageBox.Show("삭제에 실패했습니다");
+                }
+            }
+        }
+
+        private void UserImageDelete(int userId)
+        {
+            string targetFolder = $"D:\\Nas\\UserInfo\\{userId}";
+
+            if (Directory.Exists(targetFolder))
+            {
+                try
+                {
+                    Directory.Delete(targetFolder, true);
+                    //MessageBox.Show("폴더가 삭제되었습니다.");
+                }
+                catch (IOException ioEx)
+                {
+                    MessageBox.Show("폴더 삭제 중 오류 발생 (폴더 안에 파일이 있을 수 있음): " + ioEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("폴더 삭제 중 예기치 않은 오류 발생: " + ex.Message);
                 }
             }
         }
