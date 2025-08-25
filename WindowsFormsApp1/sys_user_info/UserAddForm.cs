@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -25,14 +26,15 @@ namespace WindowsFormsApp1.sys_user_info
 
         public bool UserInsertFg { get; private set; } = false;
 
+        // 이벤트 핸들러
         private void InitEvent()
         {
             this.Load += UserAdd_Load;
             this.KeyDown += UserAddForm_KeyDown;
             selectDeptCd.SelectionChangeCommitted += SelectDeptCd_SelectionChangeCommitted;
-            txtRemarkDc.KeyDown += TxtRemarkDc_KeyDown;
             chkUserGender1.CheckedChanged += ChkUserGender1_CheckedChanged;
             chkUserGender2.CheckedChanged += ChkUserGender2_CheckedChanged;
+            txtRemarkDc.KeyDown += TxtRemarkDc_KeyDown;
 
             btnAct.Click += BtnAct_Click;
             btnCancel.Click += BtnCancel_Click;
@@ -48,8 +50,14 @@ namespace WindowsFormsApp1.sys_user_info
             InitEvent();
         }
 
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 Load 이벤트
         private void UserAdd_Load(object sender, EventArgs e)
         {
+            // 콤보박스 리스트
             deptComboList = ConnDatabase.Instance.GetDept();
 
             selectDeptCd.DataSource = deptComboList;
@@ -59,6 +67,7 @@ namespace WindowsFormsApp1.sys_user_info
             txtDeptName.Text = "";
         }
 
+        // 폼 KeyDown 이벤트
         private void UserAddForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -83,12 +92,26 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 부서코드 combobox selectChange 이벤트
         private void SelectDeptCd_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
             txtDeptName.Text = selectedDept.DeptName;
         }
 
+        // 성별 체크박스 남자 체크 이벤트
+        private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUserGender1.Checked) chkUserGender2.Checked = false;
+        }
+
+        // 성별 체크박스 여자 체크 이벤트
+        private void ChkUserGender2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUserGender2.Checked) chkUserGender1.Checked = false;
+        }
+
+        // input 비고 KeyDown 이벤트
         private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -102,50 +125,19 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
-        private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkUserGender1.Checked) chkUserGender2.Checked = false;
-        }
-
-        private void ChkUserGender2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkUserGender2.Checked) chkUserGender1.Checked = false;
-        }
-
+        // 저장 버튼 클릭 이벤트
         private void BtnAct_Click(object sender, EventArgs e)
         {
             UserReg();
         }
 
+        // 취소 버튼 클릭 이벤트
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             UserClose();
         }
 
-        //public void ResetForm()
-        //{
-        //    selectDeptCd.SelectedIndex = -1;
-        //    txtDeptName.Text = string.Empty;
-
-        //    txtUserId.Text = string.Empty;
-        //    txtUserName.Text = string.Empty;
-        //    txtUserLoginId.Text = string.Empty;
-        //    txtUserPass.Text = string.Empty;
-        //    txtUserRank.Text = string.Empty;
-        //    txtUserEmpType.Text = string.Empty;
-        //    txtUserTel.Text = string.Empty;
-        //    txtUserEmail.Text = string.Empty;
-        //    txtUserMessengerId.Text = string.Empty;
-        //    txtRemarkDc.Text = string.Empty;
-
-        //    chkUserGender1.Checked = false;
-        //    chkUserGender2.Checked = false;
-
-        //    DataUserInfo.IdDept = 0;
-
-        //    this.ActiveControl = selectDeptCd;
-        //}
-
+        // 이미지 추가 Paint 이벤트
         private void UserImage_Paint(object sender, PaintEventArgs e)
         {
             if (userImage.Image == null)
@@ -162,6 +154,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 이미지 추가 클릭 이벤트
         private void UserImage_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
@@ -178,6 +171,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 이미지 비우기 버튼 클릭 이벤트
         private void BtnClearImage_Click(object sender, EventArgs e)
         {
             if (userImage.Image != null)
@@ -191,6 +185,11 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // ------------
+        // 메서드 정의
+        // ------------
+
+        // 사원 저장
         private void UserReg()
         {
             if (selectDeptCd.SelectedIndex < 0)
@@ -293,13 +292,23 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 사원 이미지 업로드
         private void UserImageUpdate()
         {
             if (userImage.Image != null)
             {
                 try
                 {
-                    string targetFolder = $"D:\\Nas\\UserInfo\\{saveId}";
+                    // app.config에서 기본 경로 읽기
+                    string baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
+
+                    if (string.IsNullOrEmpty(baseFolder))
+                    {
+                        Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
+                        return;
+                    }
+
+                    string targetFolder = Path.Combine(baseFolder, saveId.ToString());
                     string savePath = Path.Combine(targetFolder, saveFileName);
 
                     if (!Directory.Exists(targetFolder))
@@ -307,26 +316,51 @@ namespace WindowsFormsApp1.sys_user_info
                         Directory.CreateDirectory(targetFolder);
                     }
 
-                    int imageResult = ConnDatabase.Instance.UpdateUserImage(saveId, savePath);
-
                     using (var bmp = new Bitmap(userImage.Image))
                     {
                         bmp.Save(savePath);
                     }
 
-                    //MessageBox.Show("이미지가 저장되었습니다: " + savePath);
+                    int imageResult = ConnDatabase.Instance.UpdateUserImage(saveId, savePath);
+
+                    Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("이미지 저장 중 오류가 발생했습니다: " + ex.Message);
+                    Debug.WriteLine("이미지 저장 중 오류가 발생했습니다: " + ex.Message);
                 }
             }
         }
 
+        // 폼 닫기
         private void UserClose()
         {
             UserInsertFg = false;
             this.Close();
         }
+
+        //public void ResetForm()
+        //{
+        //    selectDeptCd.SelectedIndex = -1;
+        //    txtDeptName.Text = string.Empty;
+
+        //    txtUserId.Text = string.Empty;
+        //    txtUserName.Text = string.Empty;
+        //    txtUserLoginId.Text = string.Empty;
+        //    txtUserPass.Text = string.Empty;
+        //    txtUserRank.Text = string.Empty;
+        //    txtUserEmpType.Text = string.Empty;
+        //    txtUserTel.Text = string.Empty;
+        //    txtUserEmail.Text = string.Empty;
+        //    txtUserMessengerId.Text = string.Empty;
+        //    txtRemarkDc.Text = string.Empty;
+
+        //    chkUserGender1.Checked = false;
+        //    chkUserGender2.Checked = false;
+
+        //    DataUserInfo.IdDept = 0;
+
+        //    this.ActiveControl = selectDeptCd;
+        //}
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -20,33 +21,12 @@ namespace WindowsFormsApp1.sys_user_info
 
         public bool UserUpdateFg { get; private set; } = false;
 
-        private bool imageUpdateFg = false;
+        private readonly int Id;
         private string oldFileName = "";
         private string saveFileName = "";
-        
+        private bool imageUpdateFg = false;
 
-        public void SetData(User user)
-        {
-            DataUserInfo = user;
-            if (DataUserInfo != null)
-            {
-                txtUserId.Text = DataUserInfo.UserId;
-                txtUserName.Text = DataUserInfo.UserName;
-                txtUserRank.Text = DataUserInfo.UserRank;
-                txtUserEmpType.Text = DataUserInfo.UserEmpType;
-                chkUserGender1.Checked = DataUserInfo.UserGender == User.Gender.Male;
-                chkUserGender2.Checked = DataUserInfo.UserGender == User.Gender.FeMale;
-                txtUserTel.Text = DataUserInfo.UserTel;
-                txtUserEmail.Text = DataUserInfo.UserEmail;
-                txtUserMessengerId.Text = DataUserInfo.UserMessengerId;
-                txtRemarkDc.Text = DataUserInfo.RemarkDc;
-
-                oldFileName = DataUserInfo.UserImage;
-            }
-
-            this.ActiveControl = selectDeptCd;
-        }
-
+        // 이벤트 핸들러
         private void InitEvent()
         {
             this.Load += UserUpdate_Load;
@@ -65,15 +45,174 @@ namespace WindowsFormsApp1.sys_user_info
             btnClearImage.Click += BtnClearImage_Click;
         }
 
-        public UserUpdateForm(User user)
+        public UserUpdateForm(int id)
         {
+            Id = id;
             InitializeComponent();
-            SetData(user);
             InitEvent();
         }
 
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 Load 이벤트
         private void UserUpdate_Load(object sender, EventArgs e)
         {
+            UserSetData();
+        }
+
+        // 폼 KeyDown 이벤트
+        private void UserUpdateForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                // 엔터키
+                case Keys.Enter:
+                    this.SelectNextControl(this.ActiveControl, true, true, true, false);
+                    break;
+
+                // 저장(F4)
+                case Keys.F4:
+                    UserUpdateCheck();
+                    break;
+
+                // 닫기(ESC)
+                case Keys.Escape:
+                    UserClose();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        // 부서코드 combobox selectChange 이벤트
+        private void SelectDeptCd_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
+            txtDeptName.Text = selectedDept.DeptName;
+        }
+
+        // 성별 체크박스 남자 체크 이벤트
+        private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUserGender1.Checked) chkUserGender2.Checked = false;
+        }
+
+        // 성별 체크박스 여자 체크 이벤트
+        private void ChkUserGender2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUserGender2.Checked) chkUserGender1.Checked = false;
+        }
+
+        // input 비고 KeyDown 이벤트
+        private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    UserUpdateCheck();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        // 저장 버튼 클릭 이벤트
+        private void BtnAct_Click(object sender, EventArgs e)
+        {
+            UserUpdateCheck();
+        }
+
+        // 닫기 버튼 클릭 이벤트
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            UserClose();
+        }
+
+        // 이미지 추가 Paint 이벤트
+        private void UserImage_Paint(object sender, PaintEventArgs e)
+        {
+            if (userImage.Image == null)
+            {
+                string text = "이미지 추가";
+                Font font = new Font("굴림", 12, FontStyle.Bold);
+                Brush brush = Brushes.Gray;
+
+                SizeF textSize = e.Graphics.MeasureString(text, font);
+                float x = (userImage.Width - textSize.Width) / 2;
+                float y = (userImage.Height - textSize.Height) / 2;
+
+                e.Graphics.DrawString(text, font, brush, x, y);
+            }
+        }
+
+        // 이미지 추가 클릭 이벤트
+        private void UserImage_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp";
+                ofd.Title = "이미지 선택";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    userImage.Image = Image.FromFile(ofd.FileName);
+                    saveFileName = Path.GetFileName(ofd.FileName);
+                    userImage.Invalidate();
+                    imageUpdateFg = true;
+                }
+            }
+        }
+
+        // 이미지 비우기 버튼 클릭 이벤트
+        private void BtnClearImage_Click(object sender, EventArgs e)
+        {
+            if (userImage.Image != null)
+            {
+                if (MessageBox.Show("이미지를 비우시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    userImage.Image.Dispose();
+                    userImage.Image = null;
+                    userImage.Invalidate();
+                    imageUpdateFg = true;
+                }
+            }
+        }
+
+        // ------------
+        // 메서드 정의
+        // ------------
+
+        // 사원 데이터 SET
+        private void UserSetData()
+        {
+            DataUserInfo = ConnDatabase.Instance.GetUserById(Id);
+
+            if (DataUserInfo == null)
+            {
+                MessageBox.Show("해당 사원 정보를 찾을 수 없습니다.");
+                this.Close();
+            }
+            else
+            {
+                txtUserId.Text = DataUserInfo.UserId;
+                txtUserName.Text = DataUserInfo.UserName;
+                txtUserRank.Text = DataUserInfo.UserRank;
+                txtUserEmpType.Text = DataUserInfo.UserEmpType;
+                chkUserGender1.Checked = DataUserInfo.UserGender == User.Gender.Male;
+                chkUserGender2.Checked = DataUserInfo.UserGender == User.Gender.FeMale;
+                txtUserTel.Text = DataUserInfo.UserTel;
+                txtUserEmail.Text = DataUserInfo.UserEmail;
+                txtUserMessengerId.Text = DataUserInfo.UserMessengerId;
+                txtRemarkDc.Text = DataUserInfo.RemarkDc;
+
+                oldFileName = DataUserInfo.UserImage;
+            }
+
+            // 콤보박스 리스트
             deptComboList = ConnDatabase.Instance.GetDept();
 
             selectDeptCd.DataSource = deptComboList;
@@ -106,116 +245,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
-        private void UserUpdateForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                // 엔터키
-                case Keys.Enter:
-                    this.SelectNextControl(this.ActiveControl, true, true, true, false);
-                    break;
-
-                // 저장(F4)
-                case Keys.F4:
-                    UserUpdateCheck();
-                    break;
-
-                // 닫기(ESC)
-                case Keys.Escape:
-                    UserClose();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void SelectDeptCd_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
-            txtDeptName.Text = selectedDept.DeptName;
-        }
-
-        private void ChkUserGender1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkUserGender1.Checked) chkUserGender2.Checked = false;
-        }
-
-        private void ChkUserGender2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkUserGender2.Checked) chkUserGender1.Checked = false;
-        }
-
-        private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Enter:
-                    UserUpdateCheck();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void BtnAct_Click(object sender, EventArgs e)
-        {
-            UserUpdateCheck();
-        }
-
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
-            UserClose();
-        }
-
-        private void UserImage_Paint(object sender, PaintEventArgs e)
-        {
-            if (userImage.Image == null)
-            {
-                string text = "이미지 추가";
-                Font font = new Font("굴림", 12, FontStyle.Bold);
-                Brush brush = Brushes.Gray;
-
-                SizeF textSize = e.Graphics.MeasureString(text, font);
-                float x = (userImage.Width - textSize.Width) / 2;
-                float y = (userImage.Height - textSize.Height) / 2;
-
-                e.Graphics.DrawString(text, font, brush, x, y);
-            }
-        }
-
-        private void UserImage_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp";
-                ofd.Title = "이미지 선택";
-
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    userImage.Image = Image.FromFile(ofd.FileName);
-                    saveFileName = Path.GetFileName(ofd.FileName);
-                    userImage.Invalidate();
-                    imageUpdateFg = true;
-                }
-            }
-        }
-
-        private void BtnClearImage_Click(object sender, EventArgs e)
-        {
-            if (userImage.Image != null)
-            {
-                if (MessageBox.Show("이미지를 비우시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    userImage.Image.Dispose();
-                    userImage.Image = null;
-                    userImage.Invalidate();
-                    imageUpdateFg = true;
-                }
-            }
-        }
-
+        // 수정된 데이터 존재 여부 체크
         private void UserUpdateCheck()
         {
             bool fieldUpdateFg = false;
@@ -245,6 +275,7 @@ namespace WindowsFormsApp1.sys_user_info
             UserReg();
         }
 
+        // 사원 저장
         private void UserReg()
         {
             if (selectDeptCd.SelectedIndex < 0)
@@ -325,8 +356,10 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 사원 이미지 업데이트
         private void UserImageUpdate()
         {
+            // 기존 등록된 이미지가 존재하는 경우 삭제
             if (!string.IsNullOrEmpty(oldFileName) && File.Exists(oldFileName))
             {
                 try
@@ -339,15 +372,25 @@ namespace WindowsFormsApp1.sys_user_info
                 }
                 catch (Exception deleteEx)
                 {
-                    MessageBox.Show($"기존 파일 삭제 중 예기치 않은 오류 발생: {deleteEx.Message}");
+                    Debug.WriteLine($"기존 파일 삭제 중 예기치 않은 오류 발생: {deleteEx.Message}");
                 }
             }
 
+            // 이미지 업로드
             if (userImage.Image != null)
             {
                 try
                 {
-                    string targetFolder = $"D:\\Nas\\UserInfo\\{DataUserInfo.Id}";
+                    // app.config에서 기본 경로 읽기
+                    string baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
+
+                    if (string.IsNullOrEmpty(baseFolder))
+                    {
+                        Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
+                        return;
+                    }
+
+                    string targetFolder = Path.Combine(baseFolder, Id.ToString());
                     string savePath = Path.Combine(targetFolder, saveFileName);
 
                     if (!Directory.Exists(targetFolder))
@@ -360,15 +403,16 @@ namespace WindowsFormsApp1.sys_user_info
                         bmp.Save(savePath);
                     }
 
-                    //MessageBox.Show("이미지가 저장되었습니다: " + savePath);
+                    Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("이미지 저장 중 오류가 발생했습니다: " + ex.Message);
+                    Debug.WriteLine("이미지 저장 중 오류가 발생했습니다: " + ex.Message);
                 }
             }
         }
 
+        // 폼 닫기
         private void UserClose()
         {
             UserUpdateFg = false;

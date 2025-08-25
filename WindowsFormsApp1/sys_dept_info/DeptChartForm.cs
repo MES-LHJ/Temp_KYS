@@ -16,6 +16,7 @@ namespace WindowsFormsApp1.sys_dept_info
     {
         private List<DeptUserCnt> chartList;
 
+        // 이벤트 핸들러
         private void InitEvents()
         {
             this.Load += DeptChartForm_Load;
@@ -28,7 +29,38 @@ namespace WindowsFormsApp1.sys_dept_info
             InitEvents();
         }
 
+
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 Load 이벤트
         private void DeptChartForm_Load(object sender, EventArgs e)
+        {
+            DeptChart();
+        }
+
+        // 폼 KeyDown 이벤트
+        private void DeptChartForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                // 닫기(ESC)
+                case Keys.Escape:
+                    this.Close();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        // ------------
+        // 메서드 정의
+        // ------------
+
+        // 부서별 사원수 차트
+        public void DeptChart()
         {
             Chart chart = chart1;
 
@@ -57,20 +89,6 @@ namespace WindowsFormsApp1.sys_dept_info
             // 차트 제목 설정
             Title title = new Title("부서별 사원수", Docking.Top, new System.Drawing.Font("Arial", 14), System.Drawing.Color.Black);
             chart.Titles.Add(title);
-        }
-
-        private void DeptChartForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                // 닫기(ESC)
-                case Keys.Escape:
-                    this.Close();
-                    break;
-
-                default:
-                    break;
-            }
         }
     }
 }

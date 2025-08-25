@@ -3,6 +3,7 @@ using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -22,6 +23,7 @@ namespace WindowsFormsApp1.sys_user_info
     {
         private BindingList<User> userList;
 
+        // 이벤트 핸들러
         private void InitEvents()
         {
             this.Load += UserInfoForm_Load;
@@ -47,6 +49,11 @@ namespace WindowsFormsApp1.sys_user_info
             InitEvents();
         }
 
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 Load 이벤트
         public void UserInfoForm_Load(object sender, EventArgs e)
         {
             this.BeginInvoke((MethodInvoker)delegate
@@ -61,6 +68,7 @@ namespace WindowsFormsApp1.sys_user_info
             });
         }
 
+        // 폼 KeyDown 이벤트
         private void UserInfoForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -90,98 +98,55 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 부서 버튼 클릭 이벤트
         private void BtnDept_Click(object sender, EventArgs e)
         {
             DeptInfoLoad();
         }
 
+        // 조회 버튼 클릭 이벤트
         private void BtnSrch_Click(object sender, EventArgs e)
         {
             UserSrch();
         }
 
+        // 추가 버튼 클릭 이벤트
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             UserAddLoad();
         }
 
+        // 수정 버튼 클릭 이벤트
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
             UserUpdateLoad();
         }
 
+        // 로그인정보 클릭 이벤트
         private void BtnLoginInfo_Click(object sender, EventArgs e)
         {
 
         }
 
+        // 삭제 버튼 클릭 이벤트
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             UserDelete();
         }
 
+        // 자료변환 버튼 클릭 이벤트 (엑셀 다운로드)
         private void BtnChange_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("조회된 데이터가 없습니다.");
-                return;
-            }
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.Filter = "Excel 파일|*.xlsx";
-                sfd.Title = "파일 경로를 선택하세요";
-                sfd.FileName = $"사원목록_{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    using (var workBook = new ClosedXML.Excel.XLWorkbook())
-                    {
-                        var workSheet = workBook.Worksheets.Add("사원정보");
-
-                        var visibleColumns = dataGridView1.Columns
-                            .Cast<DataGridViewColumn>()
-                            .Where(c => c.Visible)
-                            .OrderBy(c => c.DisplayIndex)
-                            .ToList();
-
-                        var dataTable = new DataTable();
-                        for (int i=0; i<visibleColumns.Count; i++)
-                        {
-                            dataTable.Columns.Add(visibleColumns[i].HeaderText);
-                        }
-
-                        for (int j=0; j<dataGridView1.Rows.Count; j++)
-                        {
-                            var row = dataGridView1.Rows[j];
-                            if (row.IsNewRow) continue;
-
-                            var dataRow = dataTable.NewRow();
-
-                            for (int k=0; k<visibleColumns.Count; k++)
-                            {
-                                dataRow[k] = row.Cells[visibleColumns[k].Index].FormattedValue ?? "";
-                            }
-
-                            dataTable.Rows.Add(dataRow);
-                        }
-
-                        var table = workSheet.Cell(1, 1).InsertTable(dataTable, "사원정보", true);
-
-                        workSheet.Columns().Width = 15;
-
-                        workBook.SaveAs(sfd.FileName);
-                    }
-                }
-            }
+            ExcelDownLoad();
         }
 
+        // 닫기 버튼 클릭 이벤트
         private void BtnClose_Click(object sender, EventArgs e)
         {
             UserClose();
         }
 
+        // 데이터 그리드 셀 포멧팅 이벤트
         private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var data = sender as DataGridView;
@@ -214,11 +179,13 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 데이터 그리드 셀 더블클릭 이벤트
         private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             UserUpdateLoad();
         }
 
+        // 데이터 그리드 KeyDown 이벤트
         private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -233,6 +200,11 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // ------------
+        // 메서드 정의
+        // ------------
+
+        // 부서정보 폼 Load
         public void DeptInfoLoad()
         {
             DeptInfoForm deptInfoForm = new DeptInfoForm();
@@ -244,12 +216,14 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 사원 조회
         private void UserSrch()
         {
             userList = ConnDatabase.Instance.GetUser();
             dataGridView1.DataSource = userList;
         }
 
+        // 사원추가 폼 Load
         public void UserAddLoad()
         {
             UserAddForm userAddForm = new UserAddForm();
@@ -261,6 +235,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 사원수정 폼 Load
         public void UserUpdateLoad()
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -269,27 +244,9 @@ namespace WindowsFormsApp1.sys_user_info
                 return;
             }
 
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[nameof(User.Id)].Value);
 
-            var user = new User
-            {
-                Id = Convert.ToInt32(row.Cells[nameof(User.Id)].Value),
-                UserId = row.Cells[nameof(User.UserId)].Value?.ToString(),
-                UserName = row.Cells[nameof(User.UserName)].Value?.ToString(),
-                UserRank = row.Cells[nameof(User.UserRank)].Value?.ToString(),
-                UserEmpType = row.Cells[nameof(User.UserEmpType)].Value?.ToString(),
-                UserGender = (User.Gender)Convert.ToInt32(row.Cells[nameof(User.UserGender)].Value),
-                UserTel = row.Cells[nameof(User.UserTel)].Value?.ToString(),
-                UserEmail = row.Cells[nameof(User.UserEmail)].Value?.ToString(),
-                UserMessengerId = row.Cells[nameof(User.UserMessengerId)].Value?.ToString(),
-                RemarkDc = row.Cells[nameof(User.RemarkDc)].Value?.ToString(),
-                UserImage = row.Cells[nameof(User.UserImage)].Value?.ToString(),
-                IdDept = Convert.ToInt32(row.Cells[nameof(User.IdDept)].Value),
-                DeptCd = row.Cells[nameof(User.DeptCd)].Value?.ToString(),
-                DeptName = row.Cells[nameof(User.DeptName)].Value?.ToString()
-            };
-
-            UserUpdateForm userUpdateForm = new UserUpdateForm(user);
+            UserUpdateForm userUpdateForm = new UserUpdateForm(id);
             userUpdateForm.ShowDialog();
 
             if (userUpdateForm.UserUpdateFg)
@@ -298,6 +255,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 사원 삭제
         public void UserDelete()
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -341,28 +299,96 @@ namespace WindowsFormsApp1.sys_user_info
             }
         }
 
+        // 사원 삭제 후 이미지 삭제
         private void UserImageDelete(int userId)
         {
-            string targetFolder = $"D:\\Nas\\UserInfo\\{userId}";
+            // app.config에서 기본 경로 읽기
+            string baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
+
+            if (string.IsNullOrEmpty(baseFolder))
+            {
+                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
+                return;
+            }
+
+            string targetFolder = Path.Combine(baseFolder, userId.ToString());
 
             if (Directory.Exists(targetFolder))
             {
                 try
                 {
                     Directory.Delete(targetFolder, true);
-                    //MessageBox.Show("폴더가 삭제되었습니다.");
+                    Debug.WriteLine("폴더가 삭제되었습니다.");
                 }
                 catch (IOException ioEx)
                 {
-                    MessageBox.Show("폴더 삭제 중 오류 발생 (폴더 안에 파일이 있을 수 있음): " + ioEx.Message);
+                    Debug.WriteLine("폴더 삭제 중 오류 발생: " + ioEx.Message);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("폴더 삭제 중 예기치 않은 오류 발생: " + ex.Message);
+                    Debug.WriteLine("폴더 삭제 중 오류 발생: " + ex.Message);
                 }
             }
         }
 
+        // 엑셀 다운로드
+        public void ExcelDownLoad()
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("조회된 데이터가 없습니다.");
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Excel 파일|*.xlsx";
+                sfd.Title = "파일 경로를 선택하세요";
+                sfd.FileName = $"사원목록_{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    using (var workBook = new ClosedXML.Excel.XLWorkbook())
+                    {
+                        var workSheet = workBook.Worksheets.Add("사원정보");
+
+                        var visibleColumns = dataGridView1.Columns
+                            .Cast<DataGridViewColumn>()
+                            .Where(c => c.Visible)
+                            .OrderBy(c => c.DisplayIndex)
+                            .ToList();
+
+                        var dataTable = new DataTable();
+                        for (int i = 0; i < visibleColumns.Count; i++)
+                        {
+                            dataTable.Columns.Add(visibleColumns[i].HeaderText);
+                        }
+
+                        for (int j = 0; j < dataGridView1.Rows.Count; j++)
+                        {
+                            var row = dataGridView1.Rows[j];
+                            if (row.IsNewRow) continue;
+
+                            var dataRow = dataTable.NewRow();
+
+                            for (int k = 0; k < visibleColumns.Count; k++)
+                            {
+                                dataRow[k] = row.Cells[visibleColumns[k].Index].FormattedValue ?? "";
+                            }
+
+                            dataTable.Rows.Add(dataRow);
+                        }
+
+                        var table = workSheet.Cell(1, 1).InsertTable(dataTable, "사원정보", true);
+
+                        workSheet.Columns().Width = 15;
+
+                        workBook.SaveAs(sfd.FileName);
+                    }
+                }
+            }
+        }
+        // 폼 닫기
         public void UserClose()
         {
             this.Close();

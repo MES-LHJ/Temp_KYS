@@ -18,21 +18,12 @@ namespace WindowsFormsApp1.sys_dept_info
 
         public bool DeptUpdateFg { get; private set; } = false;
 
-        public void SetData(Dept dept)
-        {
-            DataDeptInfo = dept;
-            if (DataDeptInfo != null)
-            {
-                txtDeptCd.Text = DataDeptInfo.DeptCd;
-                txtDeptName.Text = DataDeptInfo.DeptName;
-                txtRemarkDc.Text = DataDeptInfo.RemarkDc;
-            }
+        private readonly int Id;
 
-            this.ActiveControl = txtDeptCd;
-        }
-
+        // 이벤트 핸들러
         private void InitEvent()
         {
+            this.Load += DeptUpdateForm_Load;
             this.KeyDown += DeptUpdateForm_KeyDown;
             txtRemarkDc.KeyDown += TxtRemarkDc_KeyDown;
 
@@ -40,13 +31,24 @@ namespace WindowsFormsApp1.sys_dept_info
             btnCancel.Click += BtnCancel_Click;
         }
 
-        public DeptUpdateForm(Dept dept)
+        public DeptUpdateForm(int id)
         {
+            Id = id;
             InitializeComponent();
-            SetData(dept);
             InitEvent();
         }
 
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 Load 이벤트
+        public void DeptUpdateForm_Load(object sender, EventArgs e)
+        {
+            DeptSetData();
+        }
+
+        // 폼 KeyDown 이벤트
         private void DeptUpdateForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -71,6 +73,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // input 비고 KeyDown 이벤트
         private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -84,16 +87,42 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 저장 버튼 클릭 이벤트
         private void BtnAct_Click(object sender, EventArgs e)
         {
             DeptUpdateCheck();
         }
 
+        // 닫기 버튼 클릭 이벤트
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             DeptClose();
         }
 
+
+        // ------------
+        // 메서드 정의
+        // ------------
+
+        // 부서 데이터 SET
+        public void DeptSetData()
+        {
+            DataDeptInfo = ConnDatabase.Instance.GetDeptById(Id);
+
+            if (DataDeptInfo == null)
+            {
+                MessageBox.Show("해당 부서 정보를 찾을 수 없습니다.");
+                this.Close();
+            }
+            else
+            {
+                txtDeptCd.Text = DataDeptInfo.DeptCd;
+                txtDeptName.Text = DataDeptInfo.DeptName;
+                txtRemarkDc.Text = DataDeptInfo.RemarkDc;
+            }
+        }
+
+        // 수정된 데이터 존재 여부 체크
         private void DeptUpdateCheck()
         {
             bool fieldUpdateFg = false;
@@ -111,6 +140,7 @@ namespace WindowsFormsApp1.sys_dept_info
             DeptReg();
         }
 
+        // 부서 저장
         private void DeptReg()
         {
             if (DataDeptInfo == null) return;
@@ -161,6 +191,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 폼 닫기
         private void DeptClose()
         {
             DeptUpdateFg = false;

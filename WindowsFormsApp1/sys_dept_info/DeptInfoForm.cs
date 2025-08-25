@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,7 @@ namespace WindowsFormsApp1.sys_dept_info
 
         public bool DeptChangeFg { get; private set; } = false;
 
+        // 이벤트 핸들러
         private void InitEvents()
         {
             this.Load += DeptInfoForm_Load;
@@ -42,11 +44,17 @@ namespace WindowsFormsApp1.sys_dept_info
             InitEvents();
         }
 
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 Load 이벤트
         public void DeptInfoForm_Load(object sender, EventArgs e)
         {
             DeptSrch();
         }
 
+        // 폼 KeyDown 이벤트
         private void DeptInfoForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -71,31 +79,49 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 차트 버튼 클릭 이벤트
+        private void BtnChart_Click(object sender, EventArgs e)
+        {
+            DeptChartLoad();
+        }
+
+        // 자료변환 버튼 클릭 이벤트 (엑셀 다운로드)
+        private void BtnChange_Click(object sender, EventArgs e)
+        {
+            ExcelDownLoad();
+        }
+
+        // 추가 버튼 클릭 이벤트
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             DeptAddLoad();
         }
 
+        // 수정 버튼 클릭 이벤트
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
             DeptUpdateLoad();
         }
 
+        // 삭제 버튼 클릭 이벤트
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             DeptDelete();
         }
-
+        
+        // 닫기 버튼 클릭 이벤트
         private void BtnClose_Click(object sender, EventArgs e)
         {
             DeptClose();
         }
 
+        // 데이터 그리드 셀 더블클릭 이벤트
         private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             DeptUpdateLoad();
         }
 
+        // 데이터 그리드 KeyDown 이벤트
         private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -110,18 +136,26 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // ------------
+        // 메서드 정의
+        // ------------
+
+        // 부서 조회
         public void DeptSrch()
         {
             deptList = ConnDatabase.Instance.GetDept();
             dataGridView1.DataSource = deptList;
         }
-        private void BtnChart_Click(object sender, EventArgs e)
+
+        // 부서 차트 폼 Load
+        public void DeptChartLoad()
         {
             DeptChartForm deptChart = new DeptChartForm();
             deptChart.ShowDialog();
         }
 
-        private void BtnChange_Click(object sender, EventArgs e)
+        // 엑셀 다운로드
+        public void ExcelDownLoad()
         {
             if (dataGridView1.Rows.Count == 0)
             {
@@ -178,6 +212,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 부서 추가 폼 Load
         public void DeptAddLoad()
         {
             DeptAddForm deptAddForm = new DeptAddForm();
@@ -190,6 +225,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 부서 수정 폼 Load
         public void DeptUpdateLoad()
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -198,17 +234,9 @@ namespace WindowsFormsApp1.sys_dept_info
                 return;
             }
 
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[nameof(Dept.Id)].Value);
 
-            var dept = new Dept
-            {
-                Id = Convert.ToInt32(row.Cells[nameof(Dept.Id)].Value),
-                DeptCd = row.Cells[nameof(Dept.DeptCd)].Value?.ToString(),
-                DeptName = row.Cells[nameof(Dept.DeptName)].Value?.ToString(),
-                RemarkDc = row.Cells[nameof(Dept.RemarkDc)].Value?.ToString()
-            };
-
-            DeptUpdateForm deptUpdateForm = new DeptUpdateForm(dept);
+            DeptUpdateForm deptUpdateForm = new DeptUpdateForm(id);
             deptUpdateForm.ShowDialog();
 
             if (deptUpdateForm.DeptUpdateFg)
@@ -218,6 +246,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 부서 삭제
         public void DeptDelete()
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -259,6 +288,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 폼 닫기
         public void DeptClose()
         {
             this.Close();

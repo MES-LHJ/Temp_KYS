@@ -64,12 +64,10 @@ namespace WindowsFormsApp1.helper
             return userAddForm;
         }
 
-        public UserUpdateForm GetUserUpdateForm(User user)
+        public UserUpdateForm GetUserUpdateForm(int id)
         {
             if (userUpdateForm == null || userUpdateForm.IsDisposed)
-                userUpdateForm = new UserUpdateForm(user);
-            else if (user != null)
-                userUpdateForm.SetData(user);
+                userUpdateForm = new UserUpdateForm(id);
             return userUpdateForm;
         }
 
@@ -90,12 +88,10 @@ namespace WindowsFormsApp1.helper
             return deptAddForm;
         }
 
-        public DeptUpdateForm GetDeptUpdateForm(Dept dept)
+        public DeptUpdateForm GetDeptUpdateForm(int id)
         {
             if (deptUpdateForm == null || deptUpdateForm.IsDisposed)
-                deptUpdateForm = new DeptUpdateForm(dept);
-            else if (dept != null)
-                deptUpdateForm.SetData(dept);
+                deptUpdateForm = new DeptUpdateForm(id);
 
             return deptUpdateForm;
         }

@@ -18,6 +18,7 @@ namespace WindowsFormsApp1.sys_dept_info
 
         public bool DeptInsertFg { get; private set; } = false;
 
+        // 이벤트 핸들러
         private void InitEvent()
         {
             this.KeyDown += DeptAddForm_KeyDown;
@@ -33,6 +34,11 @@ namespace WindowsFormsApp1.sys_dept_info
             InitEvent();
         }
 
+        // ------------
+        // 이벤트 정의
+        // ------------
+
+        // 폼 KeyDown 이벤트
         private void DeptAddForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -57,6 +63,7 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // input 비고 KeyDown 이벤트
         private void TxtRemarkDc_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -70,25 +77,23 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 저장 버튼 클릭 이벤트
         private void BtnAct_Click(object sender, EventArgs e)
         {
             DeptReg();
         }
 
+        // 취소 버튼 클릭 이벤트
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             DeptClose();
         }
 
-        //public void ResetForm()
-        //{
-        //    txtDeptCd.Text = string.Empty;
-        //    txtDeptName.Text = string.Empty;
-        //    txtRemarkDc.Text = string.Empty;
+        // ------------
+        // 메서드 정의
+        // ------------
 
-        //    this.ActiveControl = txtDeptCd;
-        //}
-
+        // 부서 저장
         private void DeptReg()
         {
             if (string.IsNullOrEmpty(txtDeptCd.Text.Trim()))
@@ -137,10 +142,20 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        // 폼 닫기
         private void DeptClose()
         {
             DeptInsertFg = false;
             this.Close();
         }
+
+        //public void ResetForm()
+        //{
+        //    txtDeptCd.Text = string.Empty;
+        //    txtDeptName.Text = string.Empty;
+        //    txtRemarkDc.Text = string.Empty;
+
+        //    this.ActiveControl = txtDeptCd;
+        //}
     }
 }

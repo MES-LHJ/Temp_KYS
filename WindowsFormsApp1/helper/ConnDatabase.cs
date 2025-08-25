@@ -101,6 +101,50 @@ namespace WindowsFormsApp1.helper
             return users;
         }
 
+        // id에 해당하는 사원 정보 조회
+        public User GetUserById(int id)
+        {
+            User user = null;
+
+            string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_rank, user_emp_type, " +
+                "user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc, user_image " +
+                "FROM sys_user_info T1 INNER JOIN sys_dept_info T2 ON T1.id_dept = T2.id " +
+                "WHERE t1.id = @id";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        user = new User
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            UserId = reader.GetString(reader.GetOrdinal("user_id")),
+                            UserName = reader.GetString(reader.GetOrdinal("user_name")),
+                            UserRank = reader.IsDBNull(reader.GetOrdinal("user_rank")) ? null : reader.GetString(reader.GetOrdinal("user_rank")),
+                            UserEmpType = reader.IsDBNull(reader.GetOrdinal("user_emp_type")) ? null : reader.GetString(reader.GetOrdinal("user_emp_type")),
+                            UserGender = reader.IsDBNull(reader.GetOrdinal("user_gender")) ? User.Gender.None : (User.Gender)reader.GetInt32(reader.GetOrdinal("user_gender")),
+                            UserTel = reader.IsDBNull(reader.GetOrdinal("user_tel")) ? null : reader.GetString(reader.GetOrdinal("user_tel")),
+                            UserEmail = reader.IsDBNull(reader.GetOrdinal("user_email")) ? null : reader.GetString(reader.GetOrdinal("user_email")),
+                            UserMessengerId = reader.IsDBNull(reader.GetOrdinal("user_messenger_id")) ? null : reader.GetString(reader.GetOrdinal("user_messenger_id")),
+                            RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc")),
+                            UserImage = reader.IsDBNull(reader.GetOrdinal("user_image")) ? null : reader.GetString(reader.GetOrdinal("user_image")),
+                            IdDept = reader.GetInt32(reader.GetOrdinal("id_dept")),
+                            DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
+                            DeptName = reader.GetString(reader.GetOrdinal("dept_name"))
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+
         // 사원 추가
         public int AddUser(User user)
         {
@@ -140,6 +184,7 @@ namespace WindowsFormsApp1.helper
                     conn.Close();
                 }
 
+                // 사원 추가
                 string sql = "INSERT INTO sys_user_info (user_id, user_name, user_pass, user_login_id, id_dept, user_rank, user_emp_type, " +
                     "user_gender, user_tel, user_email, user_messenger_id, remark_dc, user_image) " +
                     "VALUES (@user_id, @user_name, @user_pass, @user_login_id, @id_dept, @user_rank, @user_emp_type, " +
@@ -197,6 +242,7 @@ namespace WindowsFormsApp1.helper
                     }
                 }
 
+                // 사원 수정
                 string sql = "UPDATE sys_user_info SET id_dept = @id_dept, user_id = @user_id, user_name = @user_name, user_rank = @user_rank, " +
                     "user_emp_type = @user_emp_type, user_gender = @user_gender, user_tel = @user_tel, user_email = @user_email, " +
                     "user_messenger_id = @user_messenger_id, remark_dc = @remark_dc, user_image = @user_image WHERE id = @id";
@@ -304,12 +350,43 @@ namespace WindowsFormsApp1.helper
             return depts;
         }
 
+        // id에 해당하는 부서 정보 조회
+        public Dept GetDeptById(int id)
+        {
+            Dept dept = null;
+
+            string sql = "SELECT * FROM sys_dept_info WHERE id = @id";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        dept = new Dept
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
+                            DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
+                            RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc"))
+                        };
+                    }
+                }
+            }
+
+            return dept;
+        }
+
         // 부서 추가
         public int AddDept(Dept dept)
         {
             try
             {
-                // 중복 체크
+                // 부서코드 중복 체크
                 string checkSql = "SELECT COUNT(*) FROM sys_dept_info WHERE dept_cd = @dept_cd";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -326,6 +403,7 @@ namespace WindowsFormsApp1.helper
                     conn.Close();
                 }
 
+                // 부서 추가
                 string sql = "INSERT INTO sys_dept_info (dept_cd, dept_name, remark_dc) VALUES (@dept_cd, @dept_name, @remark_dc)";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -351,7 +429,7 @@ namespace WindowsFormsApp1.helper
         {
             try
             {
-                // 중복 체크
+                // 부서코드 중복 체크
                 string checkSql = "SELECT COUNT(*) FROM sys_dept_info WHERE dept_cd = @dept_cd AND id <> @id";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -369,6 +447,7 @@ namespace WindowsFormsApp1.helper
                     }
                 }
 
+                // 부서 수정
                 string sql = "UPDATE sys_dept_info SET dept_cd = @dept_cd, dept_name = @dept_name, remark_dc = @remark_dc WHERE id = @id";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
