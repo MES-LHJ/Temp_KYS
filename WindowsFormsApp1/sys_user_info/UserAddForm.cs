@@ -18,13 +18,43 @@ namespace WindowsFormsApp1.sys_user_info
 {
     public partial class UserAddForm : Form
     {
-        private User DataUserInfo = new User();
+        private User dataUserInfo = new User();
         private BindingList<Dept> deptComboList = new BindingList<Dept>();
 
         private int saveId = 0;
         private string saveFileName = "";
 
         public bool UserInsertFg { get; private set; } = false;
+
+        // 속성 설정 (테스트 및 추가 필요)
+        public string UserIdText
+        {
+            get => txtUserId.Text.Trim();
+            set => txtUserId.Text = value;
+        }
+
+        public string UserNameText
+        {
+            get => txtUserName.Text.Trim();
+            set => txtUserName.Text = value;
+        }
+
+        public int SelectedDeptId
+        {
+            get => selectDeptCd.SelectedIndex >= 0 ? (int)selectDeptCd.SelectedValue : 0;
+            set => selectDeptCd.SelectedValue = value;
+        }
+
+        public User.Gender SelectedGender
+        {
+            get => chkUserGender1.Checked ? User.Gender.Male :
+                   chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+            set
+            {
+                chkUserGender1.Checked = value == User.Gender.Male;
+                chkUserGender2.Checked = value == User.Gender.FeMale;
+            }
+        }
 
         // 이벤트 핸들러
         private void InitEvent()
@@ -58,7 +88,7 @@ namespace WindowsFormsApp1.sys_user_info
         private void UserAdd_Load(object sender, EventArgs e)
         {
             // 콤보박스 리스트
-            deptComboList = ConnDatabase.Instance.GetDept();
+            deptComboList = DeptRepository.Instance.GetDept();
 
             selectDeptCd.DataSource = deptComboList;
             selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
@@ -245,20 +275,20 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
-                DataUserInfo.UserId = txtUserId.Text.Trim();
-                DataUserInfo.UserName = txtUserName.Text.Trim();
-                DataUserInfo.UserLoginId = txtUserLoginId.Text.Trim();
-                DataUserInfo.UserPass = txtUserPass.Text.Trim();
-                DataUserInfo.UserRank = txtUserRank.Text.Trim();
-                DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
-                DataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
-                DataUserInfo.UserTel = txtUserTel.Text.Trim();
-                DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
-                DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
-                DataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
+                dataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
+                dataUserInfo.UserId = txtUserId.Text.Trim();
+                dataUserInfo.UserName = txtUserName.Text.Trim();
+                dataUserInfo.UserLoginId = txtUserLoginId.Text.Trim();
+                dataUserInfo.UserPass = txtUserPass.Text.Trim();
+                dataUserInfo.UserRank = txtUserRank.Text.Trim();
+                dataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
+                dataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+                dataUserInfo.UserTel = txtUserTel.Text.Trim();
+                dataUserInfo.UserEmail = txtUserEmail.Text.Trim();
+                dataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
+                dataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
 
-                int result = ConnDatabase.Instance.AddUser(DataUserInfo);
+                int result = UserRepository.Instance.AddUser(dataUserInfo);
 
                 switch (result)
                 {
@@ -321,7 +351,7 @@ namespace WindowsFormsApp1.sys_user_info
                         bmp.Save(savePath);
                     }
 
-                    int imageResult = ConnDatabase.Instance.UpdateUserImage(saveId, savePath);
+                    int imageResult = UserRepository.Instance.UpdateUserImage(saveId, savePath);
 
                     Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
                 }

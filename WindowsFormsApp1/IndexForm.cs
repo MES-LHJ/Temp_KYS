@@ -94,7 +94,7 @@ namespace WindowsFormsApp1
                 UserPass = txtUserPass.Text
             };
 
-            User loginUser = ConnDatabase.Instance.LoginAct(LoginUser);
+            User loginUser = UserRepository.Instance.LoginAct(LoginUser);
 
             if (loginUser != null)
             {

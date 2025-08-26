@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.sys_dept_info
 {
     public partial class DeptAddForm : Form
     {
-        private Dept DataDeptInfo = new Dept();
+        private Dept dataDeptInfo = new Dept();
 
         public bool DeptInsertFg { get; private set; } = false;
 
@@ -112,11 +112,11 @@ namespace WindowsFormsApp1.sys_dept_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
-                DataDeptInfo.DeptName = txtDeptName.Text.Trim();
-                DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
+                dataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
+                dataDeptInfo.DeptName = txtDeptName.Text.Trim();
+                dataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
 
-                int result = ConnDatabase.Instance.AddDept(DataDeptInfo);
+                int result = DeptRepository.Instance.AddDept(dataDeptInfo);
 
                 switch (result)
                 {

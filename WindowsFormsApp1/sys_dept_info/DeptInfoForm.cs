@@ -143,7 +143,7 @@ namespace WindowsFormsApp1.sys_dept_info
         // 부서 조회
         public void DeptSrch()
         {
-            deptList = ConnDatabase.Instance.GetDept();
+            deptList = DeptRepository.Instance.GetDept();
             dataGridView1.DataSource = deptList;
         }
 
@@ -266,7 +266,7 @@ namespace WindowsFormsApp1.sys_dept_info
 
             if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int result = ConnDatabase.Instance.DeleteDept(dept.Id);
+                int result = DeptRepository.Instance.DeleteDept(dept.Id);
 
                 if (result > 0)
                 {

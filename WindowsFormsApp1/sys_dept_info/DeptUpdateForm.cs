@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.sys_dept_info
 {
     public partial class DeptUpdateForm : Form
     {
-        private Dept DataDeptInfo = new Dept();
+        private Dept dataDeptInfo = new Dept();
 
         public bool DeptUpdateFg { get; private set; } = false;
 
@@ -107,18 +107,18 @@ namespace WindowsFormsApp1.sys_dept_info
         // 부서 데이터 SET
         public void DeptSetData()
         {
-            DataDeptInfo = ConnDatabase.Instance.GetDeptById(Id);
+            dataDeptInfo = DeptRepository.Instance.GetDeptById(Id);
 
-            if (DataDeptInfo == null)
+            if (dataDeptInfo == null)
             {
                 MessageBox.Show("해당 부서 정보를 찾을 수 없습니다.");
                 this.Close();
             }
             else
             {
-                txtDeptCd.Text = DataDeptInfo.DeptCd;
-                txtDeptName.Text = DataDeptInfo.DeptName;
-                txtRemarkDc.Text = DataDeptInfo.RemarkDc;
+                txtDeptCd.Text = dataDeptInfo.DeptCd;
+                txtDeptName.Text = dataDeptInfo.DeptName;
+                txtRemarkDc.Text = dataDeptInfo.RemarkDc;
             }
         }
 
@@ -127,9 +127,9 @@ namespace WindowsFormsApp1.sys_dept_info
         {
             bool fieldUpdateFg = false;
 
-            if (!fieldUpdateFg && txtDeptCd.Text.Trim() != DataDeptInfo.DeptCd) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtDeptName.Text.Trim() != DataDeptInfo.DeptName) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtRemarkDc.Text.Trim() != DataDeptInfo.RemarkDc) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtDeptCd.Text.Trim() != dataDeptInfo.DeptCd) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtDeptName.Text.Trim() != dataDeptInfo.DeptName) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtRemarkDc.Text.Trim() != dataDeptInfo.RemarkDc) fieldUpdateFg = true;
 
             if (!fieldUpdateFg)
             {
@@ -143,7 +143,7 @@ namespace WindowsFormsApp1.sys_dept_info
         // 부서 저장
         private void DeptReg()
         {
-            if (DataDeptInfo == null) return;
+            if (dataDeptInfo == null) return;
 
             if (string.IsNullOrEmpty(txtDeptCd.Text.Trim()))
             {
@@ -161,11 +161,11 @@ namespace WindowsFormsApp1.sys_dept_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
-                DataDeptInfo.DeptName = txtDeptName.Text.Trim();
-                DataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
+                dataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
+                dataDeptInfo.DeptName = txtDeptName.Text.Trim();
+                dataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
 
-                int result = ConnDatabase.Instance.UpdateDept(DataDeptInfo);
+                int result = DeptRepository.Instance.UpdateDept(dataDeptInfo);
 
                 switch (result)
                 {

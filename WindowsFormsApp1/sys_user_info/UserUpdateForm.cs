@@ -17,7 +17,7 @@ namespace WindowsFormsApp1.sys_user_info
     public partial class UserUpdateForm : Form
     {
         private BindingList<Dept> deptComboList = new BindingList<Dept>();
-        private User DataUserInfo = new User();
+        private User dataUserInfo = new User();
 
         public bool UserUpdateFg { get; private set; } = false;
 
@@ -189,42 +189,43 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 데이터 SET
         private void UserSetData()
         {
-            DataUserInfo = ConnDatabase.Instance.GetUserById(Id);
 
-            if (DataUserInfo == null)
+            dataUserInfo = UserRepository.Instance.GetUserById(Id);
+
+            if (dataUserInfo == null)
             {
                 MessageBox.Show("해당 사원 정보를 찾을 수 없습니다.");
                 this.Close();
             }
             else
             {
-                txtUserId.Text = DataUserInfo.UserId;
-                txtUserName.Text = DataUserInfo.UserName;
-                txtUserRank.Text = DataUserInfo.UserRank;
-                txtUserEmpType.Text = DataUserInfo.UserEmpType;
-                chkUserGender1.Checked = DataUserInfo.UserGender == User.Gender.Male;
-                chkUserGender2.Checked = DataUserInfo.UserGender == User.Gender.FeMale;
-                txtUserTel.Text = DataUserInfo.UserTel;
-                txtUserEmail.Text = DataUserInfo.UserEmail;
-                txtUserMessengerId.Text = DataUserInfo.UserMessengerId;
-                txtRemarkDc.Text = DataUserInfo.RemarkDc;
+                txtUserId.Text = dataUserInfo.UserId;
+                txtUserName.Text = dataUserInfo.UserName;
+                txtUserRank.Text = dataUserInfo.UserRank;
+                txtUserEmpType.Text = dataUserInfo.UserEmpType;
+                chkUserGender1.Checked = dataUserInfo.UserGender == User.Gender.Male;
+                chkUserGender2.Checked = dataUserInfo.UserGender == User.Gender.FeMale;
+                txtUserTel.Text = dataUserInfo.UserTel;
+                txtUserEmail.Text = dataUserInfo.UserEmail;
+                txtUserMessengerId.Text = dataUserInfo.UserMessengerId;
+                txtRemarkDc.Text = dataUserInfo.RemarkDc;
 
-                oldFileName = DataUserInfo.UserImage;
+                oldFileName = dataUserInfo.UserImage;
             }
 
             // 콤보박스 리스트
-            deptComboList = ConnDatabase.Instance.GetDept();
+            deptComboList = DeptRepository.Instance.GetDept();
 
             selectDeptCd.DataSource = deptComboList;
             selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
             selectDeptCd.ValueMember = nameof(Dept.Id);
-            selectDeptCd.SelectedValue = DataUserInfo.IdDept;
-            txtDeptName.Text = DataUserInfo.DeptName;
+            selectDeptCd.SelectedValue = dataUserInfo.IdDept;
+            txtDeptName.Text = dataUserInfo.DeptName;
 
             // 이미지 파일 체크
-            if (!string.IsNullOrEmpty(DataUserInfo.UserImage))
+            if (!string.IsNullOrEmpty(dataUserInfo.UserImage))
             {
-                string imagePath = DataUserInfo.UserImage.Trim();
+                string imagePath = dataUserInfo.UserImage.Trim();
 
                 if (File.Exists(imagePath))  // 파일이 실제로 있는지 체크
                 {
@@ -250,18 +251,18 @@ namespace WindowsFormsApp1.sys_user_info
         {
             bool fieldUpdateFg = false;
 
-            if (Convert.ToInt32(selectDeptCd.SelectedValue) != DataUserInfo.IdDept) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserId.Text.Trim() != DataUserInfo.UserId) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserName.Text.Trim() != DataUserInfo.UserName) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserRank.Text.Trim() != DataUserInfo.UserRank) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserEmpType.Text.Trim() != DataUserInfo.UserEmpType) fieldUpdateFg = true;
+            if (Convert.ToInt32(selectDeptCd.SelectedValue) != dataUserInfo.IdDept) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserId.Text.Trim() != dataUserInfo.UserId) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserName.Text.Trim() != dataUserInfo.UserName) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserRank.Text.Trim() != dataUserInfo.UserRank) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserEmpType.Text.Trim() != dataUserInfo.UserEmpType) fieldUpdateFg = true;
 
             User.Gender currentGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
-            if (!fieldUpdateFg && currentGender != DataUserInfo.UserGender) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserTel.Text.Trim() != DataUserInfo.UserTel) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserEmail.Text.Trim() != DataUserInfo.UserEmail) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtUserMessengerId.Text.Trim() != DataUserInfo.UserMessengerId) fieldUpdateFg = true;
-            if (!fieldUpdateFg && txtRemarkDc.Text.Trim() != DataUserInfo.RemarkDc) fieldUpdateFg = true;
+            if (!fieldUpdateFg && currentGender != dataUserInfo.UserGender) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserTel.Text.Trim() != dataUserInfo.UserTel) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserEmail.Text.Trim() != dataUserInfo.UserEmail) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtUserMessengerId.Text.Trim() != dataUserInfo.UserMessengerId) fieldUpdateFg = true;
+            if (!fieldUpdateFg && txtRemarkDc.Text.Trim() != dataUserInfo.RemarkDc) fieldUpdateFg = true;
 
             // 이미지 변경 여부 체크
             if (!fieldUpdateFg && imageUpdateFg) fieldUpdateFg = true;
@@ -309,22 +310,22 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string targetFolder = $"D:\\Nas\\UserInfo\\{DataUserInfo.Id}";
+                string targetFolder = $"D:\\Nas\\UserInfo\\{dataUserInfo.Id}";
                 string savePath = Path.Combine(targetFolder, saveFileName);
 
-                DataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
-                DataUserInfo.UserId = txtUserId.Text.Trim();
-                DataUserInfo.UserName = txtUserName.Text.Trim();
-                DataUserInfo.UserRank = txtUserRank.Text.Trim();
-                DataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
-                DataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
-                DataUserInfo.UserTel = txtUserTel.Text.Trim();
-                DataUserInfo.UserEmail = txtUserEmail.Text.Trim();
-                DataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
-                DataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
-                DataUserInfo.UserImage = (userImage.Image != null) ? savePath : "";
+                dataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
+                dataUserInfo.UserId = txtUserId.Text.Trim();
+                dataUserInfo.UserName = txtUserName.Text.Trim();
+                dataUserInfo.UserRank = txtUserRank.Text.Trim();
+                dataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
+                dataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+                dataUserInfo.UserTel = txtUserTel.Text.Trim();
+                dataUserInfo.UserEmail = txtUserEmail.Text.Trim();
+                dataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
+                dataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
+                dataUserInfo.UserImage = (userImage.Image != null) ? savePath : "";
 
-                int result = ConnDatabase.Instance.UpdateUser(DataUserInfo);
+                int result = UserRepository.Instance.UpdateUser(dataUserInfo);
 
                 switch (result)
                 {

@@ -219,7 +219,7 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 조회
         private void UserSrch()
         {
-            userList = ConnDatabase.Instance.GetUser();
+            userList = UserRepository.Instance.GetUser();
             dataGridView1.DataSource = userList;
         }
 
@@ -276,7 +276,7 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int result = ConnDatabase.Instance.DeleteUser(user.Id);
+                int result = UserRepository.Instance.DeleteUser(user.Id);
 
                 if (result > 0)
                 {

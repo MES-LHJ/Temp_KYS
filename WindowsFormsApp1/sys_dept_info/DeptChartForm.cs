@@ -67,7 +67,7 @@ namespace WindowsFormsApp1.sys_dept_info
             Series series = chart.Series["series"];
             series.Name = "사원수";
 
-            chartList = ConnDatabase.Instance.GetDeptUserCnt();
+            chartList = DeptRepository.Instance.GetDeptUserCnt();
 
             if (chartList.Count > 0)
             {

@@ -112,9 +112,11 @@
     </Compile>
     <Compile Include="helper\ConnDatabase.cs" />
     <Compile Include="helper\Dept.cs" />
+    <Compile Include="helper\DeptRepository.cs" />
     <Compile Include="helper\DeptUserCnt.cs" />
     <Compile Include="helper\FormManager.cs" />
     <Compile Include="helper\User.cs" />
+    <Compile Include="helper\UserRepository.cs" />
     <Compile Include="helper\Validator.cs" />
     <Compile Include="sys_dept_info\DeptChartForm.cs">
       <SubType>Form</SubType>
