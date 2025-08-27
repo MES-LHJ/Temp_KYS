@@ -17,7 +17,7 @@ namespace WindowsFormsApp1.sys_dept_info
 {
     public partial class DeptInfoForm : Form
     {
-        private BindingList<Dept> deptList = new BindingList<Dept>();
+        private List<Dept> deptList = new List<Dept>();
 
         public bool DeptChangeFg { get; private set; } = false;
 
@@ -174,32 +174,41 @@ namespace WindowsFormsApp1.sys_dept_info
                     using (var workBook = new ClosedXML.Excel.XLWorkbook())
                     {
                         var workSheet = workBook.Worksheets.Add("부서정보");
-
-                        var visibleColumns = dataGridView1.Columns
-                            .Cast<DataGridViewColumn>()
-                            .Where(c => c.Visible)
-                            .OrderBy(c => c.DisplayIndex)
-                            .ToList();
-
                         var dataTable = new DataTable();
-                        for (int i = 0; i < visibleColumns.Count; i++)
+
+                        // 엑셀 column 추가
+                        foreach (var header in DeptExcelConfig.ColumnInfo.Values)
                         {
-                            dataTable.Columns.Add(visibleColumns[i].HeaderText);
+                            dataTable.Columns.Add(header);
                         }
 
-                        for (int j = 0; j < dataGridView1.Rows.Count; j++)
+                        // deptList 안에 있는 각 Dept 객체를 반복
+                        foreach (var dept in deptList)
                         {
-                            var row = dataGridView1.Rows[j];
-                            if (row.IsNewRow) continue;
+                            // DataTable에 추가할 새로운 행(Row) 생성
+                            var row = dataTable.NewRow();
 
-                            var dataRow = dataTable.NewRow();
-
-                            for (int k = 0; k < visibleColumns.Count; k++)
+                            // ColumnInfo에 정의된 컬럼만큼 반복
+                            // kvp.Key = Dept 클래스 속성 이름 (예: "DeptCd")
+                            // kvp.Value = Excel/Datatable 컬럼 이름 (예: "부서코드")
+                            foreach (var kvp in DeptExcelConfig.ColumnInfo)
                             {
-                                dataRow[k] = row.Cells[visibleColumns[k].Index].FormattedValue ?? "";
+                                // Dept 클래스에서 속성 정보를 가져옴
+                                // typeof(Dept).GetProperty(kvp.Key) → "DeptCd" 속성 정보
+                                var prop = typeof(Dept).GetProperty(kvp.Key);
+
+                                // 속성이 존재하면 해당 Dept 객체에서 값 가져오기
+                                // prop.GetValue(dept) → dept.DeptCd 값
+                                // 값이 null이면 DBNull.Value로 처리 (Excel/Datatable에서 빈 셀 처리)
+                                var value = prop != null ? prop.GetValue(dept) ?? DBNull.Value : DBNull.Value;
+
+                                // DataRow에 값을 할당
+                                // row["부서코드"] = dept.DeptCd
+                                row[kvp.Value] = value;
                             }
 
-                            dataTable.Rows.Add(dataRow);
+                            // DataTable에 완성된 행 추가
+                            dataTable.Rows.Add(row);
                         }
 
                         var table = workSheet.Cell(1, 1).InsertTable(dataTable, "부서정보", true);
@@ -234,7 +243,8 @@ namespace WindowsFormsApp1.sys_dept_info
                 return;
             }
 
-            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[nameof(Dept.Id)].Value);
+            int selectedIndex = dataGridView1.SelectedRows[0].Index;
+            int id = deptList[selectedIndex].Id;
 
             DeptUpdateForm deptUpdateForm = new DeptUpdateForm(id);
             deptUpdateForm.ShowDialog();
@@ -255,14 +265,8 @@ namespace WindowsFormsApp1.sys_dept_info
                 return;
             }
 
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            var dept = new Dept
-            {
-                Id = Convert.ToInt32(row.Cells[nameof(Dept.Id)].Value),
-                DeptCd = row.Cells[nameof(Dept.DeptCd)].Value?.ToString(),
-                DeptName = row.Cells[nameof(Dept.DeptName)].Value?.ToString()
-            };
+            int selectedIndex = dataGridView1.SelectedRows[0].Index;
+            var dept = deptList[selectedIndex];
 
             if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {

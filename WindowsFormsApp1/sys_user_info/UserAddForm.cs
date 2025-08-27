@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,32 +20,75 @@ namespace WindowsFormsApp1.sys_user_info
     public partial class UserAddForm : Form
     {
         private User dataUserInfo = new User();
-        private BindingList<Dept> deptComboList = new BindingList<Dept>();
+        private List<Dept> deptComboList = new List<Dept>();
 
         private int saveId = 0;
         private string saveFileName = "";
+        private string baseFolder;
 
         public bool UserInsertFg { get; private set; } = false;
 
-        // 속성 설정 (테스트 및 추가 필요)
+        //-----------
+        // 속성 설정
+        //-----------
+
+        // 부서코드
+        public int SelectedDeptCd
+        {
+            get => selectDeptCd.SelectedIndex >= 0 ? Convert.ToInt32(selectDeptCd.SelectedValue) : -1;
+            set => selectDeptCd.SelectedValue = value;
+        }
+
+        // 부서명
+        public string DeptNameText
+        {
+            get => txtDeptName.Text.Trim();
+            set => txtDeptName.Text = value;
+        }
+
+        // 사원코드
         public string UserIdText
         {
             get => txtUserId.Text.Trim();
             set => txtUserId.Text = value;
         }
 
+        // 사원명
         public string UserNameText
         {
             get => txtUserName.Text.Trim();
             set => txtUserName.Text = value;
         }
-
-        public int SelectedDeptId
+        
+        // 로그인ID
+        public string UserLoginIdText
         {
-            get => selectDeptCd.SelectedIndex >= 0 ? (int)selectDeptCd.SelectedValue : 0;
-            set => selectDeptCd.SelectedValue = value;
+            get => txtUserLoginId.Text.Trim();
+            set => txtUserLoginId.Text = value;
         }
 
+        // 비밀번호
+        public string UserPassText
+        {
+            get => txtUserPass.Text.Trim();
+            set => txtUserPass.Text = value;
+        }
+
+        // 직위
+        public string UserRankText
+        {
+            get => txtUserRank.Text.Trim();
+            set => txtUserRank.Text = value;
+        }
+
+        // 고용형태
+        public string UserEmpTypeText
+        {
+            get => txtUserEmpType.Text.Trim();
+            set => txtUserEmpType.Text = value;
+        }
+
+        // 성별
         public User.Gender SelectedGender
         {
             get => chkUserGender1.Checked ? User.Gender.Male :
@@ -53,6 +97,45 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 chkUserGender1.Checked = value == User.Gender.Male;
                 chkUserGender2.Checked = value == User.Gender.FeMale;
+            }
+        }
+
+        // 휴대전화
+        public string UserTelText
+        {
+            get => txtUserTel.Text.Trim();
+            set => txtUserTel.Text = value;
+        }
+
+        // 이메일
+        public string UserEmailText
+        {
+            get => txtUserEmail.Text.Trim();
+            set => txtUserEmail.Text = value;
+        }
+
+        // 메신저ID
+        public string UserMessengerIdText
+        {
+            get => txtUserMessengerId.Text.Trim();
+            set => txtUserMessengerId.Text = value;
+        }
+
+        // 메모
+        public string RemarkDcText
+        {
+            get => txtRemarkDc.Text.Trim();
+            set => txtRemarkDc.Text = value;
+        }
+
+        // 이미지
+        public Image UserImage
+        {
+            get => userImage.Image;
+            set
+            {
+                userImage.Image = value;
+                userImage.Invalidate();  // 이미지 변경 후 새로 그리기
             }
         }
 
@@ -74,10 +157,27 @@ namespace WindowsFormsApp1.sys_user_info
             btnClearImage.Click += BtnClearImage_Click;
         }
 
+        // 파일 저장 기본 경로 설정 (app.config)
+        private void InitializeConfig()
+        {
+            baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
+
+            if (string.IsNullOrEmpty(baseFolder))
+            {
+                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
+
+                string projectName = Assembly.GetEntryAssembly().GetName().Name;
+                string className = typeof(User).Name;
+
+                baseFolder = $"D:\\Nas\\{projectName}\\{className}";
+            }
+        }
+
         public UserAddForm()
         {
             InitializeComponent();
             InitEvent();
+            InitializeConfig();
         }
 
         // ------------
@@ -94,7 +194,7 @@ namespace WindowsFormsApp1.sys_user_info
             selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
             selectDeptCd.ValueMember = nameof(Dept.Id);
             selectDeptCd.SelectedIndex = -1;
-            txtDeptName.Text = "";
+            DeptNameText = "";
         }
 
         // 폼 KeyDown 이벤트
@@ -126,7 +226,7 @@ namespace WindowsFormsApp1.sys_user_info
         private void SelectDeptCd_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
-            txtDeptName.Text = selectedDept.DeptName;
+            DeptNameText = selectedDept.DeptName;
         }
 
         // 성별 체크박스 남자 체크 이벤트
@@ -170,7 +270,7 @@ namespace WindowsFormsApp1.sys_user_info
         // 이미지 추가 Paint 이벤트
         private void UserImage_Paint(object sender, PaintEventArgs e)
         {
-            if (userImage.Image == null)
+            if (UserImage == null)
             {
                 string text = "이미지 추가";
                 Font font = new Font("굴림", 12, FontStyle.Bold);
@@ -194,9 +294,8 @@ namespace WindowsFormsApp1.sys_user_info
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    userImage.Image = Image.FromFile(ofd.FileName);
+                    UserImage = Image.FromFile(ofd.FileName);
                     saveFileName = Path.GetFileName(ofd.FileName);
-                    userImage.Invalidate();
                 }
             }
         }
@@ -204,13 +303,12 @@ namespace WindowsFormsApp1.sys_user_info
         // 이미지 비우기 버튼 클릭 이벤트
         private void BtnClearImage_Click(object sender, EventArgs e)
         {
-            if (userImage.Image != null)
+            if (UserImage != null)
             {
                 if (MessageBox.Show("이미지를 비우시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    userImage.Image.Dispose();
-                    userImage.Image = null;
-                    userImage.Invalidate();
+                    UserImage.Dispose();
+                    UserImage = null;
                 }
             }
         }
@@ -222,35 +320,35 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 저장
         private void UserReg()
         {
-            if (selectDeptCd.SelectedIndex < 0)
+            if (SelectedDeptCd < 0)
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
                 selectDeptCd.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtUserId.Text.Trim()))
+            if (string.IsNullOrEmpty(UserIdText))
             {
                 MessageBox.Show("사원코드가 입력되지 않았습니다.");
                 txtUserId.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtUserName.Text.Trim()))
+            if (string.IsNullOrEmpty(UserNameText))
             {
                 MessageBox.Show("사원명이 입력되지 않았습니다.");
                 txtUserName.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtUserLoginId.Text.Trim()))
+            if (string.IsNullOrEmpty(UserLoginIdText))
             {
                 MessageBox.Show("로그인ID가 입력되지 않았습니다.");
                 txtUserLoginId.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtUserPass.Text.Trim()))
+            if (string.IsNullOrEmpty(UserPassText))
             {
                 MessageBox.Show("비밀번호가 입력되지 않았습니다.");
                 txtUserPass.Focus();
@@ -258,7 +356,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
 
             // 비밀번호 유효성 검사
-            if (!Validator.ValidatePassword(txtUserPass.Text.Trim()))
+            if (!Validator.ValidatePassword(UserPassText))
             {
                 MessageBox.Show("비밀번호는 최소 8자리 이상이어야 하며, 영어와 숫자를 포함해야 합니다.");
                 txtUserPass.Focus();
@@ -266,7 +364,7 @@ namespace WindowsFormsApp1.sys_user_info
             }
 
             // 이메일 유효성 검사
-            if (!string.IsNullOrEmpty(txtUserEmail.Text.Trim()) && !Validator.ValidateEmail(txtUserEmail.Text.Trim()))
+            if (!string.IsNullOrEmpty(UserEmailText) && !Validator.ValidateEmail(UserEmailText))
             {
                 MessageBox.Show("올바른 이메일 형식이 아닙니다.");
                 txtUserEmail.Focus();
@@ -275,18 +373,18 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                dataUserInfo.IdDept = Convert.ToInt32(selectDeptCd.SelectedValue);
-                dataUserInfo.UserId = txtUserId.Text.Trim();
-                dataUserInfo.UserName = txtUserName.Text.Trim();
-                dataUserInfo.UserLoginId = txtUserLoginId.Text.Trim();
-                dataUserInfo.UserPass = txtUserPass.Text.Trim();
-                dataUserInfo.UserRank = txtUserRank.Text.Trim();
-                dataUserInfo.UserEmpType = txtUserEmpType.Text.Trim();
-                dataUserInfo.UserGender = chkUserGender1.Checked ? User.Gender.Male : chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
-                dataUserInfo.UserTel = txtUserTel.Text.Trim();
-                dataUserInfo.UserEmail = txtUserEmail.Text.Trim();
-                dataUserInfo.UserMessengerId = txtUserMessengerId.Text.Trim();
-                dataUserInfo.RemarkDc = txtRemarkDc.Text.Trim();
+                dataUserInfo.IdDept = SelectedDeptCd;
+                dataUserInfo.UserId = UserIdText;
+                dataUserInfo.UserName = UserNameText;
+                dataUserInfo.UserLoginId = UserLoginIdText;
+                dataUserInfo.UserPass = UserPassText;
+                dataUserInfo.UserRank = UserRankText;
+                dataUserInfo.UserEmpType = UserEmpTypeText;
+                dataUserInfo.UserGender = SelectedGender;
+                dataUserInfo.UserTel = UserTelText;
+                dataUserInfo.UserEmail = UserEmailText;
+                dataUserInfo.UserMessengerId = UserMessengerIdText;
+                dataUserInfo.RemarkDc = RemarkDcText;
 
                 int result = UserRepository.Instance.AddUser(dataUserInfo);
 
@@ -325,19 +423,10 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 이미지 업로드
         private void UserImageUpdate()
         {
-            if (userImage.Image != null)
+            if (UserImage != null)
             {
                 try
                 {
-                    // app.config에서 기본 경로 읽기
-                    string baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
-
-                    if (string.IsNullOrEmpty(baseFolder))
-                    {
-                        Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
-                        return;
-                    }
-
                     string targetFolder = Path.Combine(baseFolder, saveId.ToString());
                     string savePath = Path.Combine(targetFolder, saveFileName);
 
@@ -346,7 +435,7 @@ namespace WindowsFormsApp1.sys_user_info
                         Directory.CreateDirectory(targetFolder);
                     }
 
-                    using (var bmp = new Bitmap(userImage.Image))
+                    using (var bmp = new Bitmap(UserImage))
                     {
                         bmp.Save(savePath);
                     }

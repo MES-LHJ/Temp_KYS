@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace WindowsFormsApp1.sys_user_info
 {
     public partial class UserInfoForm : Form
     {
-        private BindingList<User> userList;
+        private List<User> userList;
+        private string baseFolder;
 
         // 이벤트 핸들러
         private void InitEvents()
@@ -43,10 +45,27 @@ namespace WindowsFormsApp1.sys_user_info
             dataGridView1.KeyDown += DataGridView1_KeyDown;
         }
 
+        // 파일 저장 기본 경로 설정 (app.config)
+        private void InitializeConfig()
+        {
+            baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
+
+            if (string.IsNullOrEmpty(baseFolder))
+            {
+                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
+
+                string projectName = Assembly.GetEntryAssembly().GetName().Name;
+                string className = typeof(User).Name;
+
+                baseFolder = $"D:\\Nas\\{projectName}\\{className}";
+            }
+        }
+
         public UserInfoForm()
         {
             InitializeComponent();
             InitEvents();
+            InitializeConfig();
         }
 
         // ------------
@@ -244,7 +263,8 @@ namespace WindowsFormsApp1.sys_user_info
                 return;
             }
 
-            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[nameof(User.Id)].Value);
+            int selectedIndex = dataGridView1.SelectedRows[0].Index;
+            int id = userList[selectedIndex].Id;
 
             UserUpdateForm userUpdateForm = new UserUpdateForm(id);
             userUpdateForm.ShowDialog();
@@ -264,15 +284,8 @@ namespace WindowsFormsApp1.sys_user_info
                 return;
             }
 
-            DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            var user = new User
-            {
-                Id = Convert.ToInt32(row.Cells[nameof(User.Id)].Value),
-                UserId = row.Cells[nameof(User.UserId)].Value?.ToString(),
-                UserName = row.Cells[nameof(User.UserName)].Value?.ToString(),
-                UserImage = row.Cells[nameof(User.UserImage)].Value?.ToString()
-            };
+            int selectedIndex = dataGridView1.SelectedRows[0].Index;
+            var user = userList[selectedIndex];
 
             if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -302,15 +315,6 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 삭제 후 이미지 삭제
         private void UserImageDelete(int userId)
         {
-            // app.config에서 기본 경로 읽기
-            string baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
-
-            if (string.IsNullOrEmpty(baseFolder))
-            {
-                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
-                return;
-            }
-
             string targetFolder = Path.Combine(baseFolder, userId.ToString());
 
             if (Directory.Exists(targetFolder))
@@ -344,7 +348,7 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 sfd.Filter = "Excel 파일|*.xlsx";
                 sfd.Title = "파일 경로를 선택하세요";
-                sfd.FileName = $"사원목록_{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
+                sfd.FileName = $"사원목록_{DateTime.Now:yyyyMMdd}.xlsx";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -352,31 +356,47 @@ namespace WindowsFormsApp1.sys_user_info
                     {
                         var workSheet = workBook.Worksheets.Add("사원정보");
 
-                        var visibleColumns = dataGridView1.Columns
-                            .Cast<DataGridViewColumn>()
-                            .Where(c => c.Visible)
-                            .OrderBy(c => c.DisplayIndex)
-                            .ToList();
-
                         var dataTable = new DataTable();
-                        for (int i = 0; i < visibleColumns.Count; i++)
+
+                        // 엑셀 column 추가
+                        foreach (var header in UserExcelConfig.ColumnInfo.Values)
                         {
-                            dataTable.Columns.Add(visibleColumns[i].HeaderText);
+                            dataTable.Columns.Add(header);
                         }
 
-                        for (int j = 0; j < dataGridView1.Rows.Count; j++)
+                        // userList 안에 있는 각 User 객체를 반복
+                        foreach (var user in userList)
                         {
-                            var row = dataGridView1.Rows[j];
-                            if (row.IsNewRow) continue;
+                            // DataTable에 추가할 새로운 행(Row) 생성
+                            var row = dataTable.NewRow();
 
-                            var dataRow = dataTable.NewRow();
-
-                            for (int k = 0; k < visibleColumns.Count; k++)
+                            // ColumnInfo에 정의된 컬럼만큼 반복
+                            // kvp.Key = User 클래스 속성 이름 (예: "UserId")
+                            // kvp.Value = Excel/Datatable 컬럼 이름 (예: "사원코드")
+                            foreach (var kvp in UserExcelConfig.ColumnInfo)
                             {
-                                dataRow[k] = row.Cells[visibleColumns[k].Index].FormattedValue ?? "";
+                                // User 클래스에서 속성 정보를 가져옴
+                                // typeof(User).GetProperty(kvp.Key) → "UserId" 속성 정보
+                                var prop = typeof(User).GetProperty(kvp.Key);
+
+                                // 속성이 존재하면 해당 User 객체에서 값 가져오기
+                                // prop.GetValue(user) → user.UserId 값
+                                // 값이 null이면 DBNull.Value로 처리 (Excel/Datatable에서 빈 셀 처리)
+                                var value = prop != null ? prop.GetValue(user) ?? DBNull.Value : DBNull.Value;
+
+                                // UserPass 컬럼이면 formatting 적용
+                                if (kvp.Key == nameof(User.UserPass))
+                                {
+                                    value = "**********";
+                                }
+
+                                // DataRow에 값을 할당
+                                // row["사원코드"] = user.UserId
+                                row[kvp.Value] = value;
                             }
 
-                            dataTable.Rows.Add(dataRow);
+                            // DataTable에 완성된 행 추가
+                            dataTable.Rows.Add(row);
                         }
 
                         var table = workSheet.Cell(1, 1).InsertTable(dataTable, "사원정보", true);
@@ -388,6 +408,7 @@ namespace WindowsFormsApp1.sys_user_info
                 }
             }
         }
+
         // 폼 닫기
         public void UserClose()
         {

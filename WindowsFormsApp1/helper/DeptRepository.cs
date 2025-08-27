@@ -28,9 +28,9 @@ namespace WindowsFormsApp1.helper
         }
 
         // 부서 조회
-        public BindingList<Dept> GetDept()
+        public List<Dept> GetDept()
         {
-            var depts = new BindingList<Dept>();
+            var depts = new List<Dept>();
 
             string sql = "SELECT * FROM sys_dept_info ORDER BY dept_cd, dept_name";
 
@@ -197,7 +197,7 @@ namespace WindowsFormsApp1.helper
         {
             var deptUserCnt = new List<DeptUserCnt>();
 
-            string sql = "SELECT T1.id, dept_name, COUNT(id_dept) as user_cnt " +
+            string sql = "SELECT T1.id, dept_name, COUNT(t2.id_dept) as user_cnt " +
                 "FROM sys_dept_info T1 LEFT JOIN sys_user_info T2 ON T1.id = T2.id_dept " +
                 "GROUP BY T1.id, dept_name ORDER BY dept_name";
 

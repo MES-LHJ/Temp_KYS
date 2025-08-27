@@ -55,9 +55,9 @@ namespace WindowsFormsApp1.helper
         }
 
         // 사원 조회
-        public BindingList<User> GetUser()
+        public List<User> GetUser()
         {
-            var users = new BindingList<User>();
+            var users = new List<User>();
 
             string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_login_id, user_pass, " +
                 "user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc, user_image " +

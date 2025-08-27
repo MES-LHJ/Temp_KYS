@@ -18,6 +18,31 @@ namespace WindowsFormsApp1.sys_dept_info
 
         public bool DeptInsertFg { get; private set; } = false;
 
+        //-----------
+        // 속성 설정
+        //-----------
+
+        // 부서코드
+        public string DeptCdText
+        {
+            get => txtDeptCd.Text.Trim();
+            set => txtDeptCd.Text = value;
+        }
+
+        // 부서명
+        public string DeptNameText
+        {
+            get => txtDeptName.Text.Trim();
+            set => txtDeptName.Text = value;
+        }
+
+        // 메모
+        public string RemarkDcText
+        {
+            get => txtRemarkDc.Text.Trim();
+            set => txtRemarkDc.Text = value;
+        }
+
         // 이벤트 핸들러
         private void InitEvent()
         {
@@ -96,14 +121,14 @@ namespace WindowsFormsApp1.sys_dept_info
         // 부서 저장
         private void DeptReg()
         {
-            if (string.IsNullOrEmpty(txtDeptCd.Text.Trim()))
+            if (string.IsNullOrEmpty(DeptCdText))
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
                 txtDeptCd.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtDeptName.Text.Trim()))
+            if (string.IsNullOrEmpty(DeptNameText))
             {
                 MessageBox.Show("부서명이 입력되지 않았습니다.");
                 txtDeptName.Focus();
@@ -112,9 +137,9 @@ namespace WindowsFormsApp1.sys_dept_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                dataDeptInfo.DeptCd = txtDeptCd.Text.Trim();
-                dataDeptInfo.DeptName = txtDeptName.Text.Trim();
-                dataDeptInfo.RemarkDc = txtRemarkDc.Text.Trim();
+                dataDeptInfo.DeptCd = DeptCdText;
+                dataDeptInfo.DeptName = DeptNameText;
+                dataDeptInfo.RemarkDc = RemarkDcText;
 
                 int result = DeptRepository.Instance.AddDept(dataDeptInfo);
 
