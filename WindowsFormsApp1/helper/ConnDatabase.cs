@@ -38,14 +38,14 @@ namespace WindowsFormsApp1.helper
             }
         }
 
-        public object ExecuteScalar(string sql, List<SqlParameter> parameters)
+        public int ExecuteScalar(string sql, List<SqlParameter> parameters)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
                 cmd.Parameters.AddRange(parameters.ToArray());
                 conn.Open();
-                return cmd.ExecuteScalar();
+                return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
 

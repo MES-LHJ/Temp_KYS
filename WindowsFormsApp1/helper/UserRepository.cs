@@ -196,7 +196,7 @@ namespace WindowsFormsApp1.helper
                     new SqlParameter("@user_image", SqlDbType.NVarChar) { Value = user.UserImage }
                 };
 
-                int addCnt = Convert.ToInt32(ConnDatabase.Instance.ExecuteScalar(sql, parameters));
+                int addCnt = ConnDatabase.Instance.ExecuteScalar(sql, parameters);
                 return addCnt;
             }
             catch (Exception ex)

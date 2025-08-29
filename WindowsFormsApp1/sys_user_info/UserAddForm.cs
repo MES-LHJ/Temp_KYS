@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 
 namespace WindowsFormsApp1.sys_user_info
@@ -24,7 +25,6 @@ namespace WindowsFormsApp1.sys_user_info
 
         private int saveId = 0;
         private string saveFileName = "";
-        private string baseFolder;
 
         public bool UserInsertFg { get; private set; } = false;
 
@@ -157,27 +157,10 @@ namespace WindowsFormsApp1.sys_user_info
             btnClearImage.Click += BtnClearImage_Click;
         }
 
-        // 파일 저장 기본 경로 설정 (app.config)
-        private void InitializeConfig()
-        {
-            baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
-
-            if (string.IsNullOrEmpty(baseFolder))
-            {
-                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
-
-                string projectName = Assembly.GetEntryAssembly().GetName().Name;
-                string className = typeof(User).Name;
-
-                baseFolder = $"D:\\Nas\\{projectName}\\{className}";
-            }
-        }
-
         public UserAddForm()
         {
             InitializeComponent();
             InitEvent();
-            InitializeConfig();
         }
 
         // ------------
@@ -185,16 +168,38 @@ namespace WindowsFormsApp1.sys_user_info
         // ------------
 
         // 폼 Load 이벤트
-        private void UserAdd_Load(object sender, EventArgs e)
+        private async void UserAdd_Load(object sender, EventArgs e)
         {
             // 콤보박스 리스트
-            deptComboList = DeptRepository.Instance.GetDept();
+            //deptComboList = DeptRepository.Instance.GetDept();
 
-            selectDeptCd.DataSource = deptComboList;
-            selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
-            selectDeptCd.ValueMember = nameof(Dept.Id);
-            selectDeptCd.SelectedIndex = -1;
-            DeptNameText = "";
+            //selectDeptCd.DataSource = deptComboList;
+            //selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+            //selectDeptCd.ValueMember = nameof(Dept.Id);
+            //selectDeptCd.SelectedIndex = -1;
+            //DeptNameText = "";
+
+            try
+            {
+                var result = await ApiDeptRepository.Instance.GetDept(1);
+
+                if (!string.IsNullOrEmpty(result.Error))
+                {
+                    MessageBox.Show($"부서 조회 실패: {result.Error}");
+                    return;
+                }
+                deptComboList = result.Data;
+
+                selectDeptCd.DataSource = deptComboList;
+                selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+                selectDeptCd.ValueMember = nameof(Dept.Id);
+                selectDeptCd.SelectedIndex = -1;
+                DeptNameText = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"부서 조회 중 오류가 발생했습니다.\n{ex.Message}");
+            }
         }
 
         // 폼 KeyDown 이벤트
@@ -318,7 +323,7 @@ namespace WindowsFormsApp1.sys_user_info
         // ------------
 
         // 사원 저장
-        private void UserReg()
+        private async void UserReg()
         {
             if (SelectedDeptCd < 0)
             {
@@ -386,36 +391,55 @@ namespace WindowsFormsApp1.sys_user_info
                 dataUserInfo.UserMessengerId = UserMessengerIdText;
                 dataUserInfo.RemarkDc = RemarkDcText;
 
-                int result = UserRepository.Instance.AddUser(dataUserInfo);
+                //int result = UserRepository.Instance.AddUser(dataUserInfo);
 
-                switch (result)
+                //switch (result)
+                //{
+                //    case int n when n > 0:
+                //        saveId = result;
+                //        UserInsertFg = true;
+                //        UserImageUpdate();
+
+                //        MessageBox.Show("저장되었습니다.");
+                //        this.Close();
+                //        break;
+
+                //    case -1:
+                //        MessageBox.Show("이미 존재하는 사원코드 입니다.");
+                //        txtUserId.Focus();
+                //        break;
+
+                //    case -2:
+                //        MessageBox.Show("이미 존재하는 로그인ID 입니다.");
+                //        txtUserLoginId.Focus();
+                //        break;
+
+                //    case -3:
+                //        MessageBox.Show("저장 중 오류가 발생했습니다.");
+                //        break;
+
+                //    default:
+                //        MessageBox.Show("저장에 실패했습니다.");
+                //        break;
+                //}
+
+                try
                 {
-                    case int n when n > 0:
-                        saveId = result;
-                        UserInsertFg = true;
-                        UserImageUpdate();
+                    var result = await ApiUserRepository.Instance.AddUser(dataUserInfo);
 
-                        MessageBox.Show("저장되었습니다.");
-                        this.Close();
-                        break;
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"사원 추가 실패: {result.Error}");
+                        return;
+                    }
 
-                    case -1:
-                        MessageBox.Show("이미 존재하는 사원코드 입니다.");
-                        txtUserId.Focus();
-                        break;
-
-                    case -2:
-                        MessageBox.Show("이미 존재하는 로그인ID 입니다.");
-                        txtUserLoginId.Focus();
-                        break;
-
-                    case -3:
-                        MessageBox.Show("저장 중 오류가 발생했습니다.");
-                        break;
-
-                    default:
-                        MessageBox.Show("저장에 실패했습니다.");
-                        break;
+                    UserInsertFg = true;
+                    MessageBox.Show("저장되었습니다.");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"사원 추가 중 오류가 발생했습니다.\n{ex.Message}");
                 }
             }
         }
@@ -427,26 +451,15 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 try
                 {
-                    string targetFolder = Path.Combine(baseFolder, saveId.ToString());
-                    string savePath = Path.Combine(targetFolder, saveFileName);
+                    string savePath = UserFileConfig.SaveUserImage(UserImage, saveId, saveFileName);
 
-                    if (!Directory.Exists(targetFolder))
-                    {
-                        Directory.CreateDirectory(targetFolder);
-                    }
-
-                    using (var bmp = new Bitmap(UserImage))
-                    {
-                        bmp.Save(savePath);
-                    }
-
-                    int imageResult = UserRepository.Instance.UpdateUserImage(saveId, savePath);
+                    UserRepository.Instance.UpdateUserImage(saveId, savePath);
 
                     Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("이미지 저장 중 오류가 발생했습니다: " + ex.Message);
+                    Debug.WriteLine("이미지 저장 중 오류: " + ex.Message);
                 }
             }
         }

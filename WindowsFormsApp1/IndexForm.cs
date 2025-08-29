@@ -5,9 +5,11 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 using WindowsFormsApp1.sys_user_info;
 
@@ -86,25 +88,53 @@ namespace WindowsFormsApp1
         // ------------
 
         // 로그인 정보 체크
-        private void LoginCheck()
+        private async void LoginCheck()
         {
+            // 로그인 버튼 비활성화 중복 클릭 방지
+            btnLogin.Enabled = false;
+
             User LoginUser = new User
             {
                 UserLoginId = txtUserLoginId.Text,
                 UserPass = txtUserPass.Text
             };
 
-            User loginUser = UserRepository.Instance.LoginAct(LoginUser);
+            //User loginUser = UserRepository.Instance.LoginAct(LoginUser);
 
-            if (loginUser != null)
+            try
             {
+                // 업체 토큰 발급
+                string companyToken = await ApiAuthRepository.Instance.GetCompanyToken("debug");
+
+                // 사원 토큰 발급
+                string employeeToken = await ApiAuthRepository.Instance.GetEmployeeToken(
+                    LoginUser.UserLoginId, LoginUser.UserPass, companyToken);
+
+                if (string.IsNullOrEmpty(employeeToken))
+                {
+                    MessageBox.Show("로그인 정보가 일치하지 않습니다.");
+                    txtUserLoginId.Focus();
+                    return;
+                }
+
+                // 토큰 설정
+                ApiHelper.Instance.SetToken(employeeToken);
+
                 LoginSuccess = true;
                 this.Close();
             }
-            else
+            catch (HttpRequestException hre)
             {
-                MessageBox.Show("로그인 정보가 일치하지 않습니다.");
-                txtUserLoginId.Focus();
+                MessageBox.Show("HTTP 요청 실패: " + hre.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("기타 오류: " + ex.Message);
+            }
+
+            finally
+            {
+                btnLogin.Enabled = true;
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using ClosedXML;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 using WindowsFormsApp1.sys_dept_info;
 
@@ -236,10 +238,26 @@ namespace WindowsFormsApp1.sys_user_info
         }
 
         // 사원 조회
-        private void UserSrch()
+        private async void UserSrch()
         {
-            userList = UserRepository.Instance.GetUser();
-            dataGridView1.DataSource = userList;
+            //userList = UserRepository.Instance.GetUser();
+            try
+            {
+                var result = await ApiUserRepository.Instance.GetUser(1);
+
+                if (!string.IsNullOrEmpty(result.Error))
+                {
+                    MessageBox.Show($"사원 조회 실패: {result.Error}");
+                    return;
+                }
+
+                userList = result.Data;
+                dataGridView1.DataSource = userList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"사원 조회 중 오류가 발생했습니다.\n{ex.Message}");
+            }
         }
 
         // 사원추가 폼 Load
@@ -263,10 +281,9 @@ namespace WindowsFormsApp1.sys_user_info
                 return;
             }
 
-            int selectedIndex = dataGridView1.SelectedRows[0].Index;
-            int id = userList[selectedIndex].Id;
+            var user = dataGridView1.SelectedRows[0].DataBoundItem as User;
 
-            UserUpdateForm userUpdateForm = new UserUpdateForm(id);
+            UserUpdateForm userUpdateForm = new UserUpdateForm(user.Id);
             userUpdateForm.ShowDialog();
 
             if (userUpdateForm.UserUpdateFg)
@@ -276,7 +293,7 @@ namespace WindowsFormsApp1.sys_user_info
         }
 
         // 사원 삭제
-        public void UserDelete()
+        public async void UserDelete()
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
@@ -284,55 +301,57 @@ namespace WindowsFormsApp1.sys_user_info
                 return;
             }
 
-            int selectedIndex = dataGridView1.SelectedRows[0].Index;
-            var user = userList[selectedIndex];
+            var user = dataGridView1.SelectedRows[0].DataBoundItem as User;
 
             if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int result = UserRepository.Instance.DeleteUser(user.Id);
+                //int result = UserRepository.Instance.DeleteUser(user.Id);
 
-                if (result > 0)
+                //if (result > 0)
+                //{
+                //    if (!string.IsNullOrEmpty(user.UserImage))
+                //    {
+                //        UserImageDelete(user.Id);
+                //    }
+
+                //    MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n데이터가 삭제되었습니다.");
+                //    UserSrch();
+                //}
+                //else if (result == -1)
+                //{
+                //    MessageBox.Show("삭제 중 오류가 발생했습니다.");
+                //}
+                //else
+                //{
+                //    MessageBox.Show("삭제에 실패했습니다");
+                //}
+
+                try
                 {
-                    if (!string.IsNullOrEmpty(user.UserImage))
+                    // API 호출
+                    var result = await ApiUserRepository.Instance.DeleteUser(user.Id);
+
+                    if (!string.IsNullOrEmpty(result.Error))
                     {
-                        UserImageDelete(user.Id);
+                        MessageBox.Show($"사원 삭제 실패: {result.Error}");
+                        return;
                     }
 
                     MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n데이터가 삭제되었습니다.");
                     UserSrch();
+                   
                 }
-                else if (result == -1)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("삭제 중 오류가 발생했습니다.");
-                }
-                else
-                {
-                    MessageBox.Show("삭제에 실패했습니다");
+                    MessageBox.Show($"삭제 중 오류 발생: {ex.Message}");
                 }
             }
         }
 
         // 사원 삭제 후 이미지 삭제
-        private void UserImageDelete(int userId)
+        private void UserImageDelete(int id)
         {
-            string targetFolder = Path.Combine(baseFolder, userId.ToString());
-
-            if (Directory.Exists(targetFolder))
-            {
-                try
-                {
-                    Directory.Delete(targetFolder, true);
-                    Debug.WriteLine("폴더가 삭제되었습니다.");
-                }
-                catch (IOException ioEx)
-                {
-                    Debug.WriteLine("폴더 삭제 중 오류 발생: " + ioEx.Message);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("폴더 삭제 중 오류 발생: " + ex.Message);
-                }
-            }
+            UserFileConfig.DeleteUserImage(id);
         }
 
         // 엑셀 다운로드

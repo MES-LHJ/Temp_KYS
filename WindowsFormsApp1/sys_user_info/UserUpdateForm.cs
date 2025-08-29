@@ -23,7 +23,6 @@ namespace WindowsFormsApp1.sys_user_info
         public bool UserUpdateFg { get; private set; } = false;
 
         private readonly int id;
-        private string baseFolder;
         private string oldFileName = "";
         private string saveFileName = "";
         private bool imageUpdateFg = false;
@@ -144,28 +143,11 @@ namespace WindowsFormsApp1.sys_user_info
             btnClearImage.Click += BtnClearImage_Click;
         }
 
-        // 파일 저장 기본 경로 설정 (app.config)
-        private void InitializeConfig()
-        {
-            baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
-
-            if (string.IsNullOrEmpty(baseFolder))
-            {
-                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
-                
-                string projectName = Assembly.GetEntryAssembly().GetName().Name;
-                string className = typeof(User).Name;
-
-                baseFolder = $"D:\\Nas\\{projectName}\\{className}";
-            }
-        }
-
         public UserUpdateForm(int id)
         {
             this.id = id;
             InitializeComponent();
             InitEvent();
-            InitializeConfig();
         }
 
         // ------------
@@ -423,8 +405,7 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string targetFolder = Path.Combine(baseFolder, id.ToString());
-                string savePath = Path.Combine(targetFolder, saveFileName);
+                string savePath = UserFileConfig.GetUserImagePath(id, saveFileName);
 
                 dataUserInfo.IdDept = SelectedDeptCd;
                 dataUserInfo.UserId = UserIdText;
@@ -495,24 +476,13 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 try
                 {
-                    string targetFolder = Path.Combine(baseFolder, id.ToString());
-                    string savePath = Path.Combine(targetFolder, saveFileName);
-
-                    if (!Directory.Exists(targetFolder))
-                    {
-                        Directory.CreateDirectory(targetFolder);
-                    }
-
-                    using (var bmp = new Bitmap(UserImage))
-                    {
-                        bmp.Save(savePath);
-                    }
+                    string savePath = UserFileConfig.SaveUserImage(UserImage, id, saveFileName);
 
                     Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("이미지 저장 중 오류가 발생했습니다: " + ex.Message);
+                    Debug.WriteLine("이미지 저장 중 오류: " + ex.Message);
                 }
             }
         }
