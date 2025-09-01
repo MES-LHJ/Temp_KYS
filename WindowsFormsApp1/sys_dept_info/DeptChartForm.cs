@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 
 namespace WindowsFormsApp1.sys_dept_info
@@ -21,6 +23,7 @@ namespace WindowsFormsApp1.sys_dept_info
         {
             this.Load += DeptChartForm_Load;
             this.KeyDown += DeptChartForm_KeyDown;
+            chart1.MouseMove += Chart1_MouseMove;
         }
 
         public DeptChartForm()
@@ -55,25 +58,55 @@ namespace WindowsFormsApp1.sys_dept_info
             }
         }
 
+        private void Chart1_MouseMove(object sender, MouseEventArgs e)
+        {
+            var pos = e.Location;
+            var hit = chart1.HitTest(pos.X, pos.Y);
+
+            if (hit.ChartElementType == ChartElementType.DataPoint)
+            {
+                var point = hit.Series.Points[hit.PointIndex];
+                var label = hit.Series.Name + ": " + point.YValues[0].ToString();
+                chart1.Series[hit.Series.Name].ToolTip = label;
+                chart1.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                chart1.Series.ToList().ForEach(s => s.ToolTip = string.Empty);
+                chart1.Cursor = Cursors.Default;
+            }
+        }
+
         // ------------
         // 메서드 정의
         // ------------
 
         // 부서별 사원수 차트
-        public void DeptChart()
+        public async Task DeptChart()
         {
             Chart chart = chart1;
 
             Series series = chart.Series["series"];
             series.Name = "사원수";
 
-            chartList = DeptRepository.Instance.GetDeptUserCnt();
+            //chartList = DeptRepository.Instance.GetDeptUserCnt();
 
+            var deptList = await ApiDeptRepository.Instance.GetDept(1);
+            var userList = await ApiUserRepository.Instance.GetUser(1);
+
+            chartList = deptList.Data
+                .Select(d => new DeptUserCnt
+                {
+                    DeptName = d.DeptName,
+                    UserCnt = userList.Data.Count(u => u.IdDept == d.Id)
+                })
+                .ToList();
+            
             if (chartList.Count > 0)
             {
-                for (int i = 0; i < chartList.Count; i++)
+                foreach(var item in chartList)
                 {
-                    series.Points.AddXY(chartList[i].DeptName, chartList[i].UserCnt);
+                    series.Points.AddXY(item.DeptName, item.UserCnt);
                 }
             }
 

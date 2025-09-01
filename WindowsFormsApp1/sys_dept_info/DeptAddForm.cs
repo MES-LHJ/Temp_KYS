@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 
 namespace WindowsFormsApp1.sys_dept_info
@@ -119,7 +120,7 @@ namespace WindowsFormsApp1.sys_dept_info
         // ------------
 
         // 부서 저장
-        private void DeptReg()
+        private async void DeptReg()
         {
             if (string.IsNullOrEmpty(DeptCdText))
             {
@@ -141,29 +142,48 @@ namespace WindowsFormsApp1.sys_dept_info
                 dataDeptInfo.DeptName = DeptNameText;
                 dataDeptInfo.RemarkDc = RemarkDcText;
 
-                int result = DeptRepository.Instance.AddDept(dataDeptInfo);
-
-                switch (result)
+                try
                 {
-                    case int n when n > 0:
-                        DeptInsertFg = true;
-                        MessageBox.Show("저장되었습니다.");
-                        this.Close();
-                        break;
+                    var result = await ApiDeptRepository.Instance.AddDept(dataDeptInfo);
 
-                    case -1:
-                        MessageBox.Show("이미 존재하는 부서코드 입니다.");
-                        txtDeptCd.Focus();
-                        break;
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"부서 추가 실패: {result.Error}");
+                        return;
+                    }
 
-                    case -2:
-                        MessageBox.Show("저장 중 오류가 발생했습니다.");
-                        break;
-
-                    default:
-                        MessageBox.Show("저장에 실패했습니다.");
-                        break;
+                    DeptInsertFg = true;
+                    MessageBox.Show("저장되었습니다.");
+                    this.Close();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"부서 추가 중 오류가 발생했습니다.\n{ex.Message}");
+                }
+
+                //int result = DeptRepository.Instance.AddDept(dataDeptInfo);
+
+                //switch (result)
+                //{
+                //    case int n when n > 0:
+                //        DeptInsertFg = true;
+                //        MessageBox.Show("저장되었습니다.");
+                //        this.Close();
+                //        break;
+
+                //    case -1:
+                //        MessageBox.Show("이미 존재하는 부서코드 입니다.");
+                //        txtDeptCd.Focus();
+                //        break;
+
+                //    case -2:
+                //        MessageBox.Show("저장 중 오류가 발생했습니다.");
+                //        break;
+
+                //    default:
+                //        MessageBox.Show("저장에 실패했습니다.");
+                //        break;
+                //}
             }
         }
 

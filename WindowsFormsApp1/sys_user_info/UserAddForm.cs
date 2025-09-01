@@ -170,15 +170,6 @@ namespace WindowsFormsApp1.sys_user_info
         // 폼 Load 이벤트
         private async void UserAdd_Load(object sender, EventArgs e)
         {
-            // 콤보박스 리스트
-            //deptComboList = DeptRepository.Instance.GetDept();
-
-            //selectDeptCd.DataSource = deptComboList;
-            //selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
-            //selectDeptCd.ValueMember = nameof(Dept.Id);
-            //selectDeptCd.SelectedIndex = -1;
-            //DeptNameText = "";
-
             try
             {
                 var result = await ApiDeptRepository.Instance.GetDept(1);
@@ -200,6 +191,15 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 MessageBox.Show($"부서 조회 중 오류가 발생했습니다.\n{ex.Message}");
             }
+
+            // 콤보박스 리스트
+            //deptComboList = DeptRepository.Instance.GetDept();
+
+            //selectDeptCd.DataSource = deptComboList;
+            //selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+            //selectDeptCd.ValueMember = nameof(Dept.Id);
+            //selectDeptCd.SelectedIndex = -1;
+            //DeptNameText = "";
         }
 
         // 폼 KeyDown 이벤트
@@ -391,6 +391,26 @@ namespace WindowsFormsApp1.sys_user_info
                 dataUserInfo.UserMessengerId = UserMessengerIdText;
                 dataUserInfo.RemarkDc = RemarkDcText;
 
+                try
+                {
+                    var result = await ApiUserRepository.Instance.AddUser(dataUserInfo);
+
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"사원 추가 실패: {result.Error}");
+                        return;
+                    }
+
+                    UserInsertFg = true;
+                    MessageBox.Show("저장되었습니다.");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"사원 추가 중 오류가 발생했습니다.\n{ex.Message}");
+                    txtUserId.Focus();
+                }
+
                 //int result = UserRepository.Instance.AddUser(dataUserInfo);
 
                 //switch (result)
@@ -422,25 +442,6 @@ namespace WindowsFormsApp1.sys_user_info
                 //        MessageBox.Show("저장에 실패했습니다.");
                 //        break;
                 //}
-
-                try
-                {
-                    var result = await ApiUserRepository.Instance.AddUser(dataUserInfo);
-
-                    if (!string.IsNullOrEmpty(result.Error))
-                    {
-                        MessageBox.Show($"사원 추가 실패: {result.Error}");
-                        return;
-                    }
-
-                    UserInsertFg = true;
-                    MessageBox.Show("저장되었습니다.");
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"사원 추가 중 오류가 발생했습니다.\n{ex.Message}");
-                }
             }
         }
 

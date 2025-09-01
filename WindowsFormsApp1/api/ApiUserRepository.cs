@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -43,7 +44,7 @@ namespace WindowsFormsApp1.api
         }
 
         // 사원 추가
-        public async Task<ApiResponse<long>> AddUser(User user)
+        public async Task<ApiResponse<long?>> AddUser(User user)
         {
             var url = "http://test.smartqapis.com:5000/api/Employee";
             var data = new
@@ -67,7 +68,7 @@ namespace WindowsFormsApp1.api
             var response = await _httpClient.PostAsync(url, content);
             var json = await response.Content.ReadAsStringAsync();
 
-            var result = JsonSerializer.Deserialize<ApiResponse<long>>(json);
+            var result = JsonSerializer.Deserialize<ApiResponse<long?>>(json);
             if (!response.IsSuccessStatusCode || result == null)
                 throw new Exception($"사원 추가 실패: {json}");
 

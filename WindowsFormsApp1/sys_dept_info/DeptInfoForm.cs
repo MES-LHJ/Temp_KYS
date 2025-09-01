@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 using WindowsFormsApp1.sys_user_info;
 
@@ -141,10 +143,28 @@ namespace WindowsFormsApp1.sys_dept_info
         // ------------
 
         // 부서 조회
-        public void DeptSrch()
+        public async void DeptSrch()
         {
-            deptList = DeptRepository.Instance.GetDept();
-            dataGridView1.DataSource = deptList;
+            try
+            {
+                var result = await ApiDeptRepository.Instance.GetDept(1);
+
+                if (!string.IsNullOrEmpty(result.Error))
+                {
+                    MessageBox.Show($"사원 조회 실패: {result.Error}");
+                    return;
+                }
+
+                deptList = result.Data;
+                dataGridView1.DataSource = deptList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"사원 조회 중 오류가 발생했습니다.\n{ex.Message}");
+            }
+
+            //deptList = DeptRepository.Instance.GetDept();
+            //dataGridView1.DataSource = deptList;
         }
 
         // 부서 차트 폼 Load
@@ -257,7 +277,7 @@ namespace WindowsFormsApp1.sys_dept_info
         }
 
         // 부서 삭제
-        public void DeptDelete()
+        public async void DeptDelete()
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
@@ -270,25 +290,54 @@ namespace WindowsFormsApp1.sys_dept_info
 
             if (MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int result = DeptRepository.Instance.DeleteDept(dept.Id);
-
-                if (result > 0)
+                try
                 {
+                    var userData = await ApiUserRepository.Instance.GetUser(1);
+                    var existUser = userData.Data.FirstOrDefault(u => u.IdDept == dept.Id);
+
+                    if (existUser != null)
+                    {
+                        MessageBox.Show("등록된 부서정보가 존재합니다.");
+                        return;
+                    }
+
+                    // API 호출
+                    var result = await ApiDeptRepository.Instance.DeleteDept(dept.Id);
+
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"부서 삭제 실패: {result.Error}");
+                        return;
+                    }
+
                     MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n데이터가 삭제되었습니다.");
                     DeptSrch();
+
                 }
-                else if (result == -1)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("이미 사용중인 부서 데이터는 삭제할 수 없습니다.");
+                    MessageBox.Show($"삭제 중 오류 발생: {ex.Message}");
                 }
-                else if (result == -2)
-                {
-                    MessageBox.Show("삭제 중 오류가 발생했습니다.");
-                }
-                else
-                {
-                    MessageBox.Show("삭제에 실패했습니다");
-                }
+
+                //int result = DeptRepository.Instance.DeleteDept(dept.Id);
+
+                //if (result > 0)
+                //{
+                //    MessageBox.Show($"부서코드: {dept.DeptCd}\n부서명: {dept.DeptName}\n\n데이터가 삭제되었습니다.");
+                //    DeptSrch();
+                //}
+                //else if (result == -1)
+                //{
+                //    MessageBox.Show("이미 사용중인 부서 데이터는 삭제할 수 없습니다.");
+                //}
+                //else if (result == -2)
+                //{
+                //    MessageBox.Show("삭제 중 오류가 발생했습니다.");
+                //}
+                //else
+                //{
+                //    MessageBox.Show("삭제에 실패했습니다");
+                //}
             }
         }
 

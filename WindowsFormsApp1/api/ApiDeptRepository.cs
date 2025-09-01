@@ -44,7 +44,7 @@ namespace WindowsFormsApp1.api
         }
 
         // 부서 추가
-        public async Task<ApiResponse<long>> AddDept(Dept dept)
+        public async Task<ApiResponse<long?>> AddDept(Dept dept)
         {
             var url = "http://test.smartqapis.com:5000/api/Department";
             var data = new
@@ -53,14 +53,14 @@ namespace WindowsFormsApp1.api
                 Code = dept.DeptCd,
                 Memo = dept.RemarkDc,
                 FactoryId = 1,
-                UpperDepartmentId = ""
+                UpperDepartmentId = (long?)null
             };
 
             var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
             var json = await response.Content.ReadAsStringAsync();
 
-            var result = JsonSerializer.Deserialize<ApiResponse<long>>(json);
+            var result = JsonSerializer.Deserialize<ApiResponse<long?>>(json);
             if (!response.IsSuccessStatusCode || result == null)
                 throw new Exception($"부서 추가 실패: {json}");
 
@@ -68,7 +68,7 @@ namespace WindowsFormsApp1.api
         }
 
         // 부서 수정
-        public async Task<ApiResult> UpdateDept(Dept dept)
+        public async Task<ApiResponse<object>> UpdateDept(Dept dept)
         {
             var url = $"http://test.smartqapis.com:5000/api/Department/{dept.Id}";
             var data = new
@@ -84,22 +84,22 @@ namespace WindowsFormsApp1.api
             var response = await _httpClient.PutAsync(url, content);
             var json = await response.Content.ReadAsStringAsync();
 
-            var result = JsonSerializer.Deserialize<ApiResult>(json);
-            if (!response.IsSuccessStatusCode || result == null || !result.IsSuccess)
+            var result = JsonSerializer.Deserialize<ApiResponse<object>>(json);
+            if (!response.IsSuccessStatusCode || result == null)
                 throw new Exception($"부서 수정 실패: {json}");
 
             return result;
         }
 
         // 부서 삭제
-        public async Task<ApiResult> DeleteDept(long departmentId)
+        public async Task<ApiResponse<object>> DeleteDept(long departmentId)
         {
             var url = $"http://test.smartqapis.com:5000/api/Department/{departmentId}";
             var response = await _httpClient.DeleteAsync(url);
             var json = await response.Content.ReadAsStringAsync();
 
-            var result = JsonSerializer.Deserialize<ApiResult>(json);
-            if (!response.IsSuccessStatusCode || result == null || !result.IsSuccess)
+            var result = JsonSerializer.Deserialize<ApiResponse<object>>(json);
+            if (!response.IsSuccessStatusCode || result == null)
                 throw new Exception($"부서 삭제 실패: {json}");
 
             return result;

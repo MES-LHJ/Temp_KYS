@@ -240,7 +240,6 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 조회
         private async void UserSrch()
         {
-            //userList = UserRepository.Instance.GetUser();
             try
             {
                 var result = await ApiUserRepository.Instance.GetUser(1);
@@ -258,6 +257,9 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 MessageBox.Show($"사원 조회 중 오류가 발생했습니다.\n{ex.Message}");
             }
+
+            //userList = UserRepository.Instance.GetUser();
+            //dataGridView1.DataSource = userList;
         }
 
         // 사원추가 폼 Load
@@ -305,6 +307,26 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n삭제하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                try
+                {
+                    // API 호출
+                    var result = await ApiUserRepository.Instance.DeleteUser(user.Id);
+
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"사원 삭제 실패: {result.Error}");
+                        return;
+                    }
+
+                    MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n데이터가 삭제되었습니다.");
+                    UserSrch();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"삭제 중 오류 발생: {ex.Message}");
+                }
+
                 //int result = UserRepository.Instance.DeleteUser(user.Id);
 
                 //if (result > 0)
@@ -325,26 +347,6 @@ namespace WindowsFormsApp1.sys_user_info
                 //{
                 //    MessageBox.Show("삭제에 실패했습니다");
                 //}
-
-                try
-                {
-                    // API 호출
-                    var result = await ApiUserRepository.Instance.DeleteUser(user.Id);
-
-                    if (!string.IsNullOrEmpty(result.Error))
-                    {
-                        MessageBox.Show($"사원 삭제 실패: {result.Error}");
-                        return;
-                    }
-
-                    MessageBox.Show($"사원코드: {user.UserId}\n사원명: {user.UserName}\n\n데이터가 삭제되었습니다.");
-                    UserSrch();
-                   
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"삭제 중 오류 발생: {ex.Message}");
-                }
             }
         }
 

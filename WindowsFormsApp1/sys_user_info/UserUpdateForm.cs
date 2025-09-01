@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -11,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 
 namespace WindowsFormsApp1.sys_user_info
@@ -283,18 +285,20 @@ namespace WindowsFormsApp1.sys_user_info
         // ------------
 
         // 사원 데이터 SET
-        private void UserSetData()
+        private async void UserSetData()
         {
-
-            dataUserInfo = UserRepository.Instance.GetUserById(id);
-
-            if (dataUserInfo == null)
+            try
             {
-                MessageBox.Show("해당 사원 정보를 찾을 수 없습니다.");
-                this.Close();
-            }
-            else
-            {
+                var resultUser = await ApiUserRepository.Instance.GetUser(1);
+
+                if (!string.IsNullOrEmpty(resultUser.Error))
+                {
+                    MessageBox.Show($"사원 조회 실패: {resultUser.Error}");
+                    return;
+                }
+
+                dataUserInfo = resultUser.Data.FirstOrDefault(u => u.Id == id);
+
                 UserIdText = dataUserInfo.UserId;
                 UserNameText = dataUserInfo.UserName;
                 UserRankText = dataUserInfo.UserRank;
@@ -305,42 +309,83 @@ namespace WindowsFormsApp1.sys_user_info
                 UserMessengerIdText = dataUserInfo.UserMessengerId;
                 RemarkDcText = dataUserInfo.RemarkDc;
 
-                oldFileName = dataUserInfo.UserImage;
-                saveFileName = dataUserInfo.UserImage;
+                var resultDept = await ApiDeptRepository.Instance.GetDept(1);
+
+                if (!string.IsNullOrEmpty(resultDept.Error))
+                {
+                    MessageBox.Show($"부서 조회 실패: {resultDept.Error}");
+                    return;
+                }
+
+                deptComboList = resultDept.Data;
+
+                selectDeptCd.DataSource = deptComboList;
+                selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+                selectDeptCd.ValueMember = nameof(Dept.Id);
+
+                SelectedDeptCd = dataUserInfo.IdDept;
+                DeptNameText = dataUserInfo.DeptName;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"조회 중 오류가 발생했습니다.\n{ex.Message}");
+            }
+
+            //dataUserInfo = UserRepository.Instance.GetUserById(id);
+
+            //if (dataUserInfo == null)
+            //{
+            //    MessageBox.Show("해당 사원 정보를 찾을 수 없습니다.");
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    UserIdText = dataUserInfo.UserId;
+            //    UserNameText = dataUserInfo.UserName;
+            //    UserRankText = dataUserInfo.UserRank;
+            //    UserEmpTypeText = dataUserInfo.UserEmpType;
+            //    SelectedGender = dataUserInfo.UserGender;
+            //    UserTelText = dataUserInfo.UserTel;
+            //    UserEmailText = dataUserInfo.UserEmail;
+            //    UserMessengerIdText = dataUserInfo.UserMessengerId;
+            //    RemarkDcText = dataUserInfo.RemarkDc;
+
+            //    oldFileName = dataUserInfo.UserImage;
+            //    saveFileName = dataUserInfo.UserImage;
+            //}
 
             // 콤보박스 리스트
-            deptComboList = DeptRepository.Instance.GetDept();
+            //deptComboList = DeptRepository.Instance.GetDept();
 
-            selectDeptCd.DataSource = deptComboList;
-            selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
-            selectDeptCd.ValueMember = nameof(Dept.Id);
+            //selectDeptCd.DataSource = deptComboList;
+            //selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
+            //selectDeptCd.ValueMember = nameof(Dept.Id);
 
-            SelectedDeptCd = dataUserInfo.IdDept;
-            DeptNameText = dataUserInfo.DeptName;
+            //SelectedDeptCd = dataUserInfo.IdDept;
+            //DeptNameText = dataUserInfo.DeptName;
 
             // 이미지 파일 체크
-            if (!string.IsNullOrEmpty(dataUserInfo.UserImage))
-            {
-                string imagePath = dataUserInfo.UserImage;
+            //if (!string.IsNullOrEmpty(dataUserInfo.UserImage))
+            //{
+            //    string imagePath = dataUserInfo.UserImage;
 
-                if (File.Exists(imagePath))  // 파일이 실제로 있는지 체크
-                {
-                    using (var img = Image.FromFile(imagePath))
-                    {
-                        UserImage = new Bitmap(img);
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("이미지 파일이 존재하지 않음: " + imagePath);
-                    UserImage = null;
-                }
-            }
-            else
-            {
-                UserImage = null;
-            }
+            //    if (File.Exists(imagePath))  // 파일이 실제로 있는지 체크
+            //    {
+            //        using (var img = Image.FromFile(imagePath))
+            //        {
+            //            UserImage = new Bitmap(img);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Debug.WriteLine("이미지 파일이 존재하지 않음: " + imagePath);
+            //        UserImage = null;
+            //    }
+            //}
+            //else
+            //{
+            //    UserImage = null;
+            //}
         }
 
         // 수정된 데이터 존재 여부 체크
@@ -372,7 +417,7 @@ namespace WindowsFormsApp1.sys_user_info
         }
 
         // 사원 저장
-        private void UserReg()
+        private async void UserReg()
         {
             if (SelectedDeptCd < 0)
             {
@@ -407,47 +452,72 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 string savePath = UserFileConfig.GetUserImagePath(id, saveFileName);
 
-                dataUserInfo.IdDept = SelectedDeptCd;
-                dataUserInfo.UserId = UserIdText;
-                dataUserInfo.UserName = UserNameText;
-                dataUserInfo.UserRank = UserRankText;
-                dataUserInfo.UserEmpType = UserEmpTypeText;
-                dataUserInfo.UserGender = SelectedGender;
-                dataUserInfo.UserTel = UserTelText;
-                dataUserInfo.UserEmail = UserEmailText;
-                dataUserInfo.UserMessengerId = UserMessengerIdText;
-                dataUserInfo.RemarkDc = RemarkDcText;
-                dataUserInfo.UserImage = (UserImage != null) ? savePath : "";
-
-                int result = UserRepository.Instance.UpdateUser(dataUserInfo);
-
-                switch (result)
+                var updatedUser = new User
                 {
-                    case int n when n > 0:
-                        UserUpdateFg = true;
+                    Id = dataUserInfo.Id,
+                    IdDept = SelectedDeptCd,
+                    UserId = UserIdText,
+                    UserName = UserNameText,
+                    UserRank = UserRankText,
+                    UserEmpType = UserEmpTypeText,
+                    UserGender = SelectedGender,
+                    UserTel = UserTelText,
+                    UserEmail = UserEmailText,
+                    UserMessengerId = UserMessengerIdText,
+                    RemarkDc = RemarkDcText,
+                    UserImage = (UserImage != null) ? savePath : ""
+                };
 
-                        if (imageUpdateFg)
-                        {
-                            UserImageUpdate();
-                        }
+                try
+                {
+                    var result = await ApiUserRepository.Instance.UpdateUser(updatedUser);
 
-                        MessageBox.Show("저장되었습니다.");
-                        this.Close();
-                        break;
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"사원 수정 실패: {result.Error}");
+                        return;
+                    }
 
-                    case -1:
-                        MessageBox.Show("이미 존재하는 사원코드 입니다.");
-                        txtUserId.Focus();
-                        break;
-
-                    case -2:
-                        MessageBox.Show("저장 중 오류가 발생했습니다.");
-                        break;
-
-                    default:
-                        MessageBox.Show("저장에 실패했습니다.");
-                        break;
+                    UserUpdateFg = true;
+                    MessageBox.Show("저장되었습니다.");
+                    this.Close();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"사원 수정 중 오류가 발생했습니다.\n{ex.Message}");
+                    txtUserId.Focus();
+
+                }
+
+                //int result = UserRepository.Instance.UpdateUser(dataUserInfo);
+
+                //switch (result)
+                //{
+                //    case int n when n > 0:
+                //        UserUpdateFg = true;
+
+                //        if (imageUpdateFg)
+                //        {
+                //            UserImageUpdate();
+                //        }
+
+                //        MessageBox.Show("저장되었습니다.");
+                //        this.Close();
+                //        break;
+
+                //    case -1:
+                //        MessageBox.Show("이미 존재하는 사원코드 입니다.");
+                //        txtUserId.Focus();
+                //        break;
+
+                //    case -2:
+                //        MessageBox.Show("저장 중 오류가 발생했습니다.");
+                //        break;
+
+                //    default:
+                //        MessageBox.Show("저장에 실패했습니다.");
+                //        break;
+                //}
             }
         }
 

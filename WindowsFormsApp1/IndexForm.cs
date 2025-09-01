@@ -90,9 +90,6 @@ namespace WindowsFormsApp1
         // 로그인 정보 체크
         private async void LoginCheck()
         {
-            // 로그인 버튼 비활성화 중복 클릭 방지
-            btnLogin.Enabled = false;
-
             User LoginUser = new User
             {
                 UserLoginId = txtUserLoginId.Text,
@@ -100,6 +97,19 @@ namespace WindowsFormsApp1
             };
 
             //User loginUser = UserRepository.Instance.LoginAct(LoginUser);
+
+            //if (loginUser != null)
+            //{
+            //    FormManager.Instance.GetUserInfoForm().Show();
+            //    this.Hide();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("로그인 정보가 일치하지 않습니다.");
+            //}
+
+            // 로그인 버튼 비활성화 중복 클릭 방지
+            btnLogin.Enabled = false;
 
             try
             {

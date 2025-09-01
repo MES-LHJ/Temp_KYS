@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.api;
 using WindowsFormsApp1.helper;
 
 namespace WindowsFormsApp1.sys_dept_info
@@ -126,21 +127,42 @@ namespace WindowsFormsApp1.sys_dept_info
         // ------------
 
         // 부서 데이터 SET
-        public void DeptSetData()
+        public async void DeptSetData()
         {
-            dataDeptInfo = DeptRepository.Instance.GetDeptById(id);
+            try
+            {
+                var result = await ApiDeptRepository.Instance.GetDept(1);
 
-            if (dataDeptInfo == null)
-            {
-                MessageBox.Show("해당 부서 정보를 찾을 수 없습니다.");
-                this.Close();
-            }
-            else
-            {
+                if (!string.IsNullOrEmpty(result.Error))
+                {
+                    MessageBox.Show($"부서 조회 실패: {result.Error}");
+                    return;
+                }
+
+                dataDeptInfo = result.Data.FirstOrDefault(u => u.Id == id);
+
                 DeptCdText = dataDeptInfo.DeptCd;
                 DeptNameText = dataDeptInfo.DeptName;
                 RemarkDcText = dataDeptInfo.RemarkDc;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"조회 중 오류가 발생했습니다.\n{ex.Message}");
+            }
+
+            //dataDeptInfo = DeptRepository.Instance.GetDeptById(id);
+
+            //if (dataDeptInfo == null)
+            //{
+            //    MessageBox.Show("해당 부서 정보를 찾을 수 없습니다.");
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    DeptCdText = dataDeptInfo.DeptCd;
+            //    DeptNameText = dataDeptInfo.DeptName;
+            //    RemarkDcText = dataDeptInfo.RemarkDc;
+            //}
         }
 
         // 수정된 데이터 존재 여부 체크
@@ -162,7 +184,7 @@ namespace WindowsFormsApp1.sys_dept_info
         }
 
         // 부서 저장
-        private void DeptReg()
+        private async void DeptReg()
         {
             if (dataDeptInfo == null) return;
 
@@ -182,33 +204,57 @@ namespace WindowsFormsApp1.sys_dept_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                dataDeptInfo.DeptCd = DeptCdText;
-                dataDeptInfo.DeptName = DeptNameText;
-                dataDeptInfo.RemarkDc = RemarkDcText;
-
-                int result = DeptRepository.Instance.UpdateDept(dataDeptInfo);
-
-                switch (result)
+                var updatedDept = new Dept
                 {
-                    case int n when n > 0:
-                        DeptUpdateFg = true;
-                        MessageBox.Show("수정되었습니다.");
-                        this.Close();
-                        break;
+                    Id = dataDeptInfo.Id,
+                    DeptCd = DeptCdText,
+                    DeptName = DeptNameText,
+                    RemarkDc = RemarkDcText
+                };
 
-                    case -1:
-                        MessageBox.Show("이미 존재하는 부서코드 입니다.");
-                        txtDeptCd.Focus();
-                        break;
+                try
+                {
+                    var result = await ApiDeptRepository.Instance.UpdateDept(updatedDept);
 
-                    case -2:
-                        MessageBox.Show("수정 중 오류가 발생했습니다.");
-                        break;
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        MessageBox.Show($"부서 수정 실패: {result.Error}");
+                        return;
+                    }
 
-                    default:
-                        MessageBox.Show("수정에 실패했습니다.");
-                        break;
+                    DeptUpdateFg = true;
+                    MessageBox.Show("저장되었습니다.");
+                    this.Close();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"부서 수정 중 오류가 발생했습니다.\n{ex.Message}");
+                    txtDeptCd.Focus();
+                }
+
+                //int result = DeptRepository.Instance.UpdateDept(dataDeptInfo);
+
+                //switch (result)
+                //{
+                //    case int n when n > 0:
+                //        DeptUpdateFg = true;
+                //        MessageBox.Show("수정되었습니다.");
+                //        this.Close();
+                //        break;
+
+                //    case -1:
+                //        MessageBox.Show("이미 존재하는 부서코드 입니다.");
+                //        txtDeptCd.Focus();
+                //        break;
+
+                //    case -2:
+                //        MessageBox.Show("수정 중 오류가 발생했습니다.");
+                //        break;
+
+                //    default:
+                //        MessageBox.Show("수정에 실패했습니다.");
+                //        break;
+                //}
             }
         }
 
