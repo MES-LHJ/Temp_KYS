@@ -397,6 +397,7 @@ namespace WindowsFormsApp1.sys_user_info
 
                     if (!string.IsNullOrEmpty(result.Error))
                     {
+                        
                         MessageBox.Show($"사원 추가 실패: {result.Error}");
                         return;
                     }

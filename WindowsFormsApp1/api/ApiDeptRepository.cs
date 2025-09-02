@@ -38,7 +38,7 @@ namespace WindowsFormsApp1.api
 
             var result = JsonSerializer.Deserialize<ApiResponse<List<Dept>>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"부서 목록 조회 실패: {json}");
+                throw new Exception($"부서 목록 조회 실패: {result.Error}");
 
             return result;
         }
@@ -62,7 +62,7 @@ namespace WindowsFormsApp1.api
 
             var result = JsonSerializer.Deserialize<ApiResponse<long?>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"부서 추가 실패: {json}");
+                throw new Exception($"부서 추가 실패: {result.Error}");
 
             return result;
         }
@@ -77,7 +77,7 @@ namespace WindowsFormsApp1.api
                 Code = dept.DeptCd,
                 Memo = dept.RemarkDc,
                 FactoryId = 1,
-                UpperDepartmentId = ""
+                UpperDepartmentId = (long?)null
             };
 
             var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
@@ -86,21 +86,21 @@ namespace WindowsFormsApp1.api
 
             var result = JsonSerializer.Deserialize<ApiResponse<object>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"부서 수정 실패: {json}");
+                throw new Exception($"부서 수정 실패: {result.Error}");
 
             return result;
         }
 
         // 부서 삭제
-        public async Task<ApiResponse<object>> DeleteDept(long departmentId)
+        public async Task<ApiResponse<object>> DeleteDept(long id)
         {
-            var url = $"http://test.smartqapis.com:5000/api/Department/{departmentId}";
+            var url = $"http://test.smartqapis.com:5000/api/Department/{id}";
             var response = await _httpClient.DeleteAsync(url);
             var json = await response.Content.ReadAsStringAsync();
 
             var result = JsonSerializer.Deserialize<ApiResponse<object>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"부서 삭제 실패: {json}");
+                throw new Exception($"부서 삭제 실패: {result.Error}");
 
             return result;
         }

@@ -38,7 +38,7 @@ namespace WindowsFormsApp1.api
 
             var result = JsonSerializer.Deserialize<ApiResponse<List<User>>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"사원 목록 조회 실패: {json}");
+                throw new Exception($"사원 목록 조회 실패: {result.Error}");
 
             return result;
         }
@@ -70,7 +70,7 @@ namespace WindowsFormsApp1.api
 
             var result = JsonSerializer.Deserialize<ApiResponse<long?>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"사원 추가 실패: {json}");
+                throw new Exception($"사원 추가 실패: {result.Error}");
 
             return result;
         }
@@ -98,21 +98,21 @@ namespace WindowsFormsApp1.api
 
             var result = JsonSerializer.Deserialize<ApiResponse<object>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"사원 수정 실패: {json}");
+                throw new Exception($"사원 수정 실패: {result.Error}");
 
             return result;
         }
 
         // 사원 삭제
-        public async Task<ApiResponse<object>> DeleteUser(long employeeId)
+        public async Task<ApiResponse<object>> DeleteUser(long id)
         {
-            var url = $"http://test.smartqapis.com:5000/api/Employee/{employeeId}";
+            var url = $"http://test.smartqapis.com:5000/api/Employee/{id}";
             var response = await _httpClient.DeleteAsync(url);
             var json = await response.Content.ReadAsStringAsync();
 
             var result = JsonSerializer.Deserialize<ApiResponse<object>>(json);
             if (!response.IsSuccessStatusCode || result == null)
-                throw new Exception($"사원 삭제 실패: {json}");
+                throw new Exception($"사원 삭제 실패: {result.Error}");
 
             return result;
         }

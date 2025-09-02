@@ -159,6 +159,7 @@ namespace WindowsFormsApp1.sys_dept_info
                 catch (Exception ex)
                 {
                     MessageBox.Show($"부서 추가 중 오류가 발생했습니다.\n{ex.Message}");
+                    txtDeptCd.Focus();
                 }
 
                 //int result = DeptRepository.Instance.AddDept(dataDeptInfo);
