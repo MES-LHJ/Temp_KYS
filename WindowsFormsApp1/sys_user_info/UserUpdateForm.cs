@@ -450,7 +450,7 @@ namespace WindowsFormsApp1.sys_user_info
 
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string savePath = UserFileConfig.GetUserImagePath(id, saveFileName);
+                //string savePath = UserFileConfig.GetUserImagePath(id, saveFileName);
 
                 var updatedUser = new User
                 {
@@ -465,7 +465,7 @@ namespace WindowsFormsApp1.sys_user_info
                     UserEmail = UserEmailText,
                     UserMessengerId = UserMessengerIdText,
                     RemarkDc = RemarkDcText,
-                    UserImage = (UserImage != null) ? savePath : ""
+                    //UserImage = (UserImage != null) ? savePath : ""
                 };
 
                 try

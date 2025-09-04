@@ -43,7 +43,7 @@ namespace WindowsFormsApp1.api
             return result;
         }
 
-        // 사원 추가
+        // 사원 추가 
         public async Task<ApiResponse<long?>> AddUser(User user)
         {
             var url = "http://test.smartqapis.com:5000/api/Employee";

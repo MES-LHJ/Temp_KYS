@@ -57,8 +57,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.chkUserGender1 = new System.Windows.Forms.CheckBox();
             this.chkUserGender2 = new System.Windows.Forms.CheckBox();
-            this.userImage = new System.Windows.Forms.PictureBox();
             this.btnClearImage = new System.Windows.Forms.Button();
+            this.userImage = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.userImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -328,16 +328,6 @@
             this.chkUserGender2.Text = "여";
             this.chkUserGender2.UseVisualStyleBackColor = true;
             // 
-            // userImage
-            // 
-            this.userImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.userImage.Location = new System.Drawing.Point(414, 12);
-            this.userImage.Name = "userImage";
-            this.userImage.Size = new System.Drawing.Size(150, 150);
-            this.userImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.userImage.TabIndex = 40;
-            this.userImage.TabStop = false;
-            // 
             // btnClearImage
             // 
             this.btnClearImage.BackColor = System.Drawing.Color.DarkGray;
@@ -349,6 +339,16 @@
             this.btnClearImage.TabStop = false;
             this.btnClearImage.Text = "이미지 비우기";
             this.btnClearImage.UseVisualStyleBackColor = false;
+            // 
+            // userImage
+            // 
+            this.userImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.userImage.Location = new System.Drawing.Point(414, 12);
+            this.userImage.Name = "userImage";
+            this.userImage.Size = new System.Drawing.Size(150, 150);
+            this.userImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.userImage.TabIndex = 40;
+            this.userImage.TabStop = false;
             // 
             // UserAddForm
             // 
@@ -428,7 +428,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox chkUserGender1;
         private System.Windows.Forms.CheckBox chkUserGender2;
-        private System.Windows.Forms.PictureBox userImage;
         private System.Windows.Forms.Button btnClearImage;
+        private System.Windows.Forms.PictureBox userImage;
     }
 }

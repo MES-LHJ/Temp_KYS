@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChart = new System.Windows.Forms.Label();
+            this.btnChange = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.DeptCd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RemarkDc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnChange = new System.Windows.Forms.Label();
-            this.btnChart = new System.Windows.Forms.Label();
+            this.RemarkDc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptCd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -59,6 +59,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(660, 43);
             this.panel1.TabIndex = 3;
+            // 
+            // btnChart
+            // 
+            this.btnChart.AutoSize = true;
+            this.btnChart.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnChart.Location = new System.Drawing.Point(280, 14);
+            this.btnChart.Name = "btnChart";
+            this.btnChart.Size = new System.Drawing.Size(37, 15);
+            this.btnChart.TabIndex = 10;
+            this.btnChart.Text = "차트";
+            // 
+            // btnChange
+            // 
+            this.btnChange.AutoSize = true;
+            this.btnChange.Font = new System.Drawing.Font("굴림", 11F);
+            this.btnChange.Location = new System.Drawing.Point(323, 14);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.Size = new System.Drawing.Size(67, 15);
+            this.btnChange.TabIndex = 9;
+            this.btnChange.Text = "자료변환";
             // 
             // btnClose
             // 
@@ -111,6 +131,35 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "부서";
             // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // RemarkDc
+            // 
+            this.RemarkDc.DataPropertyName = "RemarkDc";
+            this.RemarkDc.HeaderText = "비고";
+            this.RemarkDc.Name = "RemarkDc";
+            this.RemarkDc.ReadOnly = true;
+            // 
+            // DeptName
+            // 
+            this.DeptName.DataPropertyName = "DeptName";
+            this.DeptName.HeaderText = "부서명";
+            this.DeptName.Name = "DeptName";
+            this.DeptName.ReadOnly = true;
+            // 
+            // DeptCd
+            // 
+            this.DeptCd.DataPropertyName = "DeptCd";
+            this.DeptCd.HeaderText = "부서코드";
+            this.DeptCd.Name = "DeptCd";
+            this.DeptCd.ReadOnly = true;
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -129,55 +178,6 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(660, 310);
             this.dataGridView1.TabIndex = 4;
-            // 
-            // DeptCd
-            // 
-            this.DeptCd.DataPropertyName = "DeptCd";
-            this.DeptCd.HeaderText = "부서코드";
-            this.DeptCd.Name = "DeptCd";
-            this.DeptCd.ReadOnly = true;
-            // 
-            // DeptName
-            // 
-            this.DeptName.DataPropertyName = "DeptName";
-            this.DeptName.HeaderText = "부서명";
-            this.DeptName.Name = "DeptName";
-            this.DeptName.ReadOnly = true;
-            // 
-            // RemarkDc
-            // 
-            this.RemarkDc.DataPropertyName = "RemarkDc";
-            this.RemarkDc.HeaderText = "비고";
-            this.RemarkDc.Name = "RemarkDc";
-            this.RemarkDc.ReadOnly = true;
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // btnChange
-            // 
-            this.btnChange.AutoSize = true;
-            this.btnChange.Font = new System.Drawing.Font("굴림", 11F);
-            this.btnChange.Location = new System.Drawing.Point(323, 14);
-            this.btnChange.Name = "btnChange";
-            this.btnChange.Size = new System.Drawing.Size(67, 15);
-            this.btnChange.TabIndex = 9;
-            this.btnChange.Text = "자료변환";
-            // 
-            // btnChart
-            // 
-            this.btnChart.AutoSize = true;
-            this.btnChart.Font = new System.Drawing.Font("굴림", 11F);
-            this.btnChart.Location = new System.Drawing.Point(280, 14);
-            this.btnChart.Name = "btnChart";
-            this.btnChart.Size = new System.Drawing.Size(37, 15);
-            this.btnChart.TabIndex = 10;
-            this.btnChart.Text = "차트";
             // 
             // DeptInfoForm
             // 
@@ -205,12 +205,12 @@
         private System.Windows.Forms.Label btnUpdate;
         private System.Windows.Forms.Label btnAdd;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeptCd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeptName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RemarkDc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.Label btnChart;
         private System.Windows.Forms.Label btnChange;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RemarkDc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeptName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeptCd;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

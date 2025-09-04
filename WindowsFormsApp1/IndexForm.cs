@@ -100,8 +100,8 @@ namespace WindowsFormsApp1
 
             //if (loginUser != null)
             //{
-            //    FormManager.Instance.GetUserInfoForm().Show();
-            //    this.Hide();
+                //LoginSuccess = true;
+                //this.Close();
             //}
             //else
             //{

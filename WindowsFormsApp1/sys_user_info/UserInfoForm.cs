@@ -47,27 +47,10 @@ namespace WindowsFormsApp1.sys_user_info
             dataGridView1.KeyDown += DataGridView1_KeyDown;
         }
 
-        // 파일 저장 기본 경로 설정 (app.config)
-        private void InitializeConfig()
-        {
-            baseFolder = ConfigurationManager.AppSettings["UserInfoPath"];
-
-            if (string.IsNullOrEmpty(baseFolder))
-            {
-                Debug.WriteLine("UserInfoPath가 설정되지 않았습니다.");
-
-                string projectName = Assembly.GetEntryAssembly().GetName().Name;
-                string className = typeof(User).Name;
-
-                baseFolder = $"D:\\Nas\\{projectName}\\{className}";
-            }
-        }
-
         public UserInfoForm()
         {
             InitializeComponent();
             InitEvents();
-            InitializeConfig();
         }
 
         // ------------
