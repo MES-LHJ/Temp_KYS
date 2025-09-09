@@ -57,9 +57,11 @@ namespace WindowsFormsApp2.helper
         {
             var users = new List<User>();
 
-            string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_login_id, user_pass, " +
-                "user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc, user_image " +
+            string sql = "SELECT T1.id, id_dept, T2.dept_cd, T2.dept_name, user_id, user_name, user_login_id, user_pass, " +
+                "user_rank, user_emp_type, user_gender, user_tel, user_email, user_messenger_id, T1.remark_dc, user_image, " +
+                "id_upperdept, T3.dept_cd AS upperdept_cd, T3.dept_name AS upperdept_name " +
                 "FROM sys_user_info T1 INNER JOIN sys_dept_info T2 ON T1.id_dept = T2.id " +
+                "   INNER JOIN sys_upperdept_info T3 ON T2.id_upperdept = T3.id " +
                 "WHERE user_id <> 'master' ORDER BY user_id, user_name";
 
             var parameters = new List<SqlParameter>();
@@ -85,7 +87,10 @@ namespace WindowsFormsApp2.helper
                         UserImage = reader.IsDBNull(reader.GetOrdinal("user_image")) ? null : reader.GetString(reader.GetOrdinal("user_image")),
                         IdDept = reader.GetInt32(reader.GetOrdinal("id_dept")),
                         DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
-                        DeptName = reader.GetString(reader.GetOrdinal("dept_name"))
+                        DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
+                        IdUpperDept = reader.GetInt32(reader.GetOrdinal("id_upperdept")),
+                        UpperDeptCd = reader.GetString(reader.GetOrdinal("upperdept_cd")),
+                        UpperDeptName = reader.GetString(reader.GetOrdinal("upperdept_name"))
                     });
                 }
             }
@@ -98,9 +103,11 @@ namespace WindowsFormsApp2.helper
         {
             User user = null;
 
-            string sql = "SELECT t1.id, id_dept, dept_cd, dept_name, user_id, user_name, user_rank, user_emp_type, " +
-                "user_gender, user_tel, user_email, user_messenger_id, t1.remark_dc, user_image " +
+            string sql = "SELECT T1.id, id_dept, T2.dept_cd, T2.dept_name, user_id, user_name, user_rank, user_emp_type, " +
+                "user_gender, user_tel, user_email, user_messenger_id, T1.remark_dc, user_image, " +
+                "id_upperdept, T3.dept_cd AS upperdept_cd, T3.dept_name AS upperdept_name " +
                 "FROM sys_user_info T1 INNER JOIN sys_dept_info T2 ON T1.id_dept = T2.id " +
+                "   INNER JOIN sys_upperdept_info T3 ON T2.id_upperdept = T3.id " +
                 "WHERE t1.id = @id";
 
             var parameters = new List<SqlParameter>
@@ -127,7 +134,10 @@ namespace WindowsFormsApp2.helper
                         UserImage = reader.IsDBNull(reader.GetOrdinal("user_image")) ? null : reader.GetString(reader.GetOrdinal("user_image")),
                         IdDept = reader.GetInt32(reader.GetOrdinal("id_dept")),
                         DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
-                        DeptName = reader.GetString(reader.GetOrdinal("dept_name"))
+                        DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
+                        IdUpperDept = reader.GetInt32(reader.GetOrdinal("id_upperdept")),
+                        UpperDeptCd = reader.GetString(reader.GetOrdinal("upperdept_cd")),
+                        UpperDeptName = reader.GetString(reader.GetOrdinal("upperdept_name"))
                     };
                 }
             }
@@ -148,7 +158,7 @@ namespace WindowsFormsApp2.helper
                     new SqlParameter("@user_id", SqlDbType.NVarChar) { Value = user.UserId }
                 };
 
-                int userIdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(userIdCheckSql, userIdParams);
+                int userIdCheckCount = ConnDatabase.Instance.ExecuteScalar(userIdCheckSql, userIdParams);
 
                 if (userIdCheckCount > 0)
                 {
@@ -163,7 +173,7 @@ namespace WindowsFormsApp2.helper
                     new SqlParameter("@user_login_id", SqlDbType.NVarChar) { Value = user.UserLoginId }
                 };
 
-                int loginIdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(loginIdCheckSql, loginIdParames);
+                int loginIdCheckCount = ConnDatabase.Instance.ExecuteScalar(loginIdCheckSql, loginIdParames);
 
                 if (loginIdCheckCount > 0)
                 {
@@ -218,7 +228,7 @@ namespace WindowsFormsApp2.helper
                     new SqlParameter("@user_id", SqlDbType.NVarChar) { Value = user.UserId }
                 };
 
-                int userIdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(userIdCheckSql, userIdParams);
+                int userIdCheckCount = ConnDatabase.Instance.ExecuteScalar(userIdCheckSql, userIdParams);
 
                 if (userIdCheckCount > 0)
                 {

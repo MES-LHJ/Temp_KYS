@@ -41,9 +41,9 @@ namespace WindowsFormsApp2.helper
                     upperDepts.Add(new UpperDept
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("id")),
-                        DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
-                        DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
-                        RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc"))
+                        UpperDeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
+                        UpperDeptName = reader.GetString(reader.GetOrdinal("dept_name")),
+                        UpperRemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc"))
                     });
                 }
             }
@@ -70,9 +70,9 @@ namespace WindowsFormsApp2.helper
                     upperDept = new UpperDept
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("id")),
-                        DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
-                        DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
-                        RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc"))
+                        UpperDeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
+                        UpperDeptName = reader.GetString(reader.GetOrdinal("dept_name")),
+                        UpperRemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc"))
                     };
                 }
             }
@@ -90,10 +90,10 @@ namespace WindowsFormsApp2.helper
 
                 var deptCdParams = new List<SqlParameter>
                 {
-                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.DeptCd }
+                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.UpperDeptCd }
                 };
 
-                int deptCdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(deptCdCheckSql, deptCdParams);
+                int deptCdCheckCount = ConnDatabase.Instance.ExecuteScalar(deptCdCheckSql, deptCdParams);
 
                 if (deptCdCheckCount > 0)
                 {
@@ -105,9 +105,9 @@ namespace WindowsFormsApp2.helper
 
                 var parameters = new List<SqlParameter>
                 {
-                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.DeptCd },
-                    new SqlParameter("@dept_name", SqlDbType.NVarChar) { Value = upperDept.DeptName },
-                    new SqlParameter("@remark_dc", SqlDbType.NVarChar) { Value = upperDept.RemarkDc }
+                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.UpperDeptCd },
+                    new SqlParameter("@dept_name", SqlDbType.NVarChar) { Value = upperDept.UpperDeptName },
+                    new SqlParameter("@remark_dc", SqlDbType.NVarChar) { Value = upperDept.UpperRemarkDc }
                 };
 
                 int addCnt = ConnDatabase.Instance.ExecuteNonQuery(sql, parameters);
@@ -132,10 +132,10 @@ namespace WindowsFormsApp2.helper
                 var deptCdParams = new List<SqlParameter>
                 {
                     new SqlParameter("@id", SqlDbType.Int) { Value = upperDept.Id},
-                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.DeptCd }
+                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.UpperDeptCd }
                 };
 
-                int deptCdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(deptCdCheckSql, deptCdParams);
+                int deptCdCheckCount = ConnDatabase.Instance.ExecuteScalar(deptCdCheckSql, deptCdParams);
 
                 if (deptCdCheckCount > 0)
                 {
@@ -148,9 +148,9 @@ namespace WindowsFormsApp2.helper
                 var parameters = new List<SqlParameter>
                 {
                     new SqlParameter("@id", SqlDbType.Int) { Value = upperDept.Id },
-                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.DeptCd },
-                    new SqlParameter("@dept_name", SqlDbType.NVarChar) { Value = upperDept.DeptName },
-                    new SqlParameter("@remark_dc", SqlDbType.NVarChar) { Value = upperDept.RemarkDc }
+                    new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = upperDept.UpperDeptCd },
+                    new SqlParameter("@dept_name", SqlDbType.NVarChar) { Value = upperDept.UpperDeptName },
+                    new SqlParameter("@remark_dc", SqlDbType.NVarChar) { Value = upperDept.UpperRemarkDc }
                 };
 
                 int updateCnt = ConnDatabase.Instance.ExecuteNonQuery(sql, parameters);

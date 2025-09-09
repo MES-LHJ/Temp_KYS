@@ -38,9 +38,9 @@ namespace WindowsFormsApp1.sys_dept_info
         // ------------
 
         // 폼 Load 이벤트
-        private void DeptChartForm_Load(object sender, EventArgs e)
+        private async void DeptChartForm_Load(object sender, EventArgs e)
         {
-            DeptChart();
+            await DeptChart();
         }
 
         // 폼 KeyDown 이벤트

@@ -43,7 +43,9 @@ namespace WindowsFormsApp2.helper
                         Id = reader.GetInt32(reader.GetOrdinal("id")),
                         DeptCd = reader.GetString(reader.GetOrdinal("dept_cd")),
                         DeptName = reader.GetString(reader.GetOrdinal("dept_name")),
-                        RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc"))
+                        RemarkDc = reader.IsDBNull(reader.GetOrdinal("remark_dc")) ? null : reader.GetString(reader.GetOrdinal("remark_dc")),
+                        IdUpperDept = reader.GetInt32(reader.GetOrdinal("id_upperdept")),
+
                     });
                 }
             }
@@ -93,7 +95,7 @@ namespace WindowsFormsApp2.helper
                     new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = dept.DeptCd }
                 };
 
-                int deptCdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(deptCdCheckSql, deptCdParams);
+                int deptCdCheckCount = ConnDatabase.Instance.ExecuteScalar(deptCdCheckSql, deptCdParams);
 
                 if (deptCdCheckCount > 0)
                 {
@@ -101,13 +103,14 @@ namespace WindowsFormsApp2.helper
                 }
 
                 // 부서 추가
-                string sql = "INSERT INTO sys_dept_info (dept_cd, dept_name, remark_dc) VALUES (@dept_cd, @dept_name, @remark_dc)";
+                string sql = "INSERT INTO sys_dept_info (dept_cd, dept_name, remark_dc, id_upperdept) VALUES (@dept_cd, @dept_name, @remark_dc, @id_upperdept)";
 
                 var parameters = new List<SqlParameter>
                 {
                     new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = dept.DeptCd },
                     new SqlParameter("@dept_name", SqlDbType.NVarChar) { Value = dept.DeptName },
-                    new SqlParameter("@remark_dc", SqlDbType.NVarChar) { Value = dept.RemarkDc }
+                    new SqlParameter("@remark_dc", SqlDbType.NVarChar) { Value = dept.RemarkDc },
+                    new SqlParameter("@id_upperdept", SqlDbType.Int) { Value = dept.IdUpperDept }
                 };
 
                 int addCnt = ConnDatabase.Instance.ExecuteNonQuery(sql, parameters);
@@ -135,7 +138,7 @@ namespace WindowsFormsApp2.helper
                     new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = dept.DeptCd }
                 };
 
-                int deptCdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(deptCdCheckSql, deptCdParams);
+                int deptCdCheckCount = ConnDatabase.Instance.ExecuteScalar(deptCdCheckSql, deptCdParams);
 
                 if (deptCdCheckCount > 0)
                 {

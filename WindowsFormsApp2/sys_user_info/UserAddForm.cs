@@ -18,6 +18,7 @@ namespace WindowsFormsApp2.sys_user_info
     {
         private User dataUserInfo = new User();
         private List<UpperDept> upperDeptComboList = new List<UpperDept>();
+        private List<Dept> deptComboList = new List<Dept>();
 
         private int saveId = 0;
         private string saveFileName = "";
@@ -28,12 +29,25 @@ namespace WindowsFormsApp2.sys_user_info
         // 속성 설정
         //-----------
 
+        // 상위부서코드
+        public int SelectedUpperDeptCd
+        {
+            get => selectUpperDeptCd.ItemIndex >= 0 ? Convert.ToInt32(selectUpperDeptCd.EditValue) : -1;
+            set => selectUpperDeptCd.EditValue = value;
+        }
+
+        // 상위부서명
+        public string UpperDeptNameText
+        {
+            get => txtUpperDeptName.Text.Trim();
+            set => txtUpperDeptName.Text = value;
+        }
+
         // 부서코드
         public int SelectedDeptCd
         {
-            get; set;
-            //get => selectDeptCd.SelectedIndex >= 0 ? Convert.ToInt32(selectDeptCd.SelectedValue) : -1;
-            //set => selectDeptCd.SelectedValue = value;
+            get => selectDeptCd.ItemIndex >= 0 ? Convert.ToInt32(selectDeptCd.EditValue) : -1;
+            set => selectDeptCd.EditValue = value;
         }
 
         // 부서명
@@ -89,11 +103,11 @@ namespace WindowsFormsApp2.sys_user_info
         public User.Gender SelectedGender
         {
             get => chkUserGender1.Checked ? User.Gender.Male :
-                   chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+                   chkUserGender2.Checked ? User.Gender.Female : User.Gender.None;
             set
             {
                 chkUserGender1.Checked = value == User.Gender.Male;
-                chkUserGender2.Checked = value == User.Gender.FeMale;
+                chkUserGender2.Checked = value == User.Gender.Female;
             }
         }
 
@@ -140,6 +154,8 @@ namespace WindowsFormsApp2.sys_user_info
         private void InitEvent()
         {
             this.Load += UserAdd_Load;
+            selectUpperDeptCd.EditValueChanged += SelectUpperDeptCd_EditValueChanged;
+            selectDeptCd.EditValueChanged += SelectDeptCd_EditValueChanged;
             chkUserGender1.CheckedChanged += ChkUserGender1_CheckedChanged;
             chkUserGender2.CheckedChanged += ChkUserGender2_CheckedChanged;
 
@@ -164,27 +180,28 @@ namespace WindowsFormsApp2.sys_user_info
         // 폼 Load 이벤트
         private void UserAdd_Load(object sender, EventArgs e)
         {
-            // 콤보박스 리스트
-            upperDeptComboList = UpperDeptRepository.Instance.GetUpperDept();
-
-            //selectUpperDeptCd.Properties.Items.Clear();
-            //foreach (var dept in upperDeptComboList)
-            //{
-            //    selectUpperDeptCd.Properties.Items.Add($"{dept.DeptCd} ({dept.Id})");
-            //}
-
-            //selectDeptCd.DataSource = upperDeptComboList;
-            //selectDeptCd.DisplayMember = nameof(Dept.DeptCd);
-            //selectDeptCd.ValueMember = nameof(Dept.Id);
-            //selectDeptCd.SelectedIndex = -1;
-            DeptNameText = "";
+            SelectUpperDeptList();
         }
 
-        // 부서코드 combobox selectChange 이벤트
-        private void SelectDeptCd_SelectionChangeCommitted(object sender, EventArgs e)
+        // 상위부서코드 EditValueChange 이벤트
+        private void SelectUpperDeptCd_EditValueChanged(object sender, EventArgs e)
         {
-            Dept selectedDept = (Dept)selectDeptCd.SelectedItem;
-            DeptNameText = selectedDept.DeptName;
+            int selectedId = Convert.ToInt32(selectUpperDeptCd.EditValue);
+            var selectedUpperDept = upperDeptComboList.FirstOrDefault(x => x.Id.Equals(selectedId));
+
+            txtUpperDeptName.Text = selectedUpperDept != null ? selectedUpperDept.UpperDeptName : "";
+
+
+            SelectDeptList(selectedId);
+        }
+
+        // 부서코드 EditValueChange 이벤트
+        private void SelectDeptCd_EditValueChanged(object sender, EventArgs e)
+        {
+            int selectedId = Convert.ToInt32(selectDeptCd.EditValue);
+            var selectedDept = deptComboList.FirstOrDefault(x => x.Id.Equals(selectedId));
+
+            txtDeptName.Text = selectedDept != null ? selectedDept.DeptName : "";
         }
 
         // 성별 체크박스 남자 체크 이벤트
@@ -261,9 +278,56 @@ namespace WindowsFormsApp2.sys_user_info
         // 메서드 정의
         // ------------
 
+        // 상위부서 리스트
+        private void SelectUpperDeptList()
+        {
+            upperDeptComboList = UpperDeptRepository.Instance.GetUpperDept();
+
+            selectUpperDeptCd.Properties.DataSource = upperDeptComboList;
+            selectUpperDeptCd.Properties.DisplayMember = nameof(UpperDept.UpperDeptCd);
+            selectUpperDeptCd.Properties.ValueMember = nameof(UpperDept.Id);
+
+            selectUpperDeptCd.Properties.Columns.Clear();
+            selectUpperDeptCd.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(UpperDept.UpperDeptCd), "상위부서코드", 70));
+            selectUpperDeptCd.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(UpperDept.UpperDeptName), "상위부서명", 120));
+            selectUpperDeptCd.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(UpperDept.Id)) { Visible = false });
+
+            selectUpperDeptCd.EditValue = null;
+            DeptNameText = "";
+        }
+
+        // 하위부서 리스트
+        private void SelectDeptList(int selectedId)
+        {
+            List<Dept> allDeptList = DeptRepository.Instance.GetDept();
+
+            deptComboList = allDeptList
+                .Where(d => d.IdUpperDept == selectedId)
+                .OrderBy(d => d.DeptCd)
+                .ToList();
+
+            selectDeptCd.Properties.DataSource = deptComboList;
+            selectDeptCd.Properties.DisplayMember = nameof(Dept.DeptCd);
+            selectDeptCd.Properties.ValueMember = nameof(Dept.Id);
+
+            selectDeptCd.Properties.Columns.Clear();
+            selectDeptCd.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Dept.DeptCd), "부서코드", 70));
+            selectDeptCd.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Dept.DeptName), "부서명", 120));
+            selectDeptCd.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Dept.Id)) { Visible = false });
+
+            selectDeptCd.EditValue = null; // 선택 초기화
+        }
+
         // 사원 저장
         private void UserReg()
         {
+            if (SelectedUpperDeptCd < 0)
+            {
+                MessageBox.Show("상위부서코드가 입력되지 않았습니다.");
+                selectUpperDeptCd.Focus();
+                return;
+            }
+
             if (SelectedDeptCd < 0)
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
@@ -330,58 +394,58 @@ namespace WindowsFormsApp2.sys_user_info
                 dataUserInfo.UserMessengerId = UserMessengerIdText;
                 dataUserInfo.RemarkDc = RemarkDcText;
 
-                //int result = UserRepository.Instance.AddUser(dataUserInfo);
+                int result = UserRepository.Instance.AddUser(dataUserInfo);
 
-                //switch (result)
-                //{
-                //    case int n when n > 0:
-                //        saveId = result;
-                //        UserInsertFg = true;
-                //        UserImageUpdate();
+                switch (result)
+                {
+                    case int n when n > 0:
+                        saveId = result;
+                        UserInsertFg = true;
+                        UserImageUpdate();
 
-                //        MessageBox.Show("저장되었습니다.");
-                //        this.Close();
-                //        break;
+                        MessageBox.Show("저장되었습니다.");
+                        this.Close();
+                        break;
 
-                //    case -1:
-                //        MessageBox.Show("이미 존재하는 사원코드 입니다.");
-                //        txtUserId.Focus();
-                //        break;
+                    case -1:
+                        MessageBox.Show("이미 존재하는 사원코드 입니다.");
+                        txtUserId.Focus();
+                        break;
 
-                //    case -2:
-                //        MessageBox.Show("이미 존재하는 로그인ID 입니다.");
-                //        txtUserLoginId.Focus();
-                //        break;
+                    case -2:
+                        MessageBox.Show("이미 존재하는 로그인ID 입니다.");
+                        txtUserLoginId.Focus();
+                        break;
 
-                //    case -3:
-                //        MessageBox.Show("저장 중 오류가 발생했습니다.");
-                //        break;
+                    case -3:
+                        MessageBox.Show("저장 중 오류가 발생했습니다.");
+                        break;
 
-                //    default:
-                //        MessageBox.Show("저장에 실패했습니다.");
-                //        break;
-                //}
+                    default:
+                        MessageBox.Show("저장에 실패했습니다.");
+                        break;
+                }
             }
         }
 
         // 사원 이미지 업로드
         private void UserImageUpdate()
         {
-            //if (UserImage != null)
-            //{
-            //    try
-            //    {
-            //        string savePath = UserFileConfig.SaveUserImage(UserImage, saveId, saveFileName);
+            if (UserImage != null)
+            {
+                try
+                {
+                    string savePath = UserFileConfig.Instance.SaveUserImage(UserImage, saveId, saveFileName);
+                    
+                    UserRepository.Instance.UpdateUserImage(saveId, savePath);
 
-            //        UserRepository.Instance.UpdateUserImage(saveId, savePath);
-
-            //        Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Debug.WriteLine("이미지 저장 중 오류: " + ex.Message);
-            //    }
-            //}
+                    Debug.WriteLine("이미지가 저장되었습니다: " + savePath);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("이미지 저장 중 오류: " + ex.Message);
+                }
+            }
         }
 
         // 폼 닫기

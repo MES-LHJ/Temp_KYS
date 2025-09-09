@@ -95,7 +95,7 @@ namespace WindowsFormsApp1.helper
                     new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = dept.DeptCd }
                 };
 
-                int deptCdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(deptCdCheckSql, deptCdParams);
+                int deptCdCheckCount = ConnDatabase.Instance.ExecuteScalar(deptCdCheckSql, deptCdParams);
 
                 if (deptCdCheckCount > 0)
                 {
@@ -137,7 +137,7 @@ namespace WindowsFormsApp1.helper
                     new SqlParameter("@dept_cd", SqlDbType.NVarChar) { Value = dept.DeptCd }
                 };
 
-                int deptCdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(deptCdCheckSql, deptCdParams);
+                int deptCdCheckCount = ConnDatabase.Instance.ExecuteScalar(deptCdCheckSql, deptCdParams);
 
                 if (deptCdCheckCount > 0)
                 {

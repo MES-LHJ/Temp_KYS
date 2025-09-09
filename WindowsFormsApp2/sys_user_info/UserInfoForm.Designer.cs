@@ -39,11 +39,11 @@
             this.UserLoginId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.UserPass = new DevExpress.XtraGrid.Columns.GridColumn();
             this.UserRank = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.UserEmpTpye = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.UserEmpType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.UserGender = new DevExpress.XtraGrid.Columns.GridColumn();
             this.UserTel = new DevExpress.XtraGrid.Columns.GridColumn();
             this.UserEmail = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.USerMessengerId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.UserMessengerId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.RemarkDc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Id = new DevExpress.XtraGrid.Columns.GridColumn();
             this.IdDept = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -93,11 +93,11 @@
             // 
             // masterGrid
             // 
-            this.masterGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.masterGrid.Location = new System.Drawing.Point(2, 42);
+            this.masterGrid.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.masterGrid.Location = new System.Drawing.Point(12, 49);
             this.masterGrid.MainView = this.masterGridView;
             this.masterGrid.Name = "masterGrid";
-            this.masterGrid.Size = new System.Drawing.Size(1280, 417);
+            this.masterGrid.Size = new System.Drawing.Size(1260, 400);
             this.masterGrid.TabIndex = 1;
             this.masterGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.masterGridView});
@@ -113,11 +113,11 @@
             this.UserLoginId,
             this.UserPass,
             this.UserRank,
-            this.UserEmpTpye,
+            this.UserEmpType,
             this.UserGender,
             this.UserTel,
             this.UserEmail,
-            this.USerMessengerId,
+            this.UserMessengerId,
             this.RemarkDc,
             this.Id,
             this.IdDept,
@@ -177,13 +177,13 @@
             this.UserRank.Visible = true;
             this.UserRank.VisibleIndex = 6;
             // 
-            // UserEmpTpye
+            // UserEmpType
             // 
-            this.UserEmpTpye.Caption = "고용형태";
-            this.UserEmpTpye.FieldName = "UserEmpTpye";
-            this.UserEmpTpye.Name = "UserEmpTpye";
-            this.UserEmpTpye.Visible = true;
-            this.UserEmpTpye.VisibleIndex = 7;
+            this.UserEmpType.Caption = "고용형태";
+            this.UserEmpType.FieldName = "UserEmpType";
+            this.UserEmpType.Name = "UserEmpType";
+            this.UserEmpType.Visible = true;
+            this.UserEmpType.VisibleIndex = 7;
             // 
             // UserGender
             // 
@@ -209,13 +209,13 @@
             this.UserEmail.Visible = true;
             this.UserEmail.VisibleIndex = 10;
             // 
-            // USerMessengerId
+            // UserMessengerId
             // 
-            this.USerMessengerId.Caption = "메신저ID";
-            this.USerMessengerId.FieldName = "USerMessengerId";
-            this.USerMessengerId.Name = "USerMessengerId";
-            this.USerMessengerId.Visible = true;
-            this.USerMessengerId.VisibleIndex = 11;
+            this.UserMessengerId.Caption = "메신저ID";
+            this.UserMessengerId.FieldName = "UserMessengerId";
+            this.UserMessengerId.Name = "UserMessengerId";
+            this.UserMessengerId.Visible = true;
+            this.UserMessengerId.VisibleIndex = 11;
             // 
             // RemarkDc
             // 
@@ -417,11 +417,11 @@
         private DevExpress.XtraGrid.Columns.GridColumn UserLoginId;
         private DevExpress.XtraGrid.Columns.GridColumn UserPass;
         private DevExpress.XtraGrid.Columns.GridColumn UserRank;
-        private DevExpress.XtraGrid.Columns.GridColumn UserEmpTpye;
+        private DevExpress.XtraGrid.Columns.GridColumn UserEmpType;
         private DevExpress.XtraGrid.Columns.GridColumn UserGender;
         private DevExpress.XtraGrid.Columns.GridColumn UserTel;
         private DevExpress.XtraGrid.Columns.GridColumn UserEmail;
-        private DevExpress.XtraGrid.Columns.GridColumn USerMessengerId;
+        private DevExpress.XtraGrid.Columns.GridColumn UserMessengerId;
         private DevExpress.XtraGrid.Columns.GridColumn RemarkDc;
         private DevExpress.XtraGrid.Columns.GridColumn Id;
         private DevExpress.XtraGrid.Columns.GridColumn IdDept;

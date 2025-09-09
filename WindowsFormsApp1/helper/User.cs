@@ -11,7 +11,7 @@ namespace WindowsFormsApp1.helper
     {
         public enum Gender
         {
-            None = 0, Male = 1, FeMale = 2
+            None = 0, Male = 1, Female = 2
         }
 
         [JsonPropertyName("Id")]

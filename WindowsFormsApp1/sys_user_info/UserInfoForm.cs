@@ -25,7 +25,6 @@ namespace WindowsFormsApp1.sys_user_info
     public partial class UserInfoForm : Form
     {
         private List<User> userList;
-        private string baseFolder;
 
         // 이벤트 핸들러
         private void InitEvents()
@@ -171,7 +170,7 @@ namespace WindowsFormsApp1.sys_user_info
                     {
                         e.Value = "남";
                     }
-                    else if (cellValue == nameof(User.Gender.FeMale))
+                    else if (cellValue == nameof(User.Gender.Female))
                     {
                         e.Value = "여";
                     }
@@ -336,7 +335,7 @@ namespace WindowsFormsApp1.sys_user_info
         // 사원 삭제 후 이미지 삭제
         private void UserImageDelete(int id)
         {
-            UserFileConfig.DeleteUserImage(id);
+            UserFileConfig.Instance.DeleteUserImage(id);
         }
 
         // 엑셀 다운로드

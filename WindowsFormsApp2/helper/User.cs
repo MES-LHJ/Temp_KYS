@@ -10,7 +10,7 @@ namespace WindowsFormsApp2.helper
     {
         public enum Gender
         {
-            None = 0, Male = 1, FeMale = 2
+            None = 0, Male = 1, Female = 2
         }
 
         public int Id { get; set; }
@@ -44,5 +44,11 @@ namespace WindowsFormsApp2.helper
         public string DeptCd { get; set; }
 
         public string DeptName { get; set; }
+
+        public int IdUpperDept { get; set; }
+
+        public string UpperDeptCd { get; set; }
+
+        public string UpperDeptName { get; set; }
     }
 }

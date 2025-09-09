@@ -92,11 +92,11 @@ namespace WindowsFormsApp1.sys_user_info
         public User.Gender SelectedGender
         {
             get => chkUserGender1.Checked ? User.Gender.Male :
-                   chkUserGender2.Checked ? User.Gender.FeMale : User.Gender.None;
+                   chkUserGender2.Checked ? User.Gender.Female : User.Gender.None;
             set
             {
                 chkUserGender1.Checked = value == User.Gender.Male;
-                chkUserGender2.Checked = value == User.Gender.FeMale;
+                chkUserGender2.Checked = value == User.Gender.Female;
             }
         }
 
@@ -453,7 +453,7 @@ namespace WindowsFormsApp1.sys_user_info
             {
                 try
                 {
-                    string savePath = UserFileConfig.SaveUserImage(UserImage, saveId, saveFileName);
+                    string savePath = UserFileConfig.Instance.SaveUserImage(UserImage, saveId, saveFileName);
 
                     UserRepository.Instance.UpdateUserImage(saveId, savePath);
 

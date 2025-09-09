@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp2.sys_user_info
 {
-    partial class UserAddForm
+    partial class UserUpdateForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
             this.selectDeptCd = new DevExpress.XtraEditors.LookUpEdit();
             this.selectUpperDeptCd = new DevExpress.XtraEditors.LookUpEdit();
             this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
@@ -49,10 +50,6 @@
             this.txtUserEmpType = new DevExpress.XtraEditors.TextEdit();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
             this.btnClearImage = new DevExpress.XtraEditors.SimpleButton();
-            this.txtUserLoginId = new DevExpress.XtraEditors.TextEdit();
-            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            this.txtUserPass = new DevExpress.XtraEditors.TextEdit();
-            this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
             this.txtUserId = new DevExpress.XtraEditors.TextEdit();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.txtUserName = new DevExpress.XtraEditors.TextEdit();
@@ -66,6 +63,8 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
+            this.panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectDeptCd.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectUpperDeptCd.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemarkDc.Properties)).BeginInit();
@@ -76,8 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkUserGender1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserRank.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserEmpType.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserLoginId.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserPass.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserId.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDeptName.Properties)).BeginInit();
@@ -87,46 +84,51 @@
             // 
             // panelControl1
             // 
-            this.panelControl1.Controls.Add(this.selectDeptCd);
-            this.panelControl1.Controls.Add(this.selectUpperDeptCd);
-            this.panelControl1.Controls.Add(this.btnCancel);
-            this.panelControl1.Controls.Add(this.btnAct);
-            this.panelControl1.Controls.Add(this.txtRemarkDc);
-            this.panelControl1.Controls.Add(this.labelControl15);
-            this.panelControl1.Controls.Add(this.txtUserMessengerId);
-            this.panelControl1.Controls.Add(this.labelControl14);
-            this.panelControl1.Controls.Add(this.txtUserTel);
-            this.panelControl1.Controls.Add(this.labelControl12);
-            this.panelControl1.Controls.Add(this.txtUserEmail);
-            this.panelControl1.Controls.Add(this.labelControl13);
-            this.panelControl1.Controls.Add(this.chkUserGender2);
-            this.panelControl1.Controls.Add(this.labelControl11);
-            this.panelControl1.Controls.Add(this.chkUserGender1);
-            this.panelControl1.Controls.Add(this.txtUserRank);
-            this.panelControl1.Controls.Add(this.labelControl9);
-            this.panelControl1.Controls.Add(this.txtUserEmpType);
-            this.panelControl1.Controls.Add(this.labelControl10);
-            this.panelControl1.Controls.Add(this.btnClearImage);
-            this.panelControl1.Controls.Add(this.txtUserLoginId);
-            this.panelControl1.Controls.Add(this.labelControl7);
-            this.panelControl1.Controls.Add(this.txtUserPass);
-            this.panelControl1.Controls.Add(this.labelControl8);
-            this.panelControl1.Controls.Add(this.txtUserId);
-            this.panelControl1.Controls.Add(this.labelControl6);
-            this.panelControl1.Controls.Add(this.txtUserName);
-            this.panelControl1.Controls.Add(this.labelControl5);
-            this.panelControl1.Controls.Add(this.txtDeptName);
-            this.panelControl1.Controls.Add(this.labelControl3);
-            this.panelControl1.Controls.Add(this.labelControl4);
-            this.panelControl1.Controls.Add(this.userImage);
-            this.panelControl1.Controls.Add(this.txtUpperDeptName);
-            this.panelControl1.Controls.Add(this.labelControl2);
-            this.panelControl1.Controls.Add(this.labelControl1);
+            this.panelControl1.Controls.Add(this.panelControl2);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(614, 511);
             this.panelControl1.TabIndex = 0;
+            // 
+            // panelControl2
+            // 
+            this.panelControl2.Controls.Add(this.selectDeptCd);
+            this.panelControl2.Controls.Add(this.selectUpperDeptCd);
+            this.panelControl2.Controls.Add(this.btnCancel);
+            this.panelControl2.Controls.Add(this.btnAct);
+            this.panelControl2.Controls.Add(this.txtRemarkDc);
+            this.panelControl2.Controls.Add(this.labelControl15);
+            this.panelControl2.Controls.Add(this.txtUserMessengerId);
+            this.panelControl2.Controls.Add(this.labelControl14);
+            this.panelControl2.Controls.Add(this.txtUserTel);
+            this.panelControl2.Controls.Add(this.labelControl12);
+            this.panelControl2.Controls.Add(this.txtUserEmail);
+            this.panelControl2.Controls.Add(this.labelControl13);
+            this.panelControl2.Controls.Add(this.chkUserGender2);
+            this.panelControl2.Controls.Add(this.labelControl11);
+            this.panelControl2.Controls.Add(this.chkUserGender1);
+            this.panelControl2.Controls.Add(this.txtUserRank);
+            this.panelControl2.Controls.Add(this.labelControl9);
+            this.panelControl2.Controls.Add(this.txtUserEmpType);
+            this.panelControl2.Controls.Add(this.labelControl10);
+            this.panelControl2.Controls.Add(this.btnClearImage);
+            this.panelControl2.Controls.Add(this.txtUserId);
+            this.panelControl2.Controls.Add(this.labelControl6);
+            this.panelControl2.Controls.Add(this.txtUserName);
+            this.panelControl2.Controls.Add(this.labelControl5);
+            this.panelControl2.Controls.Add(this.txtDeptName);
+            this.panelControl2.Controls.Add(this.labelControl3);
+            this.panelControl2.Controls.Add(this.labelControl4);
+            this.panelControl2.Controls.Add(this.userImage);
+            this.panelControl2.Controls.Add(this.txtUpperDeptName);
+            this.panelControl2.Controls.Add(this.labelControl2);
+            this.panelControl2.Controls.Add(this.labelControl1);
+            this.panelControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelControl2.Location = new System.Drawing.Point(2, 2);
+            this.panelControl2.Name = "panelControl2";
+            this.panelControl2.Size = new System.Drawing.Size(610, 507);
+            this.panelControl2.TabIndex = 1;
             // 
             // selectDeptCd
             // 
@@ -354,49 +356,6 @@
             this.btnClearImage.TabStop = false;
             this.btnClearImage.Text = "이미지 비우기";
             // 
-            // txtUserLoginId
-            // 
-            this.txtUserLoginId.Location = new System.Drawing.Point(20, 226);
-            this.txtUserLoginId.Name = "txtUserLoginId";
-            this.txtUserLoginId.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.txtUserLoginId.Properties.Appearance.Options.UseFont = true;
-            this.txtUserLoginId.Size = new System.Drawing.Size(170, 22);
-            this.txtUserLoginId.TabIndex = 7;
-            // 
-            // labelControl7
-            // 
-            this.labelControl7.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl7.Appearance.ForeColor = System.Drawing.Color.Red;
-            this.labelControl7.Appearance.Options.UseFont = true;
-            this.labelControl7.Appearance.Options.UseForeColor = true;
-            this.labelControl7.Location = new System.Drawing.Point(20, 201);
-            this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(59, 19);
-            this.labelControl7.TabIndex = 15;
-            this.labelControl7.Text = "로그인ID";
-            // 
-            // txtUserPass
-            // 
-            this.txtUserPass.Location = new System.Drawing.Point(212, 226);
-            this.txtUserPass.Name = "txtUserPass";
-            this.txtUserPass.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.txtUserPass.Properties.Appearance.Options.UseFont = true;
-            this.txtUserPass.Properties.PasswordChar = '*';
-            this.txtUserPass.Size = new System.Drawing.Size(170, 22);
-            this.txtUserPass.TabIndex = 8;
-            // 
-            // labelControl8
-            // 
-            this.labelControl8.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl8.Appearance.ForeColor = System.Drawing.Color.Red;
-            this.labelControl8.Appearance.Options.UseFont = true;
-            this.labelControl8.Appearance.Options.UseForeColor = true;
-            this.labelControl8.Location = new System.Drawing.Point(212, 201);
-            this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(56, 19);
-            this.labelControl8.TabIndex = 13;
-            this.labelControl8.Text = "비밀번호";
-            // 
             // txtUserId
             // 
             this.txtUserId.Location = new System.Drawing.Point(20, 166);
@@ -522,18 +481,20 @@
             this.labelControl1.TabIndex = 1;
             this.labelControl1.Text = "상위부서코드";
             // 
-            // UserAddForm
+            // UserUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 511);
             this.Controls.Add(this.panelControl1);
-            this.Name = "UserAddForm";
+            this.Name = "UserUpdateForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "사원 추가";
+            this.Text = "사원 수정";
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
-            this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
+            this.panelControl2.ResumeLayout(false);
+            this.panelControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectDeptCd.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectUpperDeptCd.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemarkDc.Properties)).EndInit();
@@ -544,8 +505,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkUserGender1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserRank.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserEmpType.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserLoginId.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserPass.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserId.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDeptName.Properties)).EndInit();
@@ -558,27 +517,11 @@
         #endregion
 
         private DevExpress.XtraEditors.PanelControl panelControl1;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
-        private DevExpress.XtraEditors.TextEdit txtUpperDeptName;
-        private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.PictureEdit userImage;
-        private DevExpress.XtraEditors.TextEdit txtDeptName;
-        private DevExpress.XtraEditors.LabelControl labelControl3;
-        private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraEditors.TextEdit txtUserName;
-        private DevExpress.XtraEditors.LabelControl labelControl5;
-        private DevExpress.XtraEditors.TextEdit txtUserLoginId;
-        private DevExpress.XtraEditors.LabelControl labelControl7;
-        private DevExpress.XtraEditors.TextEdit txtUserPass;
-        private DevExpress.XtraEditors.LabelControl labelControl8;
-        private DevExpress.XtraEditors.TextEdit txtUserId;
-        private DevExpress.XtraEditors.LabelControl labelControl6;
-        private DevExpress.XtraEditors.SimpleButton btnClearImage;
-        private DevExpress.XtraEditors.TextEdit txtUserRank;
-        private DevExpress.XtraEditors.LabelControl labelControl9;
-        private DevExpress.XtraEditors.TextEdit txtUserEmpType;
-        private DevExpress.XtraEditors.LabelControl labelControl10;
-        private DevExpress.XtraEditors.CheckEdit chkUserGender1;
+        private DevExpress.XtraEditors.PanelControl panelControl2;
+        private DevExpress.XtraEditors.LookUpEdit selectDeptCd;
+        private DevExpress.XtraEditors.LookUpEdit selectUpperDeptCd;
+        private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraEditors.SimpleButton btnAct;
         private DevExpress.XtraEditors.TextEdit txtRemarkDc;
         private DevExpress.XtraEditors.LabelControl labelControl15;
         private DevExpress.XtraEditors.TextEdit txtUserMessengerId;
@@ -589,9 +532,22 @@
         private DevExpress.XtraEditors.LabelControl labelControl13;
         private DevExpress.XtraEditors.CheckEdit chkUserGender2;
         private DevExpress.XtraEditors.LabelControl labelControl11;
-        private DevExpress.XtraEditors.SimpleButton btnCancel;
-        private DevExpress.XtraEditors.SimpleButton btnAct;
-        private DevExpress.XtraEditors.LookUpEdit selectUpperDeptCd;
-        private DevExpress.XtraEditors.LookUpEdit selectDeptCd;
+        private DevExpress.XtraEditors.CheckEdit chkUserGender1;
+        private DevExpress.XtraEditors.TextEdit txtUserRank;
+        private DevExpress.XtraEditors.LabelControl labelControl9;
+        private DevExpress.XtraEditors.TextEdit txtUserEmpType;
+        private DevExpress.XtraEditors.LabelControl labelControl10;
+        private DevExpress.XtraEditors.SimpleButton btnClearImage;
+        private DevExpress.XtraEditors.TextEdit txtUserId;
+        private DevExpress.XtraEditors.LabelControl labelControl6;
+        private DevExpress.XtraEditors.TextEdit txtUserName;
+        private DevExpress.XtraEditors.LabelControl labelControl5;
+        private DevExpress.XtraEditors.TextEdit txtDeptName;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.PictureEdit userImage;
+        private DevExpress.XtraEditors.TextEdit txtUpperDeptName;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }

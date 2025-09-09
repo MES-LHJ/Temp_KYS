@@ -150,7 +150,7 @@ namespace WindowsFormsApp1.helper
                     new SqlParameter("@user_id", SqlDbType.NVarChar) { Value = user.UserId }
                 };
 
-                int userIdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(userIdCheckSql, userIdParams);
+                int userIdCheckCount = ConnDatabase.Instance.ExecuteScalar(userIdCheckSql, userIdParams);
 
                 if (userIdCheckCount > 0)
                 {
@@ -165,7 +165,7 @@ namespace WindowsFormsApp1.helper
                     new SqlParameter("@user_login_id", SqlDbType.NVarChar) { Value = user.UserLoginId }
                 };
 
-                int loginIdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(loginIdCheckSql, loginIdParames);
+                int loginIdCheckCount = ConnDatabase.Instance.ExecuteScalar(loginIdCheckSql, loginIdParames);
 
                 if (loginIdCheckCount > 0)
                 {
@@ -220,7 +220,7 @@ namespace WindowsFormsApp1.helper
                     new SqlParameter("@user_id", SqlDbType.NVarChar) { Value = user.UserId }
                 };
 
-                int userIdCheckCount = ConnDatabase.Instance.ExecuteNonQuery(userIdCheckSql, userIdParams);
+                int userIdCheckCount = ConnDatabase.Instance.ExecuteScalar(userIdCheckSql, userIdParams);
 
                 if (userIdCheckCount > 0)
                 {

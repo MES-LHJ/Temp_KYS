@@ -188,14 +188,14 @@ namespace WindowsFormsApp1.sys_dept_info
         {
             if (dataDeptInfo == null) return;
 
-            if (string.IsNullOrEmpty(txtDeptCd.Text.Trim()))
+            if (string.IsNullOrEmpty(DeptCdText))
             {
                 MessageBox.Show("부서코드가 입력되지 않았습니다.");
                 txtDeptCd.Focus();
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtDeptName.Text.Trim()))
+            if (string.IsNullOrEmpty(DeptNameText))
             {
                 MessageBox.Show("부서명이 입력되지 않았습니다.");
                 txtDeptName.Focus();
@@ -232,7 +232,7 @@ namespace WindowsFormsApp1.sys_dept_info
                     txtDeptCd.Focus();
                 }
 
-                //int result = DeptRepository.Instance.UpdateDept(dataDeptInfo);
+                //int result = DeptRepository.Instance.UpdateDept(updatedDept);
 
                 //switch (result)
                 //{
