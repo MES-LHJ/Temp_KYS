@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.helper;
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2.sys_upperdept_info
 {
-    public partial class UpperDeptUpdateForm : Form
+    public partial class UpperDeptUpdateForm : XtraForm
     {
         private UpperDept dataUpperDeptInfo;
 

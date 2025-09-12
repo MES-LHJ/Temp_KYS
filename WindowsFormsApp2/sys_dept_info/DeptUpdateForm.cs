@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.helper;
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2.sys_dept_info
 {
-    public partial class DeptUpdateForm : Form
+    public partial class DeptUpdateForm : XtraForm
     {
         private Dept dataDeptInfo;
 

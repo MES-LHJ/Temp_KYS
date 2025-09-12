@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.helper;
 using WindowsFormsApp2.sys_upperdept_info;
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2.sys_dept_info
 {
-    public partial class DeptInfoForm : Form
+    public partial class DeptInfoForm : XtraForm
     {
         private List<UpperDept> upperDeptList = new List<UpperDept>();
         private List<Dept> deptList = new List<Dept>();
@@ -128,15 +129,15 @@ namespace WindowsFormsApp2.sys_dept_info
         // 트리 폼 Load
         public void DeptTreeLoad()
         {
-            //DeptChartForm deptChart = new DeptChartForm();
-            //deptChart.ShowDialog();
+            DeptTreeForm deptTreeForm = new DeptTreeForm();
+            deptTreeForm.ShowDialog();
         }
 
         // 차트 폼 Load
         public void DeptChartLoad()
         {
-            //DeptChartForm deptChart = new DeptChartForm();
-            //deptChart.ShowDialog();
+            DeptChartForm deptChartForm = new DeptChartForm();
+            deptChartForm.ShowDialog();
         }
 
         // 부서 추가 폼 Load

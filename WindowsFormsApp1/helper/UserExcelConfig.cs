@@ -21,7 +21,7 @@ namespace WindowsFormsApp1.helper
             { nameof(User.UserTel), "휴대전화" },
             { nameof(User.UserEmail), "이메일" },
             { nameof(User.UserMessengerId), "메신저ID" },
-            { nameof(User.RemarkDc), "비고" }
+            { nameof(User.RemarkDc), "메모" }
         };
     }
 }

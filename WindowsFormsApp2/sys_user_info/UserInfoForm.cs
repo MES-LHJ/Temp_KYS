@@ -1,5 +1,4 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +12,11 @@ using WindowsFormsApp2.helper;
 using WindowsFormsApp2.sys_dept_info;
 using ClosedXML;
 using ClosedXML.Excel;
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2.sys_user_info
 {
-    public partial class UserInfoForm : Form
+    public partial class UserInfoForm : XtraForm
     {
         private List<User> userList;
 
@@ -28,6 +28,7 @@ namespace WindowsFormsApp2.sys_user_info
             btnDept.Click += BtnDept_Click;
             btnSrch.Click += BtnSrch_Click;
             btnAdd.Click += BtnAdd_Click;
+            btnMultiAdd.Click += BtnMultiAdd_Click;
             btnUpdate.Click += BtnUpdate_Click;
             btnLoginInfo.Click += BtnLoginInfo_Click;
             btnDelete.Click += BtnDelete_Click;
@@ -78,6 +79,12 @@ namespace WindowsFormsApp2.sys_user_info
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             UserAddLoad();
+        }
+
+        // 다중추가 버튼 클릭 이벤트
+        private void BtnMultiAdd_Click(object sender, EventArgs e)
+        {
+            UserMultiAddLoad();
         }
 
         // 수정 버튼 클릭 이벤트
@@ -162,6 +169,18 @@ namespace WindowsFormsApp2.sys_user_info
             userAddForm.ShowDialog();
 
             if (userAddForm.UserInsertFg)
+            {
+                UserSrch();
+            }
+        }
+
+        // 사원 다중추가 폼 Load
+        public void UserMultiAddLoad()
+        {
+            UserMultiAddForm userMultiAddForm = new UserMultiAddForm();
+            userMultiAddForm.ShowDialog();
+
+            if (userMultiAddForm.UserMultiInsertFg)
             {
                 UserSrch();
             }
@@ -253,7 +272,7 @@ namespace WindowsFormsApp2.sys_user_info
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    using (var workBook = new ClosedXML.Excel.XLWorkbook())
+                    using (var workBook = new XLWorkbook())
                     {
                         var workSheet = workBook.Worksheets.Add("사원정보");
 

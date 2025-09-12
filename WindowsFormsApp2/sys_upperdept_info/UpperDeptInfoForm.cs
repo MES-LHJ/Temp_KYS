@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.helper;
-
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2.sys_upperdept_info
 {
-    public partial class UpperDeptInfoForm : Form
+    public partial class UpperDeptInfoForm : XtraForm
     {
         private List<UpperDept> upperDeptList = new List<UpperDept>();
 
@@ -212,7 +212,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
                 }
                 else if (result == -1)
                 {
-                    MessageBox.Show("이미 사용중인 부서 데이터는 삭제할 수 없습니다.");
+                    MessageBox.Show("하위부서가 존재해 삭제할 수 없습니다.");
                 }
                 else if (result == -2)
                 {

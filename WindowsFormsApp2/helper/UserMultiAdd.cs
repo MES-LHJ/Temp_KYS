@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp2.helper
 {
-    public static class UserExcelConfig
+    public static class UserMultiAdd
     {
         public static readonly Dictionary<string, string> ColumnInfo = new Dictionary<string, string>()
         {
             { nameof(User.DeptCd), "부서코드" },
-            { nameof(User.DeptName), "부서명" },
             { nameof(User.UserId), "사원코드" },
             { nameof(User.UserName), "사원명" },
             { nameof(User.UserLoginId), "로그인ID" },

@@ -12,7 +12,7 @@ namespace WindowsFormsApp1.helper
         {
             { nameof(Dept.DeptCd), "부서코드" },
             { nameof(Dept.DeptName), "부서명" },
-            { nameof(Dept.RemarkDc), "비고" }
+            { nameof(Dept.RemarkDc), "메모" }
         };
     }
 }

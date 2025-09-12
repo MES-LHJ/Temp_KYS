@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.helper;
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2
 {
-    public partial class IndexForm : Form
+    public partial class IndexForm : XtraForm
     {
         public bool LoginSuccess { get; private set; } = false;
 

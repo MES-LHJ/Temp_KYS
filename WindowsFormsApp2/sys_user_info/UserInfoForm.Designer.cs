@@ -97,7 +97,7 @@
             this.masterGrid.Location = new System.Drawing.Point(12, 49);
             this.masterGrid.MainView = this.masterGridView;
             this.masterGrid.Name = "masterGrid";
-            this.masterGrid.Size = new System.Drawing.Size(1260, 400);
+            this.masterGrid.Size = new System.Drawing.Size(1250, 400);
             this.masterGrid.TabIndex = 1;
             this.masterGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.masterGridView});
@@ -127,6 +127,7 @@
             this.masterGridView.Name = "masterGridView";
             this.masterGridView.OptionsBehavior.Editable = false;
             this.masterGridView.OptionsFind.AlwaysVisible = true;
+            this.masterGridView.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.FindClick;
             this.masterGridView.OptionsView.ShowGroupPanel = false;
             // 
             // DeptName
@@ -422,10 +423,10 @@
         private DevExpress.XtraGrid.Columns.GridColumn UserTel;
         private DevExpress.XtraGrid.Columns.GridColumn UserEmail;
         private DevExpress.XtraGrid.Columns.GridColumn UserMessengerId;
-        private DevExpress.XtraGrid.Columns.GridColumn RemarkDc;
         private DevExpress.XtraGrid.Columns.GridColumn Id;
         private DevExpress.XtraGrid.Columns.GridColumn IdDept;
         private DevExpress.XtraGrid.Columns.GridColumn UserImage;
+        private DevExpress.XtraGrid.Columns.GridColumn RemarkDc;
     }
 }
 

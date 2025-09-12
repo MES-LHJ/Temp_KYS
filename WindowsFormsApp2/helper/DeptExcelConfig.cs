@@ -12,7 +12,7 @@ namespace WindowsFormsApp2.helper
         {
             { nameof(UpperDept.UpperDeptCd), "부서코드" },
             { nameof(UpperDept.UpperDeptName), "부서명" },
-            { nameof(UpperDept.UpperRemarkDc), "비고" }
+            { nameof(UpperDept.UpperRemarkDc), "메모" }
         };
     }
 }

@@ -10,11 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp2.helper;
-
+using DevExpress.XtraEditors;
 
 namespace WindowsFormsApp2.sys_user_info
 {
-    public partial class UserUpdateForm : Form
+    public partial class UserUpdateForm : XtraForm
     {
         private User dataUserInfo = new User();
         private List<UpperDept> upperDeptComboList = new List<UpperDept>();
@@ -142,7 +142,7 @@ namespace WindowsFormsApp2.sys_user_info
         // 이벤트 핸들러
         private void InitEvent()
         {
-            this.Load += UserUpdate_Load;
+            this.Load += UserUpdateForm_Load;
             selectUpperDeptCd.EditValueChanged += SelectUpperDeptCd_EditValueChanged;
             selectDeptCd.EditValueChanged += SelectDeptCd_EditValueChanged;
             chkUserGender1.CheckedChanged += ChkUserGender1_CheckedChanged;
@@ -168,7 +168,7 @@ namespace WindowsFormsApp2.sys_user_info
         // ------------
 
         // 폼 Load 이벤트
-        private void UserUpdate_Load(object sender, EventArgs e)
+        private void UserUpdateForm_Load(object sender, EventArgs e)
         {
             UserSetData();
         }

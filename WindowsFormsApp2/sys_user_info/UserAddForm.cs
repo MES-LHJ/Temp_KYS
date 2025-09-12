@@ -14,7 +14,7 @@ using WindowsFormsApp2.helper;
 
 namespace WindowsFormsApp2.sys_user_info
 {
-    public partial class UserAddForm : Form
+    public partial class UserAddForm : XtraForm
     {
         private User dataUserInfo = new User();
         private List<UpperDept> upperDeptComboList = new List<UpperDept>();
@@ -153,7 +153,7 @@ namespace WindowsFormsApp2.sys_user_info
         // 이벤트 핸들러
         private void InitEvent()
         {
-            this.Load += UserAdd_Load;
+            this.Load += UserAddForm_Load;
             selectUpperDeptCd.EditValueChanged += SelectUpperDeptCd_EditValueChanged;
             selectDeptCd.EditValueChanged += SelectDeptCd_EditValueChanged;
             chkUserGender1.CheckedChanged += ChkUserGender1_CheckedChanged;
@@ -178,7 +178,7 @@ namespace WindowsFormsApp2.sys_user_info
         // ------------
 
         // 폼 Load 이벤트
-        private void UserAdd_Load(object sender, EventArgs e)
+        private void UserAddForm_Load(object sender, EventArgs e)
         {
             SelectUpperDeptList();
         }

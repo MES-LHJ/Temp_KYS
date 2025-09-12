@@ -94,16 +94,16 @@
             this.splitContainerControl1.Panel2.Controls.Add(this.detailGrid);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(980, 367);
-            this.splitContainerControl1.SplitterPosition = 486;
+            this.splitContainerControl1.SplitterPosition = 484;
             this.splitContainerControl1.TabIndex = 2;
             // 
             // masterGrid
             // 
             this.masterGrid.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.masterGrid.Location = new System.Drawing.Point(10, 6);
+            this.masterGrid.Location = new System.Drawing.Point(10, 7);
             this.masterGrid.MainView = this.masterGridView;
             this.masterGrid.Name = "masterGrid";
-            this.masterGrid.Size = new System.Drawing.Size(450, 350);
+            this.masterGrid.Size = new System.Drawing.Size(460, 350);
             this.masterGrid.TabIndex = 0;
             this.masterGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.masterGridView});
@@ -153,10 +153,10 @@
             // detailGrid
             // 
             this.detailGrid.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.detailGrid.Location = new System.Drawing.Point(24, 7);
+            this.detailGrid.Location = new System.Drawing.Point(16, 7);
             this.detailGrid.MainView = this.detailGridView;
             this.detailGrid.Name = "detailGrid";
-            this.detailGrid.Size = new System.Drawing.Size(450, 350);
+            this.detailGrid.Size = new System.Drawing.Size(460, 350);
             this.detailGrid.TabIndex = 0;
             this.detailGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.detailGridView});

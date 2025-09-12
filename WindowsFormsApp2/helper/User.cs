@@ -39,13 +39,13 @@ namespace WindowsFormsApp2.helper
 
         public string UserImage { get; set; } = "";
 
-        public int IdDept { get; set; }
+        public int IdDept { get; set; } = 0;
 
         public string DeptCd { get; set; }
 
         public string DeptName { get; set; }
 
-        public int IdUpperDept { get; set; }
+        public int IdUpperDept { get; set; } = 0;
 
         public string UpperDeptCd { get; set; }
 

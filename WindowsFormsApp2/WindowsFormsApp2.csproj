@@ -39,6 +39,7 @@
     <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Charts.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.Desktop.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.DataAccess.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -53,6 +54,8 @@
     <Reference Include="DevExpress.Utils.v21.2.UI, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraCharts.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v21.2.UI, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v21.2.Wizard, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraEditors.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -116,6 +119,8 @@
     <Compile Include="helper\UpperDeptRepository.cs" />
     <Compile Include="helper\UserExcelConfig.cs" />
     <Compile Include="helper\UserFileConfig.cs" />
+    <Compile Include="helper\UserMultiAdd.cs" />
+    <Compile Include="helper\UserTree.cs" />
     <Compile Include="helper\Validator.cs" />
     <Compile Include="IndexForm.cs">
       <SubType>Form</SubType>
@@ -129,11 +134,23 @@
     <Compile Include="sys_dept_info\DeptAddForm.Designer.cs">
       <DependentUpon>DeptAddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="sys_dept_info\DeptChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sys_dept_info\DeptChartForm.Designer.cs">
+      <DependentUpon>DeptChartForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="sys_dept_info\DeptInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="sys_dept_info\DeptInfoForm.Designer.cs">
       <DependentUpon>DeptInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="sys_dept_info\DeptTreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sys_dept_info\DeptTreeForm.Designer.cs">
+      <DependentUpon>DeptTreeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="sys_dept_info\DeptUpdateForm.cs">
       <SubType>Form</SubType>
@@ -178,6 +195,12 @@
     <Compile Include="helper\UserRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sys_user_info\UserMultiAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sys_user_info\UserMultiAddForm.Designer.cs">
+      <DependentUpon>UserMultiAddForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="sys_user_info\UserUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,8 +213,14 @@
     <EmbeddedResource Include="sys_dept_info\DeptAddForm.resx">
       <DependentUpon>DeptAddForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="sys_dept_info\DeptChartForm.resx">
+      <DependentUpon>DeptChartForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="sys_dept_info\DeptInfoForm.resx">
       <DependentUpon>DeptInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sys_dept_info\DeptTreeForm.resx">
+      <DependentUpon>DeptTreeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sys_dept_info\DeptUpdateForm.resx">
       <DependentUpon>DeptUpdateForm.cs</DependentUpon>
@@ -221,6 +250,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="sys_user_info\UserMultiAddForm.resx">
+      <DependentUpon>UserMultiAddForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="sys_user_info\UserUpdateForm.resx">
       <DependentUpon>UserUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
