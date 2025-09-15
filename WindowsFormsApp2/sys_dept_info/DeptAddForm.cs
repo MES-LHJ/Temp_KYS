@@ -25,21 +25,21 @@ namespace WindowsFormsApp2.sys_dept_info
         //-----------
 
         // 부서코드
-        public string DeptCdText
+        private string DeptCdText
         {
             get => txtDeptCd.Text.Trim();
             set => txtDeptCd.Text = value;
         }
 
         // 부서명
-        public string DeptNameText
+        private string DeptNameText
         {
             get => txtDeptName.Text.Trim();
             set => txtDeptName.Text = value;
         }
 
         // 메모
-        public string RemarkDcText
+        private string RemarkDcText
         {
             get => txtRemarkDc.Text.Trim();
             set => txtRemarkDc.Text = value;

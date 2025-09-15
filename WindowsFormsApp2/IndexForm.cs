@@ -74,7 +74,7 @@ namespace WindowsFormsApp2
         }
 
         // 폼 닫기
-        public void IndexClose()
+        private void IndexClose()
         {
             LoginSuccess = false;
             this.Close();

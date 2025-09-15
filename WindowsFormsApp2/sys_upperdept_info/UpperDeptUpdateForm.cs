@@ -21,21 +21,21 @@ namespace WindowsFormsApp2.sys_upperdept_info
         private readonly int id;
 
         // 부서코드
-        public string UpperDeptCdText
+        private string UpperDeptCdText
         {
             get => txtUpperDeptCd.Text.Trim();
             set => txtUpperDeptCd.Text = value;
         }
 
         // 부서명
-        public string UpperDeptNameText
+        private string UpperDeptNameText
         {
             get => txtUpperDeptName.Text.Trim();
             set => txtUpperDeptName.Text = value;
         }
 
         // 메모
-        public string UpperRemarkDcText
+        private string UpperRemarkDcText
         {
             get => txtUpperRemarkDc.Text.Trim();
             set => txtUpperRemarkDc.Text = value;
@@ -62,7 +62,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         // ------------
 
         // 폼 Load 이벤트
-        public void UpperDeptUpdateForm_Load(object sender, EventArgs e)
+        private void UpperDeptUpdateForm_Load(object sender, EventArgs e)
         {
             UpperDeptSetData();
         }
@@ -84,7 +84,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         // ------------
 
         // 부서 데이터 SET
-        public void UpperDeptSetData()
+        private void UpperDeptSetData()
         {
             dataUpperDeptInfo = UpperDeptRepository.Instance.GetUpperDeptById(id);
 

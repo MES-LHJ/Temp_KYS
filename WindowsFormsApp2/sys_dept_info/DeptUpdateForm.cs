@@ -21,21 +21,21 @@ namespace WindowsFormsApp2.sys_dept_info
         private readonly int id;
 
         // 부서코드
-        public string DeptCdText
+        private string DeptCdText
         {
             get => txtDeptCd.Text.Trim();
             set => txtDeptCd.Text = value;
         }
 
         // 부서명
-        public string DeptNameText
+        private string DeptNameText
         {
             get => txtDeptName.Text.Trim();
             set => txtDeptName.Text = value;
         }
 
         // 메모
-        public string RemarkDcText
+        private string RemarkDcText
         {
             get => txtRemarkDc.Text.Trim();
             set => txtRemarkDc.Text = value;
@@ -62,7 +62,7 @@ namespace WindowsFormsApp2.sys_dept_info
         // ------------
 
         // 폼 Load 이벤트
-        public void DeptUpdateForm_Load(object sender, EventArgs e)
+        private void DeptUpdateForm_Load(object sender, EventArgs e)
         {
             DeptSetData();
         }
@@ -84,7 +84,7 @@ namespace WindowsFormsApp2.sys_dept_info
         // ------------
 
         // 부서 데이터 SET
-        public void DeptSetData()
+        private void DeptSetData()
         {
             dataDeptInfo = DeptRepository.Instance.GetDeptById(id);
 

@@ -144,7 +144,7 @@ namespace WindowsFormsApp2.sys_user_info
         // ------------
 
         // 부서정보 폼 Load
-        public void DeptInfoLoad()
+        private void DeptInfoLoad()
         {
             DeptInfoForm deptInfoForm = new DeptInfoForm();
             deptInfoForm.ShowDialog();
@@ -163,7 +163,7 @@ namespace WindowsFormsApp2.sys_user_info
         }
 
         // 사원추가 폼 Load
-        public void UserAddLoad()
+        private void UserAddLoad()
         {
             UserAddForm userAddForm = new UserAddForm();
             userAddForm.ShowDialog();
@@ -175,7 +175,7 @@ namespace WindowsFormsApp2.sys_user_info
         }
 
         // 사원 다중추가 폼 Load
-        public void UserMultiAddLoad()
+        private void UserMultiAddLoad()
         {
             UserMultiAddForm userMultiAddForm = new UserMultiAddForm();
             userMultiAddForm.ShowDialog();
@@ -187,7 +187,7 @@ namespace WindowsFormsApp2.sys_user_info
         }
 
         // 사원수정 폼 Load
-        public void UserUpdateLoad()
+        private void UserUpdateLoad()
         {
             // 선택된 행이 있는지 확인
             if (masterGridView.FocusedRowHandle < 0)
@@ -214,7 +214,7 @@ namespace WindowsFormsApp2.sys_user_info
         }
 
         // 사원 삭제
-        public void UserDelete()
+        private void UserDelete()
         {
             if (masterGridView.FocusedRowHandle < 0)
             {
@@ -256,7 +256,7 @@ namespace WindowsFormsApp2.sys_user_info
         }
 
         // 엑셀 다운로드
-        public void ExcelDownLoad()
+        private void ExcelDownLoad()
         {
             if (masterGridView.FocusedRowHandle < 0)
             {
@@ -328,9 +328,9 @@ namespace WindowsFormsApp2.sys_user_info
                 }
             }
         }
-        
+
         // 폼 닫기
-        public void UserClose()
+        private void UserClose()
         {
             this.Close();
         }

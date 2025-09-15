@@ -50,7 +50,7 @@ namespace WindowsFormsApp2.sys_dept_info
         // ------------
 
         // 폼 Load 이벤트
-        public void DeptInfoForm_Load(object sender, EventArgs e)
+        private void DeptInfoForm_Load(object sender, EventArgs e)
         {
             DeptSrch();
         }
@@ -108,14 +108,14 @@ namespace WindowsFormsApp2.sys_dept_info
         // ------------
 
         // 부서 조회
-        public void DeptSrch()
+        private void DeptSrch()
         {
             upperDeptList = UpperDeptRepository.Instance.GetUpperDept();
             masterGrid.DataSource = upperDeptList;
         }
 
         // 상위부서 폼 Load
-        public void UpperDeptLoad()
+        private void UpperDeptLoad()
         {
             UpperDeptInfoForm upperDeptInfoForm = new UpperDeptInfoForm();
             upperDeptInfoForm.ShowDialog();
@@ -127,21 +127,21 @@ namespace WindowsFormsApp2.sys_dept_info
         }
 
         // 트리 폼 Load
-        public void DeptTreeLoad()
+        private void DeptTreeLoad()
         {
             DeptTreeForm deptTreeForm = new DeptTreeForm();
             deptTreeForm.ShowDialog();
         }
 
         // 차트 폼 Load
-        public void DeptChartLoad()
+        private void DeptChartLoad()
         {
             DeptChartForm deptChartForm = new DeptChartForm();
             deptChartForm.ShowDialog();
         }
 
         // 부서 추가 폼 Load
-        public void DeptAddLoad()
+        private void DeptAddLoad()
         {
             if (masterGridView.FocusedRowHandle < 0)
             {
@@ -162,7 +162,7 @@ namespace WindowsFormsApp2.sys_dept_info
         }
 
         // 부서 수정 폼 Load
-        public void DeptUpdateLoad()
+        private void DeptUpdateLoad()
         {
             if (detailGridView.FocusedRowHandle < 0)
             {
@@ -183,7 +183,7 @@ namespace WindowsFormsApp2.sys_dept_info
         }
 
         // 부서 삭제
-        public void DeptDelete()
+        private void DeptDelete()
         {
             if (detailGridView.FocusedRowHandle < 0)
             {
@@ -218,7 +218,7 @@ namespace WindowsFormsApp2.sys_dept_info
         }
 
         // 폼 닫기
-        public void DeptClose()
+        private void DeptClose()
         {
             this.Close();
         }

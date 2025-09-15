@@ -30,77 +30,77 @@ namespace WindowsFormsApp2.sys_user_info
         //-----------
 
         // 상위부서코드
-        public int SelectedUpperDeptCd
+        private int SelectedUpperDeptCd
         {
             get => selectUpperDeptCd.ItemIndex >= 0 ? Convert.ToInt32(selectUpperDeptCd.EditValue) : -1;
             set => selectUpperDeptCd.EditValue = value;
         }
 
         // 상위부서명
-        public string UpperDeptNameText
+        private string UpperDeptNameText
         {
             get => txtUpperDeptName.Text.Trim();
             set => txtUpperDeptName.Text = value;
         }
 
         // 부서코드
-        public int SelectedDeptCd
+        private int SelectedDeptCd
         {
             get => selectDeptCd.ItemIndex >= 0 ? Convert.ToInt32(selectDeptCd.EditValue) : -1;
             set => selectDeptCd.EditValue = value;
         }
 
         // 부서명
-        public string DeptNameText
+        private string DeptNameText
         {
             get => txtDeptName.Text.Trim();
             set => txtDeptName.Text = value;
         }
 
         // 사원코드
-        public string UserIdText
+        private string UserIdText
         {
             get => txtUserId.Text.Trim();
             set => txtUserId.Text = value;
         }
 
         // 사원명
-        public string UserNameText
+        private string UserNameText
         {
             get => txtUserName.Text.Trim();
             set => txtUserName.Text = value;
         }
 
         // 로그인ID
-        public string UserLoginIdText
+        private string UserLoginIdText
         {
             get => txtUserLoginId.Text.Trim();
             set => txtUserLoginId.Text = value;
         }
 
         // 비밀번호
-        public string UserPassText
+        private string UserPassText
         {
             get => txtUserPass.Text.Trim();
             set => txtUserPass.Text = value;
         }
 
         // 직위
-        public string UserRankText
+        private string UserRankText
         {
             get => txtUserRank.Text.Trim();
             set => txtUserRank.Text = value;
         }
 
         // 고용형태
-        public string UserEmpTypeText
+        private string UserEmpTypeText
         {
             get => txtUserEmpType.Text.Trim();
             set => txtUserEmpType.Text = value;
         }
 
         // 성별
-        public User.Gender SelectedGender
+        private User.Gender SelectedGender
         {
             get => chkUserGender1.Checked ? User.Gender.Male :
                    chkUserGender2.Checked ? User.Gender.Female : User.Gender.None;
@@ -112,35 +112,35 @@ namespace WindowsFormsApp2.sys_user_info
         }
 
         // 휴대전화
-        public string UserTelText
+        private string UserTelText
         {
             get => txtUserTel.Text.Trim();
             set => txtUserTel.Text = value;
         }
 
         // 이메일
-        public string UserEmailText
+        private string UserEmailText
         {
             get => txtUserEmail.Text.Trim();
             set => txtUserEmail.Text = value;
         }
 
         // 메신저ID
-        public string UserMessengerIdText
+        private string UserMessengerIdText
         {
             get => txtUserMessengerId.Text.Trim();
             set => txtUserMessengerId.Text = value;
         }
 
         // 메모
-        public string RemarkDcText
+        private string RemarkDcText
         {
             get => txtRemarkDc.Text.Trim();
             set => txtRemarkDc.Text = value;
         }
 
         // 이미지
-        public Image UserImage
+        private Image UserImage
         {
             get => userImage.Image;
             set

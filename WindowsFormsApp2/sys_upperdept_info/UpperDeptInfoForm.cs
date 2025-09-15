@@ -42,7 +42,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         // ------------
 
         // 폼 Load 이벤트
-        public void UpperDeptInfoForm_Load(object sender, EventArgs e)
+        private void UpperDeptInfoForm_Load(object sender, EventArgs e)
         {
             UpperDeptSrch();
         }
@@ -82,14 +82,14 @@ namespace WindowsFormsApp2.sys_upperdept_info
         // ------------
 
         // 상위 부서 조회
-        public void UpperDeptSrch()
+        private void UpperDeptSrch()
         {
             upperDeptList = UpperDeptRepository.Instance.GetUpperDept();
             masterGrid.DataSource = upperDeptList;
         }
 
         // 엑셀 다운로드
-        public void ExcelDownLoad()
+        private void ExcelDownLoad()
         {
             if (masterGridView.FocusedRowHandle < 0)
             {
@@ -156,7 +156,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         }
 
         // 부서 추가 폼 Load
-        public void DeptAddLoad()
+        private void DeptAddLoad()
         {
             UpperDeptAddForm upperDeptAddForm = new UpperDeptAddForm();
             upperDeptAddForm.ShowDialog();
@@ -169,7 +169,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         }
 
         // 부서 수정 폼 Load
-        public void DeptUpdateLoad()
+        private void DeptUpdateLoad()
         {
             if (masterGridView.FocusedRowHandle < 0)
             {
@@ -190,7 +190,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         }
 
         // 부서 삭제
-        public void DeptDelete()
+        private void DeptDelete()
         {
             if (masterGridView.FocusedRowHandle < 0)
             {
@@ -226,7 +226,7 @@ namespace WindowsFormsApp2.sys_upperdept_info
         }
 
         // 폼 닫기
-        public void DeptClose()
+        private void DeptClose()
         {
             this.Close();
         }
