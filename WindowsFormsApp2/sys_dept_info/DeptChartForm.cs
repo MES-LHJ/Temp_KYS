@@ -51,14 +51,14 @@ namespace WindowsFormsApp2.sys_dept_info
             // 하위부서 추출
             var lowerDeptInfo = userList
                 .OrderBy(u => u.IdDept)
-                .Select(u => new { u.IdDept, u.DeptName })
+                .Select(u => new { u.IdDept, u.DeptCd, u.DeptName })
                 .Distinct()
                 .ToList();
 
             // 상위부서 추출
             var upperDeptInfo = userList
                 .OrderBy(u => u.IdUpperDept)
-                .Select(u => new { u.IdUpperDept, u.UpperDeptName })
+                .Select(u => new { u.IdUpperDept, u.UpperDeptCd, u.UpperDeptName })
                 .Distinct()
                 .ToList();
 
@@ -67,12 +67,14 @@ namespace WindowsFormsApp2.sys_dept_info
             // Series 생성
             foreach (var dept in lowerDeptInfo)
             {
-                var series = new Series(dept.DeptName, ViewType.StackedBar);
+                string lowerName = $"{dept.DeptName} ({dept.DeptCd})";
+                var series = new Series(lowerName, ViewType.StackedBar);
 
                 foreach (var upper in upperDeptInfo)
                 {
+                    string upperName = $"{upper.UpperDeptName} ({upper.UpperDeptCd})";
                     int count = userList.Count(u => u.IdDept == dept.IdDept && u.IdUpperDept == upper.IdUpperDept);
-                    series.Points.Add(new SeriesPoint(upper.UpperDeptName, count));
+                    series.Points.Add(new SeriesPoint(upperName, count));
                 }
                 
                 chartControl1.Series.Add(series);
