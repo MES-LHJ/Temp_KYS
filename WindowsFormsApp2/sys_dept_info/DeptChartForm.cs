@@ -48,31 +48,31 @@ namespace WindowsFormsApp2.sys_dept_info
         {
             userList = UserRepository.Instance.GetUser();
 
-            // 하위부서 이름 추출
-            var lowerDeptNames = userList
+            // 하위부서 추출
+            var lowerDeptInfo = userList
                 .OrderBy(u => u.IdDept)
-                .Select(u => u.DeptName)
+                .Select(u => new { u.IdDept, u.DeptName })
                 .Distinct()
                 .ToList();
 
-            // 상위부서 이름 추출
-            var upperDeptNames = userList
+            // 상위부서 추출
+            var upperDeptInfo = userList
                 .OrderBy(u => u.IdUpperDept)
-                .Select(u => u.UpperDeptName)
+                .Select(u => new { u.IdUpperDept, u.UpperDeptName })
                 .Distinct()
                 .ToList();
 
             chartControl1.Series.Clear();
 
             // Series 생성
-            foreach (var dept in lowerDeptNames)
+            foreach (var dept in lowerDeptInfo)
             {
-                var series = new Series(dept, ViewType.StackedBar);
+                var series = new Series(dept.DeptName, ViewType.StackedBar);
 
-                foreach (var upper in upperDeptNames)
+                foreach (var upper in upperDeptInfo)
                 {
-                    int count = userList.Count(u => u.DeptName == dept && u.UpperDeptName == upper);
-                    series.Points.Add(new SeriesPoint(upper, count));
+                    int count = userList.Count(u => u.IdDept == dept.IdDept && u.IdUpperDept == upper.IdUpperDept);
+                    series.Points.Add(new SeriesPoint(upper.UpperDeptName, count));
                 }
                 
                 chartControl1.Series.Add(series);

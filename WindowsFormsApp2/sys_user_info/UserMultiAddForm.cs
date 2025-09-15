@@ -239,7 +239,7 @@ namespace WindowsFormsApp2.sys_user_info
             // 저장 처리
             if (MessageBox.Show("저장하시겠습니까?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int successCount = 0, userIdCount = 0, dupLoginIdCount = 0, failCount = 0;
+                int successCount = 0, userIdCount = 0, loginIdCount = 0, failCount = 0;
 
                 foreach (var user in userList)
                 {
@@ -255,7 +255,7 @@ namespace WindowsFormsApp2.sys_user_info
                             break;
 
                         case -2:
-                            dupLoginIdCount++;
+                            loginIdCount++;
                             break;
 
                         default:
@@ -269,7 +269,7 @@ namespace WindowsFormsApp2.sys_user_info
                     UserMultiInsertFg = true;
                 }
 
-                MessageBox.Show($"저장: {successCount}건\n사원코드중복: {userIdCount}건\n로그인ID중복: {dupLoginIdCount}건\n기타오류: {failCount}건");
+                MessageBox.Show($"저장: {successCount}건\n사원코드중복: {userIdCount}건\n로그인ID중복: {loginIdCount}건\n기타오류: {failCount}건");
                 this.Close();
             }
         }
